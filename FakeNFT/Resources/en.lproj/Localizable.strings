@@ -4,9 +4,9 @@
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
 "Error.title" = "Ошибка";
-"Button.PayTitle" = "Pay";
-"Button.ProceedToPayment" = "Proceed to payment";
-"Button.CartTitle" = "Cart";
+"Button.payTitle" = "Pay";
+"Button.proceedToPayment" = "Proceed to payment";
+"Button.cartTitle" = "Cart";
 "Button.profileTitle" = "Profile";
 "Button.catalogTitle" = "Catalog";
 "Button.statisticsTitle" = "Statistics";
