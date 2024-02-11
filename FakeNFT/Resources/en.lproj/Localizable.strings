@@ -6,3 +6,7 @@
 "Error.title" = "Ошибка";
 "Button.PayTitle" = "Pay";
 "Button.ProceedToPayment" = "Proceed to payment";
+"Button.CartTitle" = "Cart";
+"Button.profileTitle" = "Profile";
+"Button.catalogTitle" = "Catalog";
+"Button.statisticsTitle" = "Statistics";

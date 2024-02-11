@@ -1,2 +1,5 @@
 disabled_rules:
-- todo
+ - todo
+ - blanket_disable_command
+ - trailing_whitespace
+ - line_length

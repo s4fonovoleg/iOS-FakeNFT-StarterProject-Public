@@ -14,10 +14,18 @@ internal enum L10n {
     }
   internal enum Localizable {
     internal enum Button {
+      /// Корзина
+      internal static let cartTitle = L10n.tr("Localizable", "Button.cartTitle", fallback: "Корзина")
+      /// Каталог
+      internal static let catalogTitle = L10n.tr("Localizable", "Button.catalogTitle", fallback: "Каталог")
       /// Оплатить
-      internal static let payTitle = L10n.tr("Localizable", "Button.PayTitle", fallback: "Оплатить")
+      internal static let payTitle = L10n.tr("Localizable", "Button.payTitle", fallback: "Оплатить")
       /// К оплате
-      internal static let proceedToPayment = L10n.tr("Localizable", "Button.ProceedToPayment", fallback: "К оплате")
+      internal static let proceedToPayment = L10n.tr("Localizable", "Button.proceedToPayment", fallback: "К оплате")
+      /// Профиль
+      internal static let profileTitle = L10n.tr("Localizable", "Button.profileTitle", fallback: "Профиль")
+      /// Статистика
+      internal static let statisticsTitle = L10n.tr("Localizable", "Button.statisticsTitle", fallback: "Статистика")
     }
     internal enum Catalog {
       /// Открыть Nft
@@ -36,48 +44,6 @@ internal enum L10n {
     internal enum Tab {
       /// Каталог
       internal static let catalog = L10n.tr("Localizable", "Tab.catalog", fallback: "Каталог")
-    }
-  }
-  internal enum Main {
-    internal enum _4N1BSJmX {
-      /// Class = "UITabBarItem"; title = "Корзина"; ObjectID = "4N1-bS-JmX";
-      internal static let title = L10n.tr("Main", "4N1-bS-JmX.title", fallback: "Корзина")
-    }
-    internal enum Bq6VkWno {
-      /// Class = "UITabBarItem"; title = "Профиль"; ObjectID = "Bq6-vk-Wno";
-      internal static let title = L10n.tr("Main", "Bq6-vk-Wno.title", fallback: "Профиль")
-    }
-    internal enum X74AkUx8 {
-      /// Class = "UITabBarItem"; title = "Каталог"; ObjectID = "X74-Ak-ux8";
-      internal static let title = L10n.tr("Main", "X74-Ak-ux8.title", fallback: "Каталог")
-    }
-    internal enum YldQuGf5 {
-      /// Class = "UILabel"; text = "Статистика"; ObjectID = "YLD-QU-GF5";
-      internal static let text = L10n.tr("Main", "YLD-QU-GF5.text", fallback: "Статистика")
-    }
-    internal enum CJeQjEp5 {
-      /// Class = "UILabel"; text = "Профиль"; ObjectID = "cJe-qj-ep5";
-      internal static let text = L10n.tr("Main", "cJe-qj-ep5.text", fallback: "Профиль")
-    }
-    internal enum Co5KxOQ8 {
-      /// Class = "UIButton"; normalTitle = "Button"; ObjectID = "co5-kx-oQ8";
-      internal static let normalTitle = L10n.tr("Main", "co5-kx-oQ8.normalTitle", fallback: "Button")
-      internal enum Configuration {
-        /// Class = "UIButton"; configuration.title = "Show nft id = 22"; ObjectID = "co5-kx-oQ8";
-        internal static let title = L10n.tr("Main", "co5-kx-oQ8.configuration.title", fallback: "Show nft id = 22")
-      }
-    }
-    internal enum He3Ik5Yf {
-      /// Class = "UILabel"; text = "Корзина"; ObjectID = "hE3-IK-5YF";
-      internal static let text = L10n.tr("Main", "hE3-IK-5YF.text", fallback: "Корзина")
-    }
-    internal enum QWkZTAG8 {
-      /// Class = "UILabel"; text = "Каталог"; ObjectID = "qWk-zT-AG8";
-      internal static let text = L10n.tr("Main", "qWk-zT-AG8.text", fallback: "Каталог")
-    }
-    internal enum XgD9YEGT {
-      /// Class = "UITabBarItem"; title = "Корзина"; ObjectID = "xgD-9Y-EGT";
-      internal static let title = L10n.tr("Main", "xgD-9Y-EGT.title", fallback: "Корзина")
     }
   }
 }
