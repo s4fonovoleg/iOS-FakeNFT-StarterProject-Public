@@ -41,6 +41,7 @@
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		4A27E9092B77E1AF007906B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4A27E90B2B77E1AF007906B0 /* Localizable.strings */; };
 		4A27E90F2B77E43E007906B0 /* Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E90E2B77E43E007906B0 /* Generated.swift */; };
+		4AB30ABE2B7A4C6000F86D9B /* NFTTAbleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB30ABD2B7A4C6000F86D9B /* NFTTAbleViewCell.swift */; };
 		4AE68FB82B790E1E00D00EB7 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE68FB72B790E1E00D00EB7 /* CartViewController.swift */; };
 		4AFBFBA92B7A2E8D00D181C7 /* UIColor + Exstension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFBFBA82B7A2E8D00D181C7 /* UIColor + Exstension.swift */; };
 		5E857BFD687BA78AEA90D43B /* Pods_FakeNFT_FakeNFTUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2AC59DA6283A583F9D0406 /* Pods_FakeNFT_FakeNFTUITests.framework */; };
@@ -108,7 +109,8 @@
 		4A27E90C2B77E1B1007906B0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4A27E90D2B77E1DA007906B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4A27E90E2B77E43E007906B0 /* Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generated.swift; sourceTree = "<group>"; };
-		4AE68FB72B790E1E00D00EB7 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CartViewController.swift; path = FakeNFT/Localization/String/CartViewController.swift; sourceTree = SOURCE_ROOT; };
+		4AB30ABD2B7A4C6000F86D9B /* NFTTAbleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NFTTAbleViewCell.swift; path = FakeNFT/Cart/TableView/NFTTAbleViewCell.swift; sourceTree = SOURCE_ROOT; };
+		4AE68FB72B790E1E00D00EB7 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CartViewController.swift; path = FakeNFT/Cart/CartViewController.swift; sourceTree = SOURCE_ROOT; };
 		4AFBFBA82B7A2E8D00D181C7 /* UIColor + Exstension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Exstension.swift"; sourceTree = "<group>"; };
 		8D7E48DCF952A3A34B2DFA4B /* Pods-FakeNFT-FakeNFTUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT-FakeNFTUITests.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT-FakeNFTUITests/Pods-FakeNFT-FakeNFTUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9C2AC59DA6283A583F9D0406 /* Pods_FakeNFT_FakeNFTUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeNFT_FakeNFTUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,8 +232,8 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
+				4AB30ABF2B7A4CC100F86D9B /* Cart */,
 				4AFBFBA72B7A2E7800D181C7 /* Helpers */,
-				4A518E9B2B7550E2004F660D /* Cart */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
 				3F6806CE29CBBD1B00B4F915 /* Foundation */,
@@ -338,12 +340,21 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
-		4A518E9B2B7550E2004F660D /* Cart */ = {
+		4AB30ABF2B7A4CC100F86D9B /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				4AB30AC02B7A4CD600F86D9B /* TableView */,
 				4AE68FB72B790E1E00D00EB7 /* CartViewController.swift */,
 			);
 			path = Cart;
+			sourceTree = "<group>";
+		};
+		4AB30AC02B7A4CD600F86D9B /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				4AB30ABD2B7A4C6000F86D9B /* NFTTAbleViewCell.swift */,
+			);
+			path = TableView;
 			sourceTree = "<group>";
 		};
 		4AFBFBA72B7A2E7800D181C7 /* Helpers */ = {
@@ -661,6 +672,7 @@
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
 				3F478ED129DB476500F6D39E /* UIFont + Extension.swift in Sources */,
 				4A27E90F2B77E43E007906B0 /* Generated.swift in Sources */,
+				4AB30ABE2B7A4C6000F86D9B /* NFTTAbleViewCell.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,

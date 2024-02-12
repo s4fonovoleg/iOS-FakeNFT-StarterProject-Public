@@ -14,6 +14,17 @@ class CartViewController: UIViewController {
   // MARK: - Properties properties:
   private var nftsCount: Int?
   private var totalCost: Double?
+  private lazy var nftTable: UITableView = {
+    let table = UITableView()
+    table.delegate = self
+    table.dataSource = self
+    table.backgroundColor = .clear
+    table.separatorStyle = .none
+    table.register(NFTTAbleViewCell.self, forCellReuseIdentifier: NFTTAbleViewCell.reuseID)
+    
+    return table
+  }()
+  
   private lazy var paymentView: UIView = {
     let paymentView = UIView()
     paymentView.backgroundColor = .YPLightGrey
@@ -70,7 +81,7 @@ class CartViewController: UIViewController {
   }
   
   private func setupIU() {
-    [paymentView].forEach {
+    [nftTable, paymentView].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
       view.addSubview($0)
     }
@@ -80,6 +91,11 @@ class CartViewController: UIViewController {
     }
     
     NSLayoutConstraint.activate([
+      nftTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+      nftTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      nftTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      nftTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+      
       paymentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       paymentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       paymentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -119,4 +135,29 @@ extension CartViewController {
   private func sortButtonTapped() {
     
   }
+}
+
+// MARK: - UITableViewDelegate:
+extension CartViewController: UITableViewDelegate {
+  
+}
+
+// MARK: - UITableViewDataSource:
+extension CartViewController: UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
+  }
+}
+
+// MARK: - nftTableViewCellDelegate:
+extension CartViewController: nftTableViewCellDelegate {
+  func deleteButtopnPressed() {
+    
+  }
+  
+  
 }
