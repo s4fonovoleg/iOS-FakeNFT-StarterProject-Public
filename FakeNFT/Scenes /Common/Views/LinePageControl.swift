@@ -10,11 +10,7 @@ final class LinePageControl: UIView {
         }
     }
 
-    var selectedItem: Int = 0 {
-        didSet {
-            selectedSegmentChanged()
-        }
-    }
+    var selectedItem: Int = 0 
 
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: height)
@@ -56,13 +52,6 @@ final class LinePageControl: UIView {
         }
 
         selectedItem = 0
-    }
-
-    func selectedSegmentChanged() {
-        for (index, subview) in stackView.arrangedSubviews.enumerated() {
-            let isSelected = index == selectedItem
-            subview.backgroundColor = isSelected ? .segmentActive : .segmentInactive
-        }
     }
 }
 

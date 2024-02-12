@@ -1,4 +1,27 @@
+import Foundation
 import UIKit
+
+extension UIColor {
+  static var YPBlack: UIColor { UIColor(named: "YPBlack") ?? .black  }
+  static var YPWhite: UIColor { UIColor(named: "YPWhite") ?? .white  }
+  static var YPBlackUniversal: UIColor { UIColor(named: "YPBlackUniversal") ?? .black}
+  static var YPWhiteUniversal: UIColor {
+    UIColor(named: "YPWhiteUniversal") ?? .white }
+  static var YPBlue: UIColor {
+    UIColor(named: "YPBlue") ?? .blue }
+  static var YPGray: UIColor {
+    UIColor(named: "YPGray") ?? .gray }
+  static var YPGreen: UIColor {
+    UIColor(named: "YPGreen") ?? .green }
+  static var YPLightGrey: UIColor {
+    UIColor(named: "YPLightGrey") ?? .lightGray }
+  static var YPRed: UIColor {
+    UIColor(named: "YPRed") ?? .red }
+  static var YPYellow: UIColor {
+    UIColor(named: "YPYellow") ?? .yellow }
+  static var YPBackground: UIColor {
+    UIColor(named: "YPBackground") ?? .systemBackground }
+}
 
 extension UIColor {
     // Creates color from a hex string
