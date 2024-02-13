@@ -42,6 +42,7 @@
 		4A27E9092B77E1AF007906B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4A27E90B2B77E1AF007906B0 /* Localizable.strings */; };
 		4A27E90F2B77E43E007906B0 /* Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E90E2B77E43E007906B0 /* Generated.swift */; };
 		4AB30ABE2B7A4C6000F86D9B /* NFTTAbleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB30ABD2B7A4C6000F86D9B /* NFTTAbleViewCell.swift */; };
+		4AC7448C2B7B838B00ED6D39 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7448B2B7B838B00ED6D39 /* Mocks.swift */; };
 		4AE68FB82B790E1E00D00EB7 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE68FB72B790E1E00D00EB7 /* CartViewController.swift */; };
 		4AFBFBA92B7A2E8D00D181C7 /* UIColor + Exstension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFBFBA82B7A2E8D00D181C7 /* UIColor + Exstension.swift */; };
 		5E857BFD687BA78AEA90D43B /* Pods_FakeNFT_FakeNFTUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2AC59DA6283A583F9D0406 /* Pods_FakeNFT_FakeNFTUITests.framework */; };
@@ -110,6 +111,7 @@
 		4A27E90D2B77E1DA007906B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4A27E90E2B77E43E007906B0 /* Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generated.swift; sourceTree = "<group>"; };
 		4AB30ABD2B7A4C6000F86D9B /* NFTTAbleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NFTTAbleViewCell.swift; path = FakeNFT/Cart/TableView/NFTTAbleViewCell.swift; sourceTree = SOURCE_ROOT; };
+		4AC7448B2B7B838B00ED6D39 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		4AE68FB72B790E1E00D00EB7 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CartViewController.swift; path = FakeNFT/Cart/CartViewController.swift; sourceTree = SOURCE_ROOT; };
 		4AFBFBA82B7A2E8D00D181C7 /* UIColor + Exstension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Exstension.swift"; sourceTree = "<group>"; };
 		8D7E48DCF952A3A34B2DFA4B /* Pods-FakeNFT-FakeNFTUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT-FakeNFTUITests.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT-FakeNFTUITests/Pods-FakeNFT-FakeNFTUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				3F6806D829CC979D00B4F915 /* Network */,
+				4AC7448B2B7B838B00ED6D39 /* Mocks.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -425,8 +428,8 @@
 			buildConfigurationList = 3F6806BD29CBBAF200B4F915 /* Build configuration list for PBXNativeTarget "FakeNFT" */;
 			buildPhases = (
 				A7A28B415B4E09D17B669D10 /* [CP] Check Pods Manifest.lock */,
-				4A27E9002B77DBD4007906B0 /* SwiftGen */,
-				3FC8C39529D24CDB0081F015 /* Swiftlint */,
+				4AC7448D2B7B989800ED6D39 /* Swiftgen */,
+				4AC7448E2B7B9A4B00ED6D39 /* Swiftlint */,
 				3F68068F29CBBAF100B4F915 /* Sources */,
 				3F68069029CBBAF100B4F915 /* Frameworks */,
 				3F68069129CBBAF100B4F915 /* Resources */,
@@ -558,7 +561,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3FC8C39529D24CDB0081F015 /* Swiftlint */ = {
+		4AC7448D2B7B989800ED6D39 /* Swiftgen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftgen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"$PODS_ROOT/SwiftGen/bin/swiftgen\"\n";
+		};
+		4AC7448E2B7B9A4B00ED6D39 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -574,25 +595,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
-		};
-		4A27E9002B77DBD4007906B0 /* SwiftGen */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftGen;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/SwiftGen/bin/swiftgen\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		A703497CD35A87AE7CE5E4B2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -678,6 +681,7 @@
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
+				4AC7448C2B7B838B00ED6D39 /* Mocks.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* NftService.swift in Sources */,
 				4AFBFBA92B7A2E8D00D181C7 /* UIColor + Exstension.swift in Sources */,
@@ -759,6 +763,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -821,6 +826,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;

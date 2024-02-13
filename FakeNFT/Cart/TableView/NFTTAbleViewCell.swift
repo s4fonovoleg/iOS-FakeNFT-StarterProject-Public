@@ -1,19 +1,19 @@
 import Foundation
 import UIKit
 
-protocol nftTableViewCellDelegate: AnyObject {
+protocol NFTTableViewCellDelegate: AnyObject {
   func deleteButtopnPressed()
 }
 
 final class NFTTAbleViewCell: UITableViewCell {
   // MARK: - Properties:
   static let reuseID = "nftTableViewCell"
-  weak var delegate: nftTableViewCellDelegate?
+  weak var delegate: NFTTableViewCellDelegate?
   
   // MARK: - Private Properties:
   private lazy var nftImageView: UIImageView = {
     let image = UIImageView()
-    image.contentMode = .scaleToFill
+    image.contentMode = .scaleAspectFill
     
     return image
   }()
@@ -57,9 +57,10 @@ final class NFTTAbleViewCell: UITableViewCell {
   }()
   
   private lazy var deleteButton: UIButton = {
-    let button = UIButton(type: .close)
+    let button = UIButton(type: .system)
     button.setImage(UIImage(named: "DeleteCartIcon"), for: .normal)
     button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+    button.tintColor = .YPBlack
     
     return button
   }()
@@ -67,6 +68,7 @@ final class NFTTAbleViewCell: UITableViewCell {
   // MARK: - LifeCycle:
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+    setupUI()
   }
   
   required init?(coder: NSCoder) {
@@ -74,12 +76,12 @@ final class NFTTAbleViewCell: UITableViewCell {
   }
   
   // MARK: - Methods:
-  func configureCell(
-    for nft: Nft,
-    name: String,
-    price: Double) {
-      
-    }
+  func configureCell(for nft: NFTModel) {
+    let image = nft.image
+    nftImageView.image = image
+    nftNameLabel.text = nft.name
+    nftPriceLabel.text = "\(nft.price) ETH"
+  }
   
   // MARK: - Private Methods:
   func setupUI() {
@@ -94,22 +96,22 @@ final class NFTTAbleViewCell: UITableViewCell {
     
     NSLayoutConstraint.activate([
       nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-      nftImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -251),
+      nftImageView.heightAnchor.constraint(equalToConstant: 108),
+      nftImageView.widthAnchor.constraint(equalToConstant: 108),
       nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-      nftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
       
       nftInfoView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
-      nftImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -156),
+      nftInfoView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -156),
       nftInfoView.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 8),
       nftInfoView.bottomAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: -8),
       
-      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 34),
+      deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+      deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
       deleteButton.widthAnchor.constraint(equalToConstant: 40),
       deleteButton.heightAnchor.constraint(equalToConstant: 40),
       
       nftNameLabel.leadingAnchor.constraint(equalTo: nftInfoView.leadingAnchor),
-      nftNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+      nftNameLabel.trailingAnchor.constraint(equalTo: nftInfoView.trailingAnchor),
       nftNameLabel.topAnchor.constraint(equalTo: nftInfoView.topAnchor),
       nftNameLabel.bottomAnchor.constraint(equalTo: nftInfoView.bottomAnchor, constant: -70),
       

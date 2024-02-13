@@ -1,17 +1,10 @@
-//
-//  CartViewController.swift
-//  FakeNFT
-//
-//  Created by Руслан Халилулин on 11.02.2024.
-//
-
 import UIKit
 
 class CartViewController: UIViewController {
   // MARK: - Properties:
   
-  
   // MARK: - Properties properties:
+  private var nfts: [NFTModel] = NFTMocks.nfts
   private var nftsCount: Int?
   private var totalCost: Double?
   private lazy var nftTable: UITableView = {
@@ -20,6 +13,7 @@ class CartViewController: UIViewController {
     table.dataSource = self
     table.backgroundColor = .clear
     table.separatorStyle = .none
+    table.allowsSelection = false
     table.register(NFTTAbleViewCell.self, forCellReuseIdentifier: NFTTAbleViewCell.reuseID)
     
     return table
@@ -68,9 +62,6 @@ class CartViewController: UIViewController {
     
     return label
   }()
-  
-  
-  
   
   // MARK: - Private Methods:
   private func navBarSetup() {
@@ -139,25 +130,32 @@ extension CartViewController {
 
 // MARK: - UITableViewDelegate:
 extension CartViewController: UITableViewDelegate {
-  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    140
+  }
 }
 
 // MARK: - UITableViewDataSource:
 extension CartViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    
+    nfts.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let nft = nfts[indexPath.row]
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: NFTTAbleViewCell.reuseID, for: indexPath) as? NFTTAbleViewCell else {
+      return UITableViewCell()
+    }
+    cell.configureCell(for: nft)
     
+    return cell
   }
 }
 
 // MARK: - nftTableViewCellDelegate:
-extension CartViewController: nftTableViewCellDelegate {
+extension CartViewController: NFTTableViewCellDelegate {
   func deleteButtopnPressed() {
     
   }
-  
   
 }
