@@ -1,0 +1,15 @@
+"Catalog.openNft" = "Open Nft";
+"Error.network" = "A network error has occurred";
+"Error.unknown" = "An unknown error has occurred";
+"Error.repeat" = "Try again";
+"Error.title" = "Error";
+"Button.payTitle" = "Pay";
+"Button.proceedToPayment" = "Proceed to payment";
+"Button.cartTitle" = "Cart";
+"Button.profileTitle" = "Profile";
+"Button.catalogTitle" = "Catalog";
+"Button.statisticsTitle" = "Statistics";
+"Button.deleteTitle" = "Delete";
+"Button.returnTitle" = "Return";
+"Lable.priceTitle" = "Price";
+"Label.deleteNftLabel" = "Are you sure you want to \ndelete the item from the cart?";
