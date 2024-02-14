@@ -4,7 +4,7 @@ class CartViewController: UIViewController {
   // MARK: - Properties:
   
   // MARK: - Properties properties:
-  private var nfts: [NFTModel] = NFTMocks.nfts
+  private var nfts: [NftModel] = NFTMocks.nfts
   private var nftsCount: Int?
   private var totalCost: Double?
   private lazy var nftTable: UITableView = {

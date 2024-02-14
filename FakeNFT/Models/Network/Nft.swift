@@ -6,7 +6,7 @@ struct Nft: Decodable {
     let images: [URL]
 }
 
-struct NFTModel {
+struct NftModel {
   let id: UUID
   let name: String
   let image: UIImage

@@ -13,6 +13,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     _: UIApplication,
     didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    tabBarController.tabBar.configureTabBarAppearance()
     tabBarController.servicesAssembly = servicesAssembly
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = tabBarController

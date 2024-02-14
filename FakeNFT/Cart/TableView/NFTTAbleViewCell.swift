@@ -78,7 +78,7 @@ final class NFTTAbleViewCell: UITableViewCell {
   }
   
   // MARK: - Methods:
-  func configureCell(for nft: NFTModel) {
+  func configureCell(for nft: NftModel) {
     let image = nft.image
     nftImageView.image = image
     nftNameLabel.text = nft.name
