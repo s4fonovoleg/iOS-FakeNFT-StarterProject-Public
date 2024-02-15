@@ -1,34 +1,26 @@
 import Foundation
 
-@propertyWrapper struct UserDefaultEncoded<T: Codable> {
+@propertyWrapper struct UserDefaultEncoded {
+  let userDefaults: UserDefaults
   let key: String
-  let defaultValue: T?
-  let decoder = JSONDecoder()
-  let encoder = JSONEncoder()
+  let defaultValue: [String] = []
   
-  init(key: String, default: T? = nil) {
+  
+  init(userDefaults: UserDefaults = .standard ,key: String) {
+    self.userDefaults = userDefaults
     self.key = key
-    defaultValue = `default`
   }
   
-  var wrappedValue: T? {
+  var wrappedValue: [String] {
     get {
-      guard let jsonString = UserDefaults.standard.string(forKey: key) else {
+      if let fetchedArray = userDefaults.array(forKey: key) as? [String] {
+        return fetchedArray
+      } else {
         return defaultValue
       }
-      guard let jsonData = jsonString.data(using: .utf8) else {
-        return defaultValue
-      }
-      guard let value = try? decoder.decode(T.self, from: jsonData) else {
-        return defaultValue
-      }
-      return value
     }
     set {
-      encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-      guard let jsonData = try? encoder.encode(newValue) else { return }
-      let jsonString = String(bytes: jsonData, encoding: .utf8)
-      UserDefaults.standard.set(jsonString, forKey: key)
+      userDefaults.set(newValue, forKey: key)
     }
   }
 }
