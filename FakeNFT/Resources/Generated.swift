@@ -18,6 +18,8 @@ internal enum L10n {
       internal static let cartTitle = L10n.tr("Localizable", "Button.cartTitle", fallback: "Корзина")
       /// Каталог
       internal static let catalogTitle = L10n.tr("Localizable", "Button.catalogTitle", fallback: "Каталог")
+      /// Закрыть
+      internal static let closeButtonTitle = L10n.tr("Localizable", "Button.closeButtonTitle", fallback: "Закрыть")
       /// Удалить
       internal static let deleteTitle = L10n.tr("Localizable", "Button.deleteTitle", fallback: "Удалить")
       /// Оплатить
@@ -28,6 +30,12 @@ internal enum L10n {
       internal static let profileTitle = L10n.tr("Localizable", "Button.profileTitle", fallback: "Профиль")
       /// Вернуться
       internal static let returnTitle = L10n.tr("Localizable", "Button.returnTitle", fallback: "Вернуться")
+      /// По названию
+      internal static let sortByNameTitle = L10n.tr("Localizable", "Button.sortByNameTitle", fallback: "По названию")
+      /// По цене
+      internal static let sortByPriceTitle = L10n.tr("Localizable", "Button.sortByPriceTitle", fallback: "По цене")
+      /// По рейтингу
+      internal static let sortByRatingTitle = L10n.tr("Localizable", "Button.sortByRatingTitle", fallback: "По рейтингу")
       /// Статистика
       internal static let statisticsTitle = L10n.tr("Localizable", "Button.statisticsTitle", fallback: "Статистика")
     }
@@ -49,10 +57,10 @@ internal enum L10n {
       /// Вы уверены, что хоитите 
       /// удалить объект из корзины?
       internal static let deleteNftLabel = L10n.tr("Localizable", "Label.deleteNftLabel", fallback: "Вы уверены, что хоитите \nудалить объект из корзины?")
-    }
-    internal enum Lable {
       /// Цена
-      internal static let priceTitle = L10n.tr("Localizable", "Lable.priceTitle", fallback: "Цена")
+      internal static let priceTitle = L10n.tr("Localizable", "Label.priceTitle", fallback: "Цена")
+      /// Сортировка
+      internal static let sortingTitle = L10n.tr("Localizable", "Label.sortingTitle", fallback: "Сортировка")
     }
   }
 }

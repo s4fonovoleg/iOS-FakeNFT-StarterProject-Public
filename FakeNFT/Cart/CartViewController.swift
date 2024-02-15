@@ -7,6 +7,7 @@ class CartViewController: UIViewController {
   private var nfts: [NftModel] = NFTMocks.nfts
   private var nftsCount: Int?
   private var totalCost: Double?
+  private var sortingAlertPresenter: SortingAlertPresenterProtocol?
   private lazy var nftTable: UITableView = {
     let table = UITableView()
     table.delegate = self
@@ -115,16 +116,33 @@ extension CartViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    sortingAlertPresenter = SortingAlertPresenter(delegate: self)
     navBarSetup()
     setupIU()
   }
 }
 
-// MARK: - IBActions:
+// MARK: - Objc-Methods:
 extension CartViewController {
   @objc
   private func sortButtonTapped() {
-    
+    sortingAlertPresenter?.showAlert(
+      model: SortingAlertModel(
+        title: L10n.Localizable.Label.sortingTitle,
+        message: nil,
+        firstButtonText: L10n.Localizable.Button.sortByPriceTitle,
+        secondButtonText: L10n.Localizable.Button.sortByRatingTitle,
+        thirdButtonText: L10n.Localizable.Button.sortByNameTitle,
+        fourthButtonText: L10n.Localizable.Button.closeButtonTitle,
+        firstCompletion: {
+          //
+        },
+        secondCompletion: {
+          //
+        },
+        thirdCompletion: {
+          //
+        }))
   }
 }
 

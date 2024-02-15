@@ -11,5 +11,10 @@
 "Button.statisticsTitle" = "Статистика";
 "Button.deleteTitle" = "Удалить";
 "Button.returnTitle" = "Вернуться";
-"Lable.priceTitle" = "Цена";
+"Button.sortByPriceTitle" = "По цене";
+"Button.sortByRatingTitle" = "По рейтингу";
+"Button.sortByNameTitle" = "По названию";
+"Button.closeButtonTitle" = "Закрыть";
+"Label.priceTitle" = "Цена";
 "Label.deleteNftLabel" = "Вы уверены, что хоитите \nудалить объект из корзины?";
+"Label.sortingTitle" = "Сортировка";

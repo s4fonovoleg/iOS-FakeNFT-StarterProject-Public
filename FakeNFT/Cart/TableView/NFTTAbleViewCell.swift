@@ -42,7 +42,7 @@ final class NFTTAbleViewCell: UITableViewCell {
     label.numberOfLines = 1
     label.textAlignment = .left
     label.textColor = .YPBlack
-    label.text = L10n.Localizable.Lable.priceTitle
+    label.text = L10n.Localizable.Label.priceTitle
     label.font = .caption2
     
     return label

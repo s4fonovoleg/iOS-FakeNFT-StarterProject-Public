@@ -11,5 +11,10 @@
 "Button.statisticsTitle" = "Statistics";
 "Button.deleteTitle" = "Delete";
 "Button.returnTitle" = "Return";
-"Lable.priceTitle" = "Price";
+"Button.sortByPriceTitle" = "By price";
+"Button.sortByRatingTitle" = "By rating";
+"Button.sortByNameTitle" = "By name";
+"Button.closeButtonTitle" = "Close";
+"Label.priceTitle" = "Price";
 "Label.deleteNftLabel" = "Are you sure you want to \ndelete the item from the cart?";
+"Label.sortingTitle" = "Sorting";
