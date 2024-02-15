@@ -13,10 +13,10 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let catalogController = TestCatalogViewController(
-            servicesAssembly: servicesAssembly
-        )
+        let catalogController = UINavigationController(rootViewController: CatalogViewController())
         catalogController.tabBarItem = catalogTabBarItem
+        catalogController.navigationBar.isTranslucent = false
+        tabBar.isTranslucent = false
 
         viewControllers = [catalogController]
 
