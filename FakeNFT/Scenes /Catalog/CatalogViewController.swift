@@ -39,16 +39,24 @@ class CatalogViewController: UIViewController {
     
     @objc
     private func filterButtonTapped(){
-        let filter = UIAlertController(title: "Сортировка", message: "", preferredStyle: .actionSheet)
-        let filterByNftCount = UIAlertAction(title: "По количеству NFT", style: .default) { _ in
+        let filter = UIAlertController(title: NSLocalizedString("Sorting", comment: ""),
+                                       message: "",
+                                       preferredStyle: .actionSheet)
+        let filterByNftCount = UIAlertAction(title: NSLocalizedString("sorting.byCountOfNft",
+                                                                      comment: "")
+                                             ,style: .default) { _ in
             self.viewModel.filterNfts(by: .byNftCount)
             self.tableView.reloadData()
         }
-        let filterByNftName = UIAlertAction(title: "По названию", style: .default) { _ in
+        let filterByNftName = UIAlertAction(title: NSLocalizedString("sorting.byName",
+                                                                     comment: ""),
+                                            style: .default) { _ in
             self.viewModel.filterNfts(by: .byNftName)
             self.tableView.reloadData()
         }
-        let cancelAction = UIAlertAction(title: "Закрыть", style: .cancel , handler: nil)
+        let cancelAction = UIAlertAction(title: "Закрыть",
+                                         style: .cancel,
+                                         handler: nil)
         filter.addAction(filterByNftName)
         filter.addAction(filterByNftCount)
         filter.addAction(cancelAction)

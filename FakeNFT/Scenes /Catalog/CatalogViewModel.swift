@@ -15,7 +15,7 @@ class CatalogViewModel {
     
     private var catalogService = CatalogService()
     
-    private(set) var nfts : [lolkek] = [] {
+    private(set) var nfts : [CatalogCollection] = [] {
         didSet{
             change?()
         }

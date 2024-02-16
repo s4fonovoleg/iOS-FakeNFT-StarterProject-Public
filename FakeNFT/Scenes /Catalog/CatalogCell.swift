@@ -27,7 +27,7 @@ final class CatalogCell : UITableViewCell {
     }()
     
     
-    func config(nft : lolkek){
+    func config(nft : CatalogCollection){
         setupScreen()
         nftLable.text = "\(nft.name.first!.uppercased())" +
         nft.name.suffix(nft.name.count - 1) +
@@ -54,10 +54,5 @@ final class CatalogCell : UITableViewCell {
     }
 }
 
-struct lolkek : Codable {
-    var name : String
-    var nfts : [String]
-    var cover : String
-}
 
 
