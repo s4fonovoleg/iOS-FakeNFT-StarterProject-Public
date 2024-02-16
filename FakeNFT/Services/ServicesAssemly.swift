@@ -11,10 +11,7 @@ final class ServicesAssembly {
         self.nftStorage = nftStorage
     }
 
-    var nftService: NftService {
-        NftServiceImpl(
-            networkClient: networkClient,
-            storage: nftStorage
-        )
+    var nftService: CartService {
+        CartService(networkClient: networkClient)
     }
 }

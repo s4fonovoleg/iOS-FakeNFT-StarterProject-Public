@@ -1,6 +1,6 @@
 import Foundation
 
-typealias NftCompletion = (Result<NftModel, Error>) -> Void
+typealias NftCompletion = (Result<NFTModel, Error>) -> Void
 typealias NFTsCompletion = (Result<[String], Error>) -> Void
 
 protocol CartServiceProtocol {
@@ -22,7 +22,7 @@ final class CartService: CartServiceProtocol {
   
   func loadNft(id: String, completion: @escaping NftCompletion) {
     let request = NFTRequest(id: id)
-    networkClient.send(request: request, type: NftModel.self) { result in
+    networkClient.send(request: request, type: NFTModel.self) { result in
       switch result {
       case .success(let nft):
         print("Request secceeded")
@@ -55,12 +55,13 @@ final class CartService: CartServiceProtocol {
   
   func updateOrder(with nfts: [String], completion: @escaping NFTsCompletion) {
     assert(Thread.isMainThread)
-    let request = putOrderRequest(
+    let request = PutOrderRequest(
       httpMethod: .put,
       dto: nfts)
     networkClient.send(request: request, type: OrderModel.self) { result in
       switch result {
       case .success(let model):
+        NFTsStorage.nfts = model.nfts
         completion(.success(model.nfts))
       case .failure(let error):
         completion(.failure(error))

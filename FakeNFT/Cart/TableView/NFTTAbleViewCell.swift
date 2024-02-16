@@ -3,7 +3,7 @@ import UIKit
 import Kingfisher
 
 protocol NFTTableViewCellDelegate: AnyObject {
-  func deleteButtopnPressed()
+  func deleteButtopnPressed(on model: NFTModel)
 }
 
 final class NFTTAbleViewCell: UITableViewCell {
@@ -12,6 +12,7 @@ final class NFTTAbleViewCell: UITableViewCell {
   weak var delegate: NFTTableViewCellDelegate?
   
   // MARK: - Private Properties:
+  private var nftModel: NFTModel?
   private lazy var nftImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .scaleAspectFill
@@ -42,8 +43,7 @@ final class NFTTAbleViewCell: UITableViewCell {
     let stack = UIStackView()
     stack.axis = .horizontal
     stack.spacing = 2
-    stack.alignment = .center
-    
+
     return stack
   }()
   
@@ -88,7 +88,7 @@ final class NFTTAbleViewCell: UITableViewCell {
   }
   
   // MARK: - Methods:
-  func configureCell(for nft: NftModel) {
+  func configureCell(for nft: NFTModel) {
     nftNameLabel.text = nft.name
     nftPriceLabel.text = "\(nft.price) ETH"
     setNFTRating(on: nft.rating)
@@ -98,7 +98,7 @@ final class NFTTAbleViewCell: UITableViewCell {
       with: url,
       placeholder: UIImage(named: "Placeholder"),
       options: [.transition(.fade(1))])
-    
+    nftModel = nft
   }
   
   // MARK: - Private Methods:
@@ -107,7 +107,7 @@ final class NFTTAbleViewCell: UITableViewCell {
       $0.translatesAutoresizingMaskIntoConstraints = false
       contentView.addSubview($0)
     }
-    [nftNameLabel, ratingStackView ,nftPriceLabel, priceLabel].forEach {
+    [nftNameLabel, ratingStackView, nftPriceLabel, priceLabel].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
       nftInfoView.addSubview($0)
     }
@@ -134,7 +134,6 @@ final class NFTTAbleViewCell: UITableViewCell {
       nftNameLabel.bottomAnchor.constraint(equalTo: nftInfoView.bottomAnchor, constant: -70),
       
       ratingStackView.leadingAnchor.constraint(equalTo: nftInfoView.leadingAnchor),
-      ratingStackView.trailingAnchor.constraint(equalTo: nftInfoView.trailingAnchor),
       ratingStackView.topAnchor.constraint(equalTo: nftNameLabel.bottomAnchor, constant: 4),
       ratingStackView.heightAnchor.constraint(equalToConstant: 12),
       
@@ -153,19 +152,19 @@ final class NFTTAbleViewCell: UITableViewCell {
   
   private func configureRatingStackView() {
     let image = UIImage(systemName: "star.fill")
-    let starImageView = UIImageView(image: image)
-    starImageView.tintColor = .YPLightGrey
-    NSLayoutConstraint.activate([
-      starImageView.heightAnchor.constraint(equalToConstant: 12),
-      starImageView.widthAnchor.constraint(equalToConstant: 12)
-    ])
-    for _ in 0...5 {
+    for _ in 0..<5 {
+      let starImageView = UIImageView(image: image)
+      starImageView.tintColor = .YPLightGrey
+      NSLayoutConstraint.activate([
+        starImageView.heightAnchor.constraint(equalToConstant: 12),
+        starImageView.widthAnchor.constraint(equalToConstant: 12)
+      ])
       ratingStackView.addArrangedSubview(starImageView)
     }
   }
   
   private func setNFTRating(on rating: Int) {
-    for value in 0...rating {
+    for value in 0..<rating {
       ratingStackView.arrangedSubviews[value].tintColor = .YPYellow
     }
     
@@ -179,6 +178,7 @@ final class NFTTAbleViewCell: UITableViewCell {
 extension NFTTAbleViewCell {
   @objc
   private func deleteButtonTapped() {
-    delegate?.deleteButtopnPressed()
+    guard let nftModel else { return }
+    delegate?.deleteButtopnPressed(on: nftModel)
   }
 }

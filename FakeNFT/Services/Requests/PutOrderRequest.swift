@@ -1,8 +1,6 @@
 import Foundation
 
-import Foundation
-
-struct putOrderRequest: NetworkRequest {
+struct PutOrderRequest: NetworkRequest {
   var httpMethod: HttpMethod 
   var dto: Encodable?
   var endpoint: URL? {

@@ -1,10 +1,17 @@
 import Foundation
 import UIKit
+import Kingfisher
+
+protocol DeleteNFTViewControllerDelegate: AnyObject {
+  func removeNFT(model: NFTModel)
+}
 
 final class DeleteNftViewController: UIViewController {
   // MARK: - Properties
+  weak var delegate: DeleteNFTViewControllerDelegate?
   
   // MARK: - Private Properties:
+  private var modelTodelete: NFTModel?
   private lazy var deleteView: UIView = {
     let deleteView = UIView()
     deleteView.backgroundColor = .clear
@@ -14,11 +21,10 @@ final class DeleteNftViewController: UIViewController {
   
   private lazy var nftImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = UIImage(named: "ZeusIcon")
     imageView.contentMode = .scaleAspectFill
     imageView.layer.cornerRadius = 12
     imageView.layer.masksToBounds = true
-    
+
     return imageView
   }()
   
@@ -58,6 +64,16 @@ final class DeleteNftViewController: UIViewController {
   }()
   
   // MARK: - Private methods:
+  init(delegate: DeleteNFTViewControllerDelegate, modelTodelete: NFTModel) {
+    self.delegate = delegate
+    self.modelTodelete = modelTodelete
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   private func setupBlurBackground() {
     let blurffect = UIBlurEffect(style: .light)
     let blurView = UIVisualEffectView(effect: blurffect)
@@ -102,6 +118,13 @@ final class DeleteNftViewController: UIViewController {
       returnButton.heightAnchor.constraint(equalToConstant: 44),
       returnButton.widthAnchor.constraint(equalToConstant: 127)
     ])
+    setDeleteImage()
+  }
+  
+  private func setDeleteImage() {
+    if let url = modelTodelete?.images.first {
+      nftImageView.kf.setImage(with: url)
+    }
   }
 }
 

@@ -2,8 +2,8 @@ import Foundation
 
 final class CartViewModel {
   // MARK: - Properties:
-  var onChange: (()-> Void)?
-  var nfts: [NftModel] = [] {
+  var onChange: (() -> Void)?
+  var nfts: [NFTModel] = [] {
     didSet {
       onChange?()
     }
@@ -17,22 +17,22 @@ final class CartViewModel {
     self.model = model
   }
   
-  func loadNft(by id: String) {
-    model.loadNft(id: id) { result in
-      switch result {
-      case .success(let model):
-        self.nfts.append(model)
-      case .failure(_):
-        <#code#>
-      }
-    }
-  }
-  
-  func updateOrder(of nfts: [String]) {
-    model.updateOrder(with: nfts) { result in
-      switch result {
-      case .success(<#T##[String]#>)
-      }
-    }
-  }
+//  func loadNft(by id: String) {
+//    model.loadNft(id: id) { result in
+//      switch result {
+//      case .success(let model):
+//        self.nfts.append(model)
+//      case .failure(_):
+//        <#code#>
+//      }
+//    }
+//  }
+//  
+//  func updateOrder(of nfts: [String]) {
+//    model.updateOrder(with: nfts) { result in
+//      switch result {
+//      case .success(<#T##[String]#>)
+//      }
+//    }
+//  }
 }

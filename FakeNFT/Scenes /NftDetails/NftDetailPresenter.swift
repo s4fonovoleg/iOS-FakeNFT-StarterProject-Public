@@ -9,7 +9,7 @@ protocol NftDetailPresenter {
 // MARK: - State
 
 enum NftDetailState {
-    case initial, loading, failed(Error), data(Nft)
+    case initial, loading, failed(Error), data(NFTModel)
 }
 
 final class NftDetailPresenterImpl: NftDetailPresenter {
@@ -18,7 +18,7 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
 
     weak var view: NftDetailView?
     private let input: NftDetailInput
-    private let service: NftService
+    private let service: CartService
     private var state = NftDetailState.initial {
         didSet {
             stateDidChanged()
@@ -27,7 +27,7 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
 
     // MARK: - Init
 
-    init(input: NftDetailInput, service: NftService) {
+    init(input: NftDetailInput, service: CartService) {
         self.input = input
         self.service = service
     }

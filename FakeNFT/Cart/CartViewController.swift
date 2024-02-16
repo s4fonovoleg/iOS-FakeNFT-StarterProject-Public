@@ -4,7 +4,7 @@ class CartViewController: UIViewController {
   // MARK: - Properties:
   
   // MARK: - Properties properties:
-  private var nfts: [NftModel] = NFTMocks.nfts
+  private var nfts: [NFTModel] = NFTMocks.nfts
   private var nftsCount: Int?
   private var totalCost: Double?
   private var sortingAlertPresenter: SortingAlertPresenterProtocol?
@@ -174,11 +174,18 @@ extension CartViewController: UITableViewDataSource {
 
 // MARK: - nftTableViewCellDelegate:
 extension CartViewController: NFTTableViewCellDelegate {
-  func deleteButtopnPressed() {
-    let viewToPresent = DeleteNftViewController()
+  func deleteButtopnPressed(on model: NFTModel) {
+    let viewToPresent = DeleteNftViewController(delegate: self, modelTodelete: model)
     viewToPresent.modalPresentationStyle = .overFullScreen
     viewToPresent.modalTransitionStyle = .crossDissolve
     viewToPresent.modalPresentationCapturesStatusBarAppearance = true
     self.present(viewToPresent, animated: true)
+  }
+}
+
+// MARK: - DeleteNFTViewControllerDelegate
+extension CartViewController: DeleteNFTViewControllerDelegate {
+  func removeNFT(model: NFTModel) {
+    
   }
 }

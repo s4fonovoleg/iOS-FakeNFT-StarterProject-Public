@@ -5,8 +5,7 @@ import Foundation
   let key: String
   let defaultValue: [String] = []
   
-  
-  init(userDefaults: UserDefaults = .standard ,key: String) {
+  init(userDefaults: UserDefaults = .standard, key: String) {
     self.userDefaults = userDefaults
     self.key = key
   }
