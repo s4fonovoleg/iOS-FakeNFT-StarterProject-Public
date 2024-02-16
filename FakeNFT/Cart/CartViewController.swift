@@ -8,6 +8,7 @@ class CartViewController: UIViewController {
   private var nftsCount: Int?
   private var totalCost: Double?
   private var sortingAlertPresenter: SortingAlertPresenterProtocol?
+  private let viewModel = CartViewModel()
   private lazy var nftTable: UITableView = {
     let table = UITableView()
     table.delegate = self
