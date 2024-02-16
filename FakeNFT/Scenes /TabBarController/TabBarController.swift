@@ -2,7 +2,6 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
-    var servicesAssembly: ServicesAssembly!
 
     private let catalogTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.catalog", comment: ""),
@@ -20,6 +19,6 @@ final class TabBarController: UITabBarController {
 
         viewControllers = [catalogController]
 
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(named: "WhiteColor")
     }
 }

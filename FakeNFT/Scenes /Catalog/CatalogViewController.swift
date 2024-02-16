@@ -18,7 +18,7 @@ class CatalogViewController: UIViewController {
     private lazy var sortButton : UIButton = {
         var button = UIButton()
         button.setImage(UIImage(systemName: "text.justifyleft"), for: .normal)
-        button.tintColor = .black
+        button.tintColor = UIColor(named: "BlackColor")
         button.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -54,12 +54,13 @@ class CatalogViewController: UIViewController {
             self.viewModel.filterNfts(by: .byNftName)
             self.tableView.reloadData()
         }
-        let cancelAction = UIAlertAction(title: "Закрыть",
+        let closeAction = UIAlertAction(title: NSLocalizedString("CloseAction",
+                                                                 comment: ""),
                                          style: .cancel,
                                          handler: nil)
         filter.addAction(filterByNftName)
         filter.addAction(filterByNftCount)
-        filter.addAction(cancelAction)
+        filter.addAction(closeAction)
         present(filter, animated: true)
     }
     
