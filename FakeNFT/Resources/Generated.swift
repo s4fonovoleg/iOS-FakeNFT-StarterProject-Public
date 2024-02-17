@@ -57,6 +57,8 @@ internal enum L10n {
       /// Вы уверены, что хоитите 
       /// удалить объект из корзины?
       internal static let deleteNftLabel = L10n.tr("Localizable", "Label.deleteNftLabel", fallback: "Вы уверены, что хоитите \nудалить объект из корзины?")
+      /// Корзина пуста
+      internal static let emptyCartTitle = L10n.tr("Localizable", "Label.emptyCartTitle", fallback: "Корзина пуста")
       /// Цена
       internal static let priceTitle = L10n.tr("Localizable", "Label.priceTitle", fallback: "Цена")
       /// Сортировка

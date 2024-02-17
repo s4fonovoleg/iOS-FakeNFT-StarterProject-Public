@@ -7,6 +7,8 @@ class CartViewController: UIViewController {
   private var nfts: [NFTModel] = NFTMocks.nfts {
     didSet {
       updatePaymentLabels()
+      showOrHideEmptyCartLabel()
+      updateSortButtonCondition()
     }
   }
   private var nftsCount: Int?
@@ -72,6 +74,17 @@ class CartViewController: UIViewController {
     return label
   }()
   
+  private lazy var emptyCartLabel: UILabel = {
+    let label = UILabel()
+    label.font = .bodyBold
+    label.textColor = .YPBlack
+    label.numberOfLines = 1
+    label.textAlignment = .center
+    label.text = L10n.Localizable.Label.emptyCartTitle
+    
+    return label
+  }()
+  
   // MARK: - Private Methods:
   private func navBarSetup() {
     if (navigationController?.navigationBar) != nil {
@@ -81,7 +94,7 @@ class CartViewController: UIViewController {
   }
   
   private func setupIU() {
-    [nftTable, paymentView].forEach {
+    [emptyCartLabel, nftTable, paymentView].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
       view.addSubview($0)
     }
@@ -114,7 +127,12 @@ class CartViewController: UIViewController {
       totalCostLabel.leadingAnchor.constraint(equalTo: paymentView.leadingAnchor, constant: 16),
       totalCostLabel.widthAnchor.constraint(equalToConstant: 90),
       totalCostLabel.topAnchor.constraint(equalTo: paymentView.topAnchor, constant: 38),
-      totalCostLabel.bottomAnchor.constraint(equalTo: paymentView.bottomAnchor, constant: -16)
+      totalCostLabel.bottomAnchor.constraint(equalTo: paymentView.bottomAnchor, constant: -16),
+      
+      emptyCartLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+      emptyCartLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+      emptyCartLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+      emptyCartLabel.heightAnchor.constraint(equalToConstant: 25)
     ])
   }
   
@@ -170,6 +188,16 @@ class CartViewController: UIViewController {
     totalCostLabel.text = "\(totalCost ?? 0) ETH"
     nftCountLabel.text = "\(nftsCount ?? 0) NFT"
   }
+  
+  private func showOrHideEmptyCartLabel() {
+    emptyCartLabel.isHidden = nfts.isEmpty ? false : true
+  }
+  
+  private func updateSortButtonCondition() {
+    if (navigationController?.navigationBar) != nil {
+      navigationItem.rightBarButtonItem?.isEnabled = nfts.isEmpty ? false : true
+    }
+  }
 }
 
 // MARK: - LifeCycle:
@@ -182,6 +210,8 @@ extension CartViewController {
     setupIU()
     updateNFTTable()
     updatePaymentLabels()
+    showOrHideEmptyCartLabel()
+    updateSortButtonCondition()
   }
 }
 

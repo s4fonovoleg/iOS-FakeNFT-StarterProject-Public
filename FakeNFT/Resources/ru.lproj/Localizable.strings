@@ -18,3 +18,4 @@
 "Label.priceTitle" = "Цена";
 "Label.deleteNftLabel" = "Вы уверены, что хоитите \nудалить объект из корзины?";
 "Label.sortingTitle" = "Сортировка";
+"Label.emptyCartTitle" = "Корзина пуста";
