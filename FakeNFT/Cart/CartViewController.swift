@@ -9,6 +9,11 @@ class CartViewController: UIViewController {
   private var totalCost: Double?
   private var sortingAlertPresenter: SortingAlertPresenterProtocol?
   private let viewModel = CartViewModel()
+  private var sortType = SortTypeStorage.sortType {
+    didSet {
+      updateNFTTableAnimatedly()
+    }
+  }
   private lazy var nftTable: UITableView = {
     let table = UITableView()
     table.delegate = self
@@ -110,6 +115,47 @@ class CartViewController: UIViewController {
       totalCostLabel.bottomAnchor.constraint(equalTo: paymentView.bottomAnchor, constant: -16)
     ])
   }
+  
+  private func updateNFTTableAnimatedly() {
+    let unsortedArray = nfts
+    switch sortType {
+    case .byPrice:
+      nfts.sort { $0.price > $1.price }
+    case .byRating:
+      nfts.sort { $0.rating > $1.rating }
+    case .byName:
+      nfts.sort { $0.name < $1.name }
+    }
+    
+    var indexMapping = [Int: Int]()
+    for (index, nft) in nfts.enumerated() {
+      if let oldIndex = unsortedArray.firstIndex(where: { $0.id == nft.id }) {
+        indexMapping[index] = oldIndex
+      }
+    }
+    
+    nftTable.performBatchUpdates({
+      for (newIndex, oldIndex) in indexMapping {
+        let oldIndexPath = IndexPath(row: oldIndex, section: 0)
+        let newIndexPath = IndexPath(row: newIndex, section: 0)
+        if oldIndexPath != newIndexPath {
+          nftTable.moveRow(at: oldIndexPath, to: newIndexPath)
+        }
+      }
+    }, completion: nil)
+  }
+  
+  private func updateNFTTable() {
+    switch sortType {
+    case .byPrice:
+      nfts.sort { $0.price > $1.price }
+    case .byRating:
+      nfts.sort { $0.rating > $1.rating }
+    case .byName:
+      nfts.sort { $0.name < $1.name }
+    }
+    nftTable.reloadData()
+  }
 }
 
 // MARK: - LifeCycle:
@@ -120,6 +166,7 @@ extension CartViewController {
     sortingAlertPresenter = SortingAlertPresenter(delegate: self)
     navBarSetup()
     setupIU()
+    updateNFTTable()
   }
 }
 
@@ -131,18 +178,21 @@ extension CartViewController {
       model: SortingAlertModel(
         title: L10n.Localizable.Label.sortingTitle,
         message: nil,
-        firstButtonText: L10n.Localizable.Button.sortByPriceTitle,
-        secondButtonText: L10n.Localizable.Button.sortByRatingTitle,
-        thirdButtonText: L10n.Localizable.Button.sortByNameTitle,
+        firstButtonText: SortType.byPrice.name,
+        secondButtonText: SortType.byRating.name,
+        thirdButtonText: SortType.byName.name,
         fourthButtonText: L10n.Localizable.Button.closeButtonTitle,
         firstCompletion: {
-          //
+          self.sortType = .byPrice
+          SortTypeStorage.sortType = .byPrice
         },
         secondCompletion: {
-          //
+          self.sortType = .byRating
+          SortTypeStorage.sortType = .byRating
         },
         thirdCompletion: {
-          //
+          self.sortType = .byName
+          SortTypeStorage.sortType = .byName
         }))
   }
 }
