@@ -6,9 +6,7 @@ class CartViewController: UIViewController {
   // MARK: - Properties properties:
   private var nfts: [NFTModel] = NFTMocks.nfts {
     didSet {
-      updatePaymentLabels()
-      showOrHideEmptyCartLabel()
-      updateSortButtonCondition()
+      updateUIElements()
     }
   }
   private var nftsCount: Int?
@@ -198,6 +196,19 @@ class CartViewController: UIViewController {
       navigationItem.rightBarButtonItem?.isEnabled = nfts.isEmpty ? false : true
     }
   }
+  
+  private func showOrHidePaymentInfo() {
+    UIView.animate(withDuration: 0.25) {
+      self.paymentView.alpha = self.nfts.isEmpty ? 0 : 1
+    }
+  }
+  
+  private func updateUIElements() {
+    updatePaymentLabels()
+    showOrHideEmptyCartLabel()
+    updateSortButtonCondition()
+    showOrHidePaymentInfo()
+  }
 }
 
 // MARK: - LifeCycle:
@@ -209,9 +220,7 @@ extension CartViewController {
     navBarSetup()
     setupIU()
     updateNFTTable()
-    updatePaymentLabels()
-    showOrHideEmptyCartLabel()
-    updateSortButtonCondition()
+    updateUIElements()
   }
 }
 
