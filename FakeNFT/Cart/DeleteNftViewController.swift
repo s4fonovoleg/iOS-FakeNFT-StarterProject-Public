@@ -148,6 +148,7 @@ extension DeleteNftViewController {
   }
   
   @objc private func deleteButtonTapped() {
-    
+    guard let modelTodelete else { return }
+    delegate?.removeNFT(model: modelTodelete)
   }
 }

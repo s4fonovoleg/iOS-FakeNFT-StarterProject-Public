@@ -4,9 +4,13 @@ class CartViewController: UIViewController {
   // MARK: - Properties:
   
   // MARK: - Properties properties:
-  private var nfts: [NFTModel] = NFTMocks.nfts
+  private var nfts: [NFTModel] = NFTMocks.nfts {
+    didSet {
+      updatePaymentLabels()
+    }
+  }
   private var nftsCount: Int?
-  private var totalCost: Double?
+  private var totalCost: Float?
   private var sortingAlertPresenter: SortingAlertPresenterProtocol?
   private let viewModel = CartViewModel()
   private var sortType = SortTypeStorage.sortType {
@@ -54,7 +58,6 @@ class CartViewController: UIViewController {
     label.textColor = .YPBlack
     label.textAlignment = .left
     label.numberOfLines = 1
-    label.text = "\(nftsCount ?? 0) NFT"
     
     return label
   }()
@@ -65,7 +68,6 @@ class CartViewController: UIViewController {
     label.textColor = .YPGreen
     label.textAlignment = .left
     label.numberOfLines = 1
-    label.text = "\(totalCost ?? 0) ETH"
     
     return label
   }()
@@ -110,7 +112,7 @@ class CartViewController: UIViewController {
       nftCountLabel.topAnchor.constraint(equalTo: paymentView.topAnchor, constant: 16),
       
       totalCostLabel.leadingAnchor.constraint(equalTo: paymentView.leadingAnchor, constant: 16),
-      totalCostLabel.trailingAnchor.constraint(equalTo: payButton.leadingAnchor, constant: -24),
+      totalCostLabel.widthAnchor.constraint(equalToConstant: 90),
       totalCostLabel.topAnchor.constraint(equalTo: paymentView.topAnchor, constant: 38),
       totalCostLabel.bottomAnchor.constraint(equalTo: paymentView.bottomAnchor, constant: -16)
     ])
@@ -156,6 +158,18 @@ class CartViewController: UIViewController {
     }
     nftTable.reloadData()
   }
+  
+  private func updatePaymentLabels() {
+    let animation = CATransition()
+    animation.duration = 0.5
+    animation.type = .moveIn
+    totalCostLabel.layer.add(animation, forKey: "Cost")
+    nftCountLabel.layer.add(animation, forKey: "Count")
+    totalCost = nfts.compactMap { $0.price }.reduce(0, +)
+    nftsCount = nfts.count
+    totalCostLabel.text = "\(totalCost ?? 0) ETH"
+    nftCountLabel.text = "\(nftsCount ?? 0) NFT"
+  }
 }
 
 // MARK: - LifeCycle:
@@ -167,6 +181,7 @@ extension CartViewController {
     navBarSetup()
     setupIU()
     updateNFTTable()
+    updatePaymentLabels()
   }
 }
 
@@ -236,6 +251,13 @@ extension CartViewController: NFTTableViewCellDelegate {
 // MARK: - DeleteNFTViewControllerDelegate
 extension CartViewController: DeleteNFTViewControllerDelegate {
   func removeNFT(model: NFTModel) {
-    
+    if let index = nfts.firstIndex(where: { $0.id == model.id }) {
+      let indexPath = IndexPath(row: index, section: 0)
+      nfts.remove(at: index)
+      nftTable.performBatchUpdates {
+        nftTable.deleteRows(at: [indexPath], with: .automatic)
+      }
+      self.dismiss(animated: true)
+    }
   }
 }
