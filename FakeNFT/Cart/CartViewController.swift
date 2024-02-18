@@ -9,6 +9,13 @@ class CartViewController: UIViewController {
   private var sortingAlertPresenter: SortingAlertPresenterProtocol?
   private let viewModel = CartViewModel()
   
+  private lazy var refreshControl: UIRefreshControl = {
+    let control = UIRefreshControl()
+    control.addTarget(self, action: #selector(refresh), for: .valueChanged)
+    
+    return control
+  }()
+  
   private lazy var nftTable: UITableView = {
     let table = UITableView()
     table.delegate = self
@@ -92,6 +99,8 @@ class CartViewController: UIViewController {
       $0.translatesAutoresizingMaskIntoConstraints = false
       paymentView.addSubview($0)
     }
+    refreshControl.translatesAutoresizingMaskIntoConstraints = false
+    nftTable.addSubview(refreshControl)
     
     NSLayoutConstraint.activate([
       nftTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -127,6 +136,7 @@ class CartViewController: UIViewController {
   }
   
   private func updateNFTTableAnimatedly() {
+    UIBlockingProgressHUD.show()
     let unsortedArray = viewModel.nfts
     switch viewModel.sortType {
     case .byPrice:
@@ -152,7 +162,9 @@ class CartViewController: UIViewController {
           nftTable.moveRow(at: oldIndexPath, to: newIndexPath)
         }
       }
-    }, completion: nil)
+    }, completion: { _ in
+      UIBlockingProgressHUD.hide()
+    })
   }
   
   private func updateNFTTable() {
@@ -253,6 +265,13 @@ extension CartViewController {
           SortTypeStorage.sortType = .byName
         }))
   }
+  
+  @objc private func refresh() {
+    DispatchQueue.main.async {
+      self.viewModel.loadNFTModels()
+      self.refreshControl.endRefreshing()
+    }
+  }
 }
 
 // MARK: - UITableViewDelegate:
@@ -304,7 +323,5 @@ extension CartViewController: DeleteNFTViewControllerDelegate {
     }
     let updatedNFTArray = viewModel.nfts.map { $0.id }
     viewModel.updateOrder(with: updatedNFTArray)
-    self.dismiss(animated: true)
-    UIBlockingProgressHUD.hide()
   }
 }

@@ -31,6 +31,7 @@ final class CartViewModel {
       case .failure:
         print("Не удалось обновить заказ")
       }
+      UIBlockingProgressHUD.hide()
     }
     loadNFTModels()
   }

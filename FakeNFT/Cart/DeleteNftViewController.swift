@@ -93,7 +93,7 @@ final class DeleteNftViewController: UIViewController {
     }
     
     NSLayoutConstraint.activate([
-      deleteView.topAnchor.constraint(equalTo: view.topAnchor, constant: 224),
+      deleteView.topAnchor.constraint(equalTo: view.topAnchor, constant: 244),
       deleteView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       deleteView.widthAnchor.constraint(equalToConstant: 262),
       deleteView.heightAnchor.constraint(equalToConstant: 220),
@@ -150,5 +150,6 @@ extension DeleteNftViewController {
   @objc private func deleteButtonTapped() {
     guard let modelTodelete else { return }
     delegate?.removeNFT(model: modelTodelete)
+    self.dismiss(animated: true)
   }
 }

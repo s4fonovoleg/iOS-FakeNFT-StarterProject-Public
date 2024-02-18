@@ -395,6 +395,14 @@
 			path = PropertyWrappres;
 			sourceTree = "<group>";
 		};
+		4A7CA6792B82714C008B50F7 /* UIBlockingProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				4A7CA6772B82539F008B50F7 /* UIBlockingProgressHUD.swift */,
+			);
+			path = UIBlockingProgressHUD;
+			sourceTree = "<group>";
+		};
 		4AA412162B7E5B260088E115 /* AlerPresenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,6 +435,7 @@
 		4AB30ABF2B7A4CC100F86D9B /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				4A7CA6792B82714C008B50F7 /* UIBlockingProgressHUD */,
 				4A7CA6722B80C7A9008B50F7 /* PropertyWrappres */,
 				4A1BF8F42B7FA73700040027 /* ViewModels */,
 				4A1BF8F32B7F981E00040027 /* Serivice */,
@@ -436,7 +445,6 @@
 				4AB30AC02B7A4CD600F86D9B /* TableView */,
 				4AE68FB72B790E1E00D00EB7 /* CartViewController.swift */,
 				4A584C412B7BB0370053865E /* DeleteNftViewController.swift */,
-				4A7CA6772B82539F008B50F7 /* UIBlockingProgressHUD.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
