@@ -227,11 +227,12 @@
 				3F478ECD29DB473000F6D39E /* DesignSystem */,
 				3F6806CE29CBBD1B00B4F915 /* Foundation */,
 				3F6806C929CBBCAF00B4F915 /* Models */,
-				FBD94D5E2B7E2CDF00812CD0 /* Profile */,
 				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
 				3F6806C729CBBC5B00B4F915 /* Scenes  */,
 				3F6806C629CBBC4E00B4F915 /* Services */,
 				3F6806A429CBBAF200B4F915 /* Info.plist */,
+				FBA6CAE32B8234F800F54D73 /* ViewModels */,
+				FBA6CAE22B8234ED00F54D73 /* Views */,
 			);
 			path = FakeNFT;
 			sourceTree = "<group>";
@@ -359,11 +360,18 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		FBD94D5E2B7E2CDF00812CD0 /* Profile */ = {
+		FBA6CAE22B8234ED00F54D73 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Profile;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FBA6CAE32B8234F800F54D73 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
