@@ -4,20 +4,11 @@ class CartViewController: UIViewController {
   // MARK: - Properties:
   
   // MARK: - Properties properties:
-  private var nfts: [NFTModel] = NFTMocks.nfts {
-    didSet {
-      updateUIElements()
-    }
-  }
   private var nftsCount: Int?
   private var totalCost: Float?
   private var sortingAlertPresenter: SortingAlertPresenterProtocol?
   private let viewModel = CartViewModel()
-  private var sortType = SortTypeStorage.sortType {
-    didSet {
-      updateNFTTableAnimatedly()
-    }
-  }
+  
   private lazy var nftTable: UITableView = {
     let table = UITableView()
     table.delegate = self
@@ -36,6 +27,7 @@ class CartViewController: UIViewController {
     paymentView.layer.cornerRadius = 16
     paymentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     paymentView.layer.masksToBounds = true
+    paymentView.alpha = 0
     
     return paymentView
   }()
@@ -135,18 +127,18 @@ class CartViewController: UIViewController {
   }
   
   private func updateNFTTableAnimatedly() {
-    let unsortedArray = nfts
-    switch sortType {
+    let unsortedArray = viewModel.nfts
+    switch viewModel.sortType {
     case .byPrice:
-      nfts.sort { $0.price > $1.price }
+      viewModel.nfts.sort { $0.price > $1.price }
     case .byRating:
-      nfts.sort { $0.rating > $1.rating }
+      viewModel.nfts.sort { $0.rating > $1.rating }
     case .byName:
-      nfts.sort { $0.name < $1.name }
+      viewModel.nfts.sort { $0.name < $1.name }
     }
     
     var indexMapping = [Int: Int]()
-    for (index, nft) in nfts.enumerated() {
+    for (index, nft) in viewModel.nfts.enumerated() {
       if let oldIndex = unsortedArray.firstIndex(where: { $0.id == nft.id }) {
         indexMapping[index] = oldIndex
       }
@@ -164,13 +156,13 @@ class CartViewController: UIViewController {
   }
   
   private func updateNFTTable() {
-    switch sortType {
+    switch viewModel.sortType {
     case .byPrice:
-      nfts.sort { $0.price > $1.price }
+      viewModel.nfts.sort { $0.price > $1.price }
     case .byRating:
-      nfts.sort { $0.rating > $1.rating }
+      viewModel.nfts.sort { $0.rating > $1.rating }
     case .byName:
-      nfts.sort { $0.name < $1.name }
+      viewModel.nfts.sort { $0.name < $1.name }
     }
     nftTable.reloadData()
   }
@@ -181,25 +173,25 @@ class CartViewController: UIViewController {
     animation.type = .moveIn
     totalCostLabel.layer.add(animation, forKey: "Cost")
     nftCountLabel.layer.add(animation, forKey: "Count")
-    totalCost = nfts.compactMap { $0.price }.reduce(0, +)
-    nftsCount = nfts.count
+    totalCost = viewModel.nfts.compactMap { $0.price }.reduce(0, +)
+    nftsCount = viewModel.nfts.count
     totalCostLabel.text = "\(totalCost ?? 0) ETH"
     nftCountLabel.text = "\(nftsCount ?? 0) NFT"
   }
   
   private func showOrHideEmptyCartLabel() {
-    emptyCartLabel.isHidden = nfts.isEmpty ? false : true
+    emptyCartLabel.isHidden = viewModel.nfts.isEmpty ? false : true
   }
   
   private func updateSortButtonCondition() {
     if (navigationController?.navigationBar) != nil {
-      navigationItem.rightBarButtonItem?.isEnabled = nfts.isEmpty ? false : true
+      navigationItem.rightBarButtonItem?.isEnabled = viewModel.nfts.isEmpty ? false : true
     }
   }
   
   private func showOrHidePaymentInfo() {
     UIView.animate(withDuration: 0.25) {
-      self.paymentView.alpha = self.nfts.isEmpty ? 0 : 1
+      self.paymentView.alpha = self.viewModel.nfts.isEmpty ? 0 : 1
     }
   }
   
@@ -220,14 +212,26 @@ extension CartViewController {
     navBarSetup()
     setupIU()
     updateNFTTable()
+    viewModel.onChange = { [weak self] in
+      guard let self else { return }
+      updateUIElements()
+    }
+    viewModel.onChangeSort = { [weak self] in
+      guard let self else { return }
+      self.updateNFTTableAnimatedly()
+    }
     updateUIElements()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    viewModel.loadNFTModels()
   }
 }
 
 // MARK: - Objc-Methods:
 extension CartViewController {
-  @objc
-  private func sortButtonTapped() {
+  @objc private func sortButtonTapped() {
     sortingAlertPresenter?.showAlert(
       model: SortingAlertModel(
         title: L10n.Localizable.Label.sortingTitle,
@@ -237,15 +241,15 @@ extension CartViewController {
         thirdButtonText: SortType.byName.name,
         fourthButtonText: L10n.Localizable.Button.closeButtonTitle,
         firstCompletion: {
-          self.sortType = .byPrice
+          self.viewModel.sortType = .byPrice
           SortTypeStorage.sortType = .byPrice
         },
         secondCompletion: {
-          self.sortType = .byRating
+          self.viewModel.sortType = .byRating
           SortTypeStorage.sortType = .byRating
         },
         thirdCompletion: {
-          self.sortType = .byName
+          self.viewModel.sortType = .byName
           SortTypeStorage.sortType = .byName
         }))
   }
@@ -261,11 +265,11 @@ extension CartViewController: UITableViewDelegate {
 // MARK: - UITableViewDataSource:
 extension CartViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    nfts.count
+    viewModel.nfts.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let nft = nfts[indexPath.row]
+    let nft = viewModel.nfts[indexPath.row]
     guard let cell = tableView.dequeueReusableCell(withIdentifier: NFTTAbleViewCell.reuseID, for: indexPath) as? NFTTAbleViewCell else {
       return UITableViewCell()
     }
@@ -290,13 +294,17 @@ extension CartViewController: NFTTableViewCellDelegate {
 // MARK: - DeleteNFTViewControllerDelegate
 extension CartViewController: DeleteNFTViewControllerDelegate {
   func removeNFT(model: NFTModel) {
-    if let index = nfts.firstIndex(where: { $0.id == model.id }) {
+    UIBlockingProgressHUD.show()
+    if let index = viewModel.nfts.firstIndex(where: { $0.id == model.id }) {
       let indexPath = IndexPath(row: index, section: 0)
-      nfts.remove(at: index)
+      viewModel.nfts.remove(at: index)
       nftTable.performBatchUpdates {
         nftTable.deleteRows(at: [indexPath], with: .automatic)
       }
-      self.dismiss(animated: true)
     }
+    let updatedNFTArray = viewModel.nfts.map { $0.id }
+    viewModel.updateOrder(with: updatedNFTArray)
+    self.dismiss(animated: true)
+    UIBlockingProgressHUD.hide()
   }
 }

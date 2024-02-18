@@ -44,6 +44,7 @@
 		4A584C422B7BB0370053865E /* DeleteNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A584C412B7BB0370053865E /* DeleteNftViewController.swift */; };
 		4A7CA6742B80C920008B50F7 /* SortModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7CA6732B80C920008B50F7 /* SortModel.swift */; };
 		4A7CA6762B80D249008B50F7 /* SortTypeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7CA6752B80D249008B50F7 /* SortTypeStorage.swift */; };
+		4A7CA6782B82539F008B50F7 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7CA6772B82539F008B50F7 /* UIBlockingProgressHUD.swift */; };
 		4AA412182B7E5B3C0088E115 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA412172B7E5B3C0088E115 /* AlertPresenter.swift */; };
 		4AA4121A2B7E5BCF0088E115 /* SortingAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA412192B7E5BCF0088E115 /* SortingAlertModel.swift */; };
 		4AA4121E2B7E75900088E115 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA4121D2B7E75900088E115 /* UserDefaults.swift */; };
@@ -127,6 +128,7 @@
 		4A584C412B7BB0370053865E /* DeleteNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNftViewController.swift; sourceTree = "<group>"; };
 		4A7CA6732B80C920008B50F7 /* SortModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortModel.swift; sourceTree = "<group>"; };
 		4A7CA6752B80D249008B50F7 /* SortTypeStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTypeStorage.swift; sourceTree = "<group>"; };
+		4A7CA6772B82539F008B50F7 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		4AA412172B7E5B3C0088E115 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		4AA412192B7E5BCF0088E115 /* SortingAlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingAlertModel.swift; sourceTree = "<group>"; };
 		4AA4121D2B7E75900088E115 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 				4AB30AC02B7A4CD600F86D9B /* TableView */,
 				4AE68FB72B790E1E00D00EB7 /* CartViewController.swift */,
 				4A584C412B7BB0370053865E /* DeleteNftViewController.swift */,
+				4A7CA6772B82539F008B50F7 /* UIBlockingProgressHUD.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -795,6 +798,7 @@
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
 				4AA412242B7E83110088E115 /* PutOrderRequest.swift in Sources */,
+				4A7CA6782B82539F008B50F7 /* UIBlockingProgressHUD.swift in Sources */,
 				4AA4121A2B7E5BCF0088E115 /* SortingAlertModel.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,

@@ -24,7 +24,7 @@ final class DeleteNftViewController: UIViewController {
     imageView.contentMode = .scaleAspectFill
     imageView.layer.cornerRadius = 12
     imageView.layer.masksToBounds = true
-
+    
     return imageView
   }()
   
