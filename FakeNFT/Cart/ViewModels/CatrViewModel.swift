@@ -17,7 +17,6 @@ final class CartViewModel {
   
   // MARK: - Private properties:
   private let service: CartServiceProtocol
-  private var storage = NFTsStorage.nfts
   
   // MARK: - Methods:
   init(service: CartServiceProtocol = CartService()) {
@@ -25,7 +24,6 @@ final class CartViewModel {
   }
   
   func updateOrder(with newNFTs: [String]) {
-    NFTsStorage.nfts = newNFTs
     service.updateOrder(with: newNFTs) { result in
       switch result {
       case .success:
@@ -39,20 +37,6 @@ final class CartViewModel {
   
   func loadNFTModels() {
     UIBlockingProgressHUD.show()
-    if !storage.isEmpty {
-      storage.forEach { id in
-        service.loadNft(by: id) { result in
-          switch result {
-          case .success(let model):
-            self.nfts.append(model)
-          case .failure(let error):
-            print(error.localizedDescription)
-          }
-        }
-      }
-      return
-    }
-    
     service.loadOrder { result in
       switch result {
       case .success(let order):

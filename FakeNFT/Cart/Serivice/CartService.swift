@@ -36,7 +36,6 @@ final class CartService: CartServiceProtocol {
     networkClient.send(request: request, type: OrderModel.self) { result in
       switch result {
       case .success(let data):
-        NFTsStorage.nfts = data.nfts
         completion(.success(data.nfts))
       case .failure(let error):
         print(error)
@@ -52,7 +51,6 @@ final class CartService: CartServiceProtocol {
     networkClient.send(request: request, type: OrderModel.self) { result in
       switch result {
       case .success(let model):
-        NFTsStorage.nfts = model.nfts
         completion(.success(model.nfts))
       case .failure(let error):
         completion(.failure(error))
