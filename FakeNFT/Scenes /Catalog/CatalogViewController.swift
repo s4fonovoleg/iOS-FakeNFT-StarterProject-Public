@@ -25,7 +25,7 @@ class CatalogViewController: UIViewController {
         ProgressHUD.show()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(CatalogCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(CatalogCell.self, forCellReuseIdentifier: CatalogCell.cellId)
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
         setupScreen()
@@ -87,7 +87,8 @@ extension CatalogViewController: UITableViewDataSource {
         return viewModel.nfts.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CatalogCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CatalogCell.cellId,
+                                                 for: indexPath) as? CatalogCell
         cell?.config(nft: viewModel.nfts[indexPath.row])
         cell?.separatorInset = .init(top: 0, left: tableView.frame.width / 2,
                                      bottom: 0, right: tableView.frame.width / 2)

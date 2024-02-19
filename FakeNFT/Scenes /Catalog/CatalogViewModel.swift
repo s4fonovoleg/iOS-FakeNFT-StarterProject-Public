@@ -5,7 +5,7 @@
 //  Created by Георгий Ксенодохов on 15.02.2024.
 //
 
-import UIKit
+import Foundation
 
 class CatalogViewModel {
     var change: (() -> Void)?

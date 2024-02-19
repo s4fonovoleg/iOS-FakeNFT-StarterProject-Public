@@ -10,6 +10,7 @@ import SnapKit
 import Kingfisher
 
 final class CatalogCell: UITableViewCell {
+    static let cellId = "CatalogCell"
     private let nftImageView: UIImageView = {
         var image = UIImageView()
         image.clipsToBounds = true
