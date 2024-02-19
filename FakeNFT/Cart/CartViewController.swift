@@ -201,18 +201,10 @@ extension CartViewController {
     
     navBarSetup()
     setupIU()
-    nftTable.reloadData()
     viewModel.onChange = { [weak self] in
       guard let self else { return }
       updateUIElements()
     }
-    viewModel.onChangeRemove = { [weak self] index in
-      guard let self else { return }
-      self.nftTable.performBatchUpdates {
-        self.nftTable.deleteRows(at: [index], with: .automatic)
-      }
-    }
-    updateUIElements()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -298,5 +290,5 @@ extension CartViewController: DeleteNFTViewControllerDelegate {
   func removeNFT(model: NFTModel) {
     UIBlockingProgressHUD.show()
     viewModel.removeModel(model)
-    }
   }
+}

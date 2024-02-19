@@ -4,7 +4,6 @@ protocol CartViewModelProtocol: AnyObject {
   var nfts: [NFTModel] { get }
   var sortType: SortType { get set }
   var onChange: (() -> Void)? { get set }
-  var onChangeRemove: ((IndexPath) -> Void)? { get set }
   func updateOrder()
   func loadNFTModels()
   func removeModel(_ model: NFTModel)
@@ -14,8 +13,7 @@ protocol CartViewModelProtocol: AnyObject {
 final class CartViewModel: CartViewModelProtocol {
   // MARK: - Properties:
   var onChange: (() -> Void)?
-  var onChangeRemove: ((IndexPath) -> Void)?
-  var sortType = SortTypeStorage.sortType 
+  var sortType = SortTypeStorage.sortType
   var nfts: [NFTModel] = [] {
     didSet {
       onChange?()
@@ -41,7 +39,6 @@ final class CartViewModel: CartViewModelProtocol {
       }
       UIBlockingProgressHUD.hide()
     }
-    //    loadNFTModels()
   }
   
   func loadNFTModels() {
@@ -101,9 +98,8 @@ final class CartViewModel: CartViewModelProtocol {
   
   func removeModel(_ model: NFTModel) {
     if let index = nfts.firstIndex(where: { $0.id == model.id }) {
-      let indexPath = IndexPath(row: index, section: 0)
       nfts.remove(at: index)
-      onChangeRemove?(indexPath)
+      updateOrder()
     }
   }
 }
