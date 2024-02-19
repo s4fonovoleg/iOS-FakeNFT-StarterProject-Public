@@ -3,10 +3,6 @@ import UIKit
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
-  let servicesAssembly = ServicesAssembly(
-    networkClient: DefaultNetworkClient(),
-    nftStorage: NftStorageImpl()
-  )
   let tabBarController = TabBarController()
   
   func application(
@@ -14,7 +10,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     tabBarController.tabBar.configureTabBarAppearance()
-    tabBarController.servicesAssembly = servicesAssembly
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = tabBarController
     window?.makeKeyAndVisible()

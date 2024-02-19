@@ -2,18 +2,12 @@ import Foundation
 import UIKit
 
 protocol SortingAlertPresenterProtocol: AnyObject {
-  func showAlert(model: SortingAlertModel)
+  static func showAlert(model: SortingAlertModel, controller: UIViewController)
 }
 
 final class SortingAlertPresenter: SortingAlertPresenterProtocol {
-  // MARK: - Properties:
-  weak var delegate: UIViewController?
-  
   // MARK: - Methods:
-  init(delegate: UIViewController) {
-    self.delegate = delegate
-  }
-  func showAlert(model: SortingAlertModel) {
+  static func showAlert(model: SortingAlertModel, controller: UIViewController) {
     let alert = UIAlertController(
       title: model.title,
       message: model.message,
@@ -46,6 +40,6 @@ final class SortingAlertPresenter: SortingAlertPresenterProtocol {
     alert.addAction(sortByRatingAction)
     alert.addAction(sortByNameAction)
     
-    delegate?.present(alert, animated: true)
+    controller.present(alert, animated: true)
   }
 }

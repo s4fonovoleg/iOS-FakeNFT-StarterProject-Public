@@ -129,7 +129,7 @@ final class NFTTAbleViewCell: UITableViewCell {
       deleteButton.heightAnchor.constraint(equalToConstant: 40),
       
       nftNameLabel.leadingAnchor.constraint(equalTo: nftInfoView.leadingAnchor),
-      nftNameLabel.trailingAnchor.constraint(equalTo: nftInfoView.trailingAnchor),
+      nftNameLabel.widthAnchor.constraint(equalToConstant: 150),
       nftNameLabel.topAnchor.constraint(equalTo: nftInfoView.topAnchor),
       nftNameLabel.bottomAnchor.constraint(equalTo: nftInfoView.bottomAnchor, constant: -70),
       
@@ -164,11 +164,13 @@ final class NFTTAbleViewCell: UITableViewCell {
   }
   
   private func setNFTRating(on rating: Int) {
-    for value in 0..<rating {
+    let value = rating
+    let defaultValue = value <= 5 ? value: 5
+    for value in 0..<defaultValue {
       ratingStackView.arrangedSubviews[value].tintColor = .YPYellow
     }
     
-    for value in rating..<5 {
+    for value in defaultValue..<5 {
       ratingStackView.arrangedSubviews[value].tintColor = .YPLightGrey
     }
   }

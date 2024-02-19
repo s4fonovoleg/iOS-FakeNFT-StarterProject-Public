@@ -1,13 +1,10 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-  // MARK: - Properties:
-  var servicesAssembly: ServicesAssembly!
-  
   // MARK: - Private Properties:
   private let profileNavigationViewController = UINavigationController(rootViewController: UIViewController())
   private let catalogNavigationViewController = UINavigationController(rootViewController: UIViewController())
-  private let cartNavigationViewController = UINavigationController(rootViewController: CartViewController())
+  private let cartNavigationViewController = UINavigationController(rootViewController: CartViewController(viewModel: CartViewModel()))
   private let statisticsNavigationViewController = UINavigationController(rootViewController: UIViewController())
   private let profileTabBarItem = UITabBarItem(title: L10n.Localizable.Button.profileTitle, image: UIImage(named: "profileIcon"), tag: 0)
   private let catalogTabBarItem = UITabBarItem(title: L10n.Localizable.Button.catalogTitle, image: UIImage(named: "catalogIcon"), tag: 1)

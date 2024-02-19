@@ -38,7 +38,6 @@ final class CartService: CartServiceProtocol {
       case .success(let data):
         completion(.success(data.nfts))
       case .failure(let error):
-        print(error)
         completion(.failure(error))
       }
     }

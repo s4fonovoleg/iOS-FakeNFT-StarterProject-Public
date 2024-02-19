@@ -6,8 +6,7 @@ class CartViewController: UIViewController {
   // MARK: - Properties properties:
   private var nftsCount: Int?
   private var totalCost: Float?
-  private var sortingAlertPresenter: SortingAlertPresenterProtocol?
-  private let viewModel = CartViewModel()
+  private var viewModel: CartViewModelProtocol
   
   private lazy var refreshControl: UIRefreshControl = {
     let control = UIRefreshControl()
@@ -83,6 +82,14 @@ class CartViewController: UIViewController {
   }()
   
   // MARK: - Private Methods:
+  init(viewModel: CartViewModelProtocol) {
+    self.viewModel = viewModel
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   private func navBarSetup() {
     if (navigationController?.navigationBar) != nil {
       let rightButton = UIBarButtonItem(image: UIImage(named: "sortIcon"), style: .plain, target: self, action: #selector(sortButtonTapped))
@@ -135,27 +142,10 @@ class CartViewController: UIViewController {
     ])
   }
   
-  private func updateNFTTableAnimatedly() {
+  private func updateNFTTableAnimatedly(with indexes: [Int: Int]) {
     UIBlockingProgressHUD.show()
-    let unsortedArray = viewModel.nfts
-    switch viewModel.sortType {
-    case .byPrice:
-      viewModel.nfts.sort { $0.price > $1.price }
-    case .byRating:
-      viewModel.nfts.sort { $0.rating > $1.rating }
-    case .byName:
-      viewModel.nfts.sort { $0.name < $1.name }
-    }
-    
-    var indexMapping = [Int: Int]()
-    for (index, nft) in viewModel.nfts.enumerated() {
-      if let oldIndex = unsortedArray.firstIndex(where: { $0.id == nft.id }) {
-        indexMapping[index] = oldIndex
-      }
-    }
-    
     nftTable.performBatchUpdates({
-      for (newIndex, oldIndex) in indexMapping {
+      for (newIndex, oldIndex) in indexes {
         let oldIndexPath = IndexPath(row: oldIndex, section: 0)
         let newIndexPath = IndexPath(row: newIndex, section: 0)
         if oldIndexPath != newIndexPath {
@@ -165,18 +155,6 @@ class CartViewController: UIViewController {
     }, completion: { _ in
       UIBlockingProgressHUD.hide()
     })
-  }
-  
-  private func updateNFTTable() {
-    switch viewModel.sortType {
-    case .byPrice:
-      viewModel.nfts.sort { $0.price > $1.price }
-    case .byRating:
-      viewModel.nfts.sort { $0.rating > $1.rating }
-    case .byName:
-      viewModel.nfts.sort { $0.name < $1.name }
-    }
-    nftTable.reloadData()
   }
   
   private func updatePaymentLabels() {
@@ -208,6 +186,7 @@ class CartViewController: UIViewController {
   }
   
   private func updateUIElements() {
+    nftTable.reloadData()
     updatePaymentLabels()
     showOrHideEmptyCartLabel()
     updateSortButtonCondition()
@@ -220,17 +199,22 @@ extension CartViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    sortingAlertPresenter = SortingAlertPresenter(delegate: self)
     navBarSetup()
     setupIU()
-    updateNFTTable()
+    nftTable.reloadData()
     viewModel.onChange = { [weak self] in
       guard let self else { return }
       updateUIElements()
     }
-    viewModel.onChangeSort = { [weak self] in
+    viewModel.onChangeSort = { [weak self] indexMapping in
       guard let self else { return }
-      self.updateNFTTableAnimatedly()
+      self.updateNFTTableAnimatedly(with: indexMapping)
+    }
+    viewModel.onChangeRemove = { [weak self] index in
+      guard let self else { return }
+      self.nftTable.performBatchUpdates {
+        self.nftTable.deleteRows(at: [index], with: .automatic)
+      }
     }
     updateUIElements()
   }
@@ -244,7 +228,7 @@ extension CartViewController {
 // MARK: - Objc-Methods:
 extension CartViewController {
   @objc private func sortButtonTapped() {
-    sortingAlertPresenter?.showAlert(
+    SortingAlertPresenter.showAlert(
       model: SortingAlertModel(
         title: L10n.Localizable.Label.sortingTitle,
         message: nil,
@@ -255,15 +239,18 @@ extension CartViewController {
         firstCompletion: {
           self.viewModel.sortType = .byPrice
           SortTypeStorage.sortType = .byPrice
+          self.viewModel.sortArrayAnimatedly()
         },
         secondCompletion: {
           self.viewModel.sortType = .byRating
           SortTypeStorage.sortType = .byRating
+          self.viewModel.sortArrayAnimatedly()
         },
         thirdCompletion: {
           self.viewModel.sortType = .byName
           SortTypeStorage.sortType = .byName
-        }))
+          self.viewModel.sortArrayAnimatedly()
+        }), controller: self)
   }
   
   @objc private func refresh() {
@@ -314,14 +301,6 @@ extension CartViewController: NFTTableViewCellDelegate {
 extension CartViewController: DeleteNFTViewControllerDelegate {
   func removeNFT(model: NFTModel) {
     UIBlockingProgressHUD.show()
-    if let index = viewModel.nfts.firstIndex(where: { $0.id == model.id }) {
-      let indexPath = IndexPath(row: index, section: 0)
-      viewModel.nfts.remove(at: index)
-      nftTable.performBatchUpdates {
-        nftTable.deleteRows(at: [indexPath], with: .automatic)
-      }
+    viewModel.removeModel(model)
     }
-    let updatedNFTArray = viewModel.nfts.map { $0.id }
-    viewModel.updateOrder(with: updatedNFTArray)
   }
-}

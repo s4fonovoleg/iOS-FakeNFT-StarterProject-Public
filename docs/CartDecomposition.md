@@ -4,66 +4,67 @@
 <br /> Эпик: Корзина
 <br /> Ссылка: https://github.com/users/s4fonovoleg/projects/1
 
-# Cart Flow Decomposition
+# Корзина
 
 
 ## Module 1:
 ### Главный экран корзины
 #### Верстка
-- NavigationBar (est: 30 min: fact: x min).
-- TableViewCell (est: 60 min; fact: x min).
-- TableView (est: 120 min; fact: x min).
-- Кнопка оплаты и стоимости (est: 60 min; fact: x min).
+- Таблица с nft (est: 0.5 h; fact: 1 h).
+- Создание кастовой ячейки для nft (est: 0.5 h; fact: 0.5 h).
+- Настройка таббара (est: 1 h; fact: 1.5 h).
+- Настройка NavigationBar (est: 2 h; fact: 2 h).
+- Кнопка оплаты и стоимости (est: 2 h; fact: 0.2 h).
 
 #### Логика
-- Конфигурация ячейки (est: 120 min; fact: x min).
-- Обновление стоимости nft (est: 120 min; fact: x min).
-- Сортировка (est: 120 min; fact: x min).
-- Сохранить способ сортировки (est: 60 min; fact: x min).
+- Конфигурация ячейки (est: 3 h; fact: 3 h).
+- Обновление стоимости nft (est: 1.5 h; fact: 1.5 h).
+- Сортировка nft в корзине (est: 1.5 h; fact: 4 h).
+- Сохранить способ сортировки nft в корзине (est: 0.5 h; fact: 1 h).
+
+`Total:` est: 12.5 h; fact: 14.7 min.
 
 ### Экран Удаления nft
 #### Верстка
-- Блюр фона контроллера (est: 60 min; fact: x min).
-- UI(иконка, текс и кнопки) (est: 60 min; fact: x min).
+- Блюр фона контроллера (est: 0.5 h; fact: 0.7 h).
+- UI(иконка, текс и кнопки (est: 0.5 h; fact: 0.5 h).
 
 #### Логика
-- Удаление nft (est: 60 min; fact: x min).
-- Возврат на жкран корзины (est: 30 min; fact: x min).
+- Удаление nft (est: 1.5 h; fact: 2 h).
+- Возврат на экран корзины (est: 0.5 h; fact: 0.1 h).
 
-`Total:` est: 780 min; fact: x min.
+`Total:` est: 3 h; fact: 3.75 h.
 
 
 ## Module 2:
 ### Экран выбора оплаты
 #### Верстка
-- NavigationBar (est: 60 min; fact: x min).
-- CollectionViewCell (est: 120 min; fact: x min).
-- Кнопка оплаты (est: 60 min; fact: x min).
-- View пользовательского соглашения (est: 30 min; fact: x min).
+- Настройка NavigationBar экрана оплаты (est: 1 h; fact: x h).
+- Настройка CollectionViewCell (est: 2 h; fact: x h).
+- Кнопка оплаты (est: 1 h; fact: x h).
+- View пользовательского соглашения (est: 0.5 h; fact: x h).
 
 #### Логика
-- Переход на экран с выбором валюты (est: 60 min; fact: x min).
-- Индикатор загрузки (est: 30 min; fact: x min).
-- Выбор ячейки валюты (est: 30 min; fact: x min).
-- Переход обратно на экран корзины (est: 60 min; fact: x min).
+- Переход на экран с выбором валюты (est: 1 h; fact: x h).
+- Индикатор загрузки (est: 0.5 h; fact: x h).
+- Выбор ячейки валюты (est: 0.5 h; fact: x h).
+- Переход обратно на экран корзины (est: 1 h; fact: x h).
 
-
-`Total:` est: 450 min; fact: x min.
+`Total:` est: 7.5 h; fact: x h.
 
 ## Module 3:
 ### Экран успешной оплаты
 #### Верстка
-- Изображение nft (est: 60 min: fact: x min).
-- Текст под nft (est: 30 min; fact: x min).
-- Кнопка возврата (est: 60 min; fact: x min).
-- Alert неудачной оплаты (est: 60 min; fact: x min).
-- Зашлушка пустой корзиный (est: 30 min; fact: x min).
+- Изображение nft (est: 1 h; fact: x h).
+- Текст под nft (est: 0.5 h; fact: x h).
+- Кнопка возврата (est: 1 h; fact: x h).
+- Alert неудачной оплаты (est: 1 h; fact: x h).
+- Зашлушка пустой корзиный (est: 0.5 h; fact: x h).
 
 #### Логика
-- Получение изображения нужной nft (est: 60 min; fact: x min).
-- Реализация возврата на прошлый экран( est: 60 min; fact: x min).
-- Повторная оплата запрос на сервер (est: 60 min; fact: x min).
-- Скрытие отображение заглушки корзины (est: 60 min; fact: x min).
+- Получение изображения нужной nft (est: 1 h; fact: x h).
+- Реализация возврата на прошлый экран (est: 1 h; fact: x h).
+- Повторная оплата запрос на сервер (est: 1 h; fact: x h).
+- Скрытие отображение заглушки корзины (est: 1 h; fact: x h).
 
-
-`Total:` est: 480 min; fact: x min.
+`Total:` est: 8 h; fact: x h.
