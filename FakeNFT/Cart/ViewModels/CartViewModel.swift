@@ -4,20 +4,18 @@ protocol CartViewModelProtocol: AnyObject {
   var nfts: [NFTModel] { get }
   var sortType: SortType { get set }
   var onChange: (() -> Void)? { get set }
-  var onChangeSort: (([Int: Int]) -> Void)? { get set }
   var onChangeRemove: ((IndexPath) -> Void)? { get set }
   func updateOrder()
   func loadNFTModels()
-  func sortArrayAnimatedly()
   func removeModel(_ model: NFTModel)
+  func sort()
 }
 
 final class CartViewModel: CartViewModelProtocol {
   // MARK: - Properties:
   var onChange: (() -> Void)?
-  var onChangeSort: (([Int: Int]) -> Void)?
   var onChangeRemove: ((IndexPath) -> Void)?
-  var sortType = SortTypeStorage.sortType
+  var sortType = SortTypeStorage.sortType 
   var nfts: [NFTModel] = [] {
     didSet {
       onChange?()
@@ -77,31 +75,8 @@ final class CartViewModel: CartViewModelProtocol {
     }
   }
   
-  func sortArrayAnimatedly() {
-    UIBlockingProgressHUD.show()
-    let unsortedArray = nfts
-    print(unsortedArray)
-    switch sortType {
-    case .byPrice:
-      nfts.sort { $0.price > $1.price }
-    case .byRating:
-      nfts.sort { $0.rating > $1.rating }
-    case .byName:
-      nfts.sort { $0.name < $1.name }
-    }
-    print(nfts)
-    var indexMapping = [Int: Int]()
-    for (index, nft) in nfts.enumerated() {
-      if let oldIndex = unsortedArray.firstIndex(where: { $0.id == nft.id }) {
-        indexMapping[index] = oldIndex
-      }
-    }
-    onChangeSort?(indexMapping)
-  }
-  
-  func sortArray(_ array: [NFTModel]) -> [NFTModel] {
+  private func sortArray(_ array: [NFTModel]) -> [NFTModel] {
     var sortedArray = array
-    UIBlockingProgressHUD.show()
     switch sortType {
     case .byPrice:
       sortedArray.sort { $0.price > $1.price }
@@ -111,6 +86,17 @@ final class CartViewModel: CartViewModelProtocol {
       sortedArray.sort { $0.name < $1.name }
     }
     return sortedArray
+  }
+  
+  func sort() {
+    switch sortType {
+    case .byPrice:
+      nfts.sort { $0.price > $1.price }
+    case .byRating:
+      nfts.sort { $0.rating > $1.rating }
+    case .byName:
+      nfts.sort { $0.name < $1.name }
+    }
   }
   
   func removeModel(_ model: NFTModel) {

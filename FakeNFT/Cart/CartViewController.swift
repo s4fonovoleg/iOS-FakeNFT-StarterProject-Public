@@ -206,10 +206,6 @@ extension CartViewController {
       guard let self else { return }
       updateUIElements()
     }
-    viewModel.onChangeSort = { [weak self] indexMapping in
-      guard let self else { return }
-      self.updateNFTTableAnimatedly(with: indexMapping)
-    }
     viewModel.onChangeRemove = { [weak self] index in
       guard let self else { return }
       self.nftTable.performBatchUpdates {
@@ -239,17 +235,17 @@ extension CartViewController {
         firstCompletion: {
           self.viewModel.sortType = .byPrice
           SortTypeStorage.sortType = .byPrice
-          self.viewModel.sortArrayAnimatedly()
+          self.viewModel.sort()
         },
         secondCompletion: {
           self.viewModel.sortType = .byRating
           SortTypeStorage.sortType = .byRating
-          self.viewModel.sortArrayAnimatedly()
+          self.viewModel.sort()
         },
         thirdCompletion: {
           self.viewModel.sortType = .byName
           SortTypeStorage.sortType = .byName
-          self.viewModel.sortArrayAnimatedly()
+          self.viewModel.sort()
         }), controller: self)
   }
   
