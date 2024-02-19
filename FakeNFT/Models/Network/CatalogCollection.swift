@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct CatalogCollection : Codable {
-    var name : String
-    var nfts : [String]
-    var cover : String
+struct CatalogCollection: Codable {
+    var name: String
+    var nfts: [String]
+    var cover: String
 }

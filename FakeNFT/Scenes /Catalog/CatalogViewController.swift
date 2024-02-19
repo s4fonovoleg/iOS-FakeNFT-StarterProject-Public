@@ -1,28 +1,23 @@
 import UIKit
 import SnapKit
 import ProgressHUD
-import UIKit
 
 class CatalogViewController: UIViewController {
-    
     private var viewModel = CatalogViewModel()
-    
-    private let tableView : UITableView = {
+    private let tableView: UITableView = {
         var table = UITableView()
         table.tableHeaderView = UIView()
         table.showsVerticalScrollIndicator = false
         table.rowHeight = 179
         return table
     }()
-    
-    private lazy var sortButton : UIButton = {
+    private lazy var sortButton: UIButton = {
         var button = UIButton()
         button.setImage(UIImage(systemName: "text.justifyleft"), for: .normal)
         button.tintColor = UIColor(named: "BlackColor")
         button.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
         return button
     }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
@@ -36,15 +31,15 @@ class CatalogViewController: UIViewController {
         setupScreen()
         loadNfts()
     }
-    
     @objc
-    private func filterButtonTapped(){
-        let filter = UIAlertController(title: NSLocalizedString("Sorting", comment: ""),
+    private func filterButtonTapped() {
+        let filter = UIAlertController(title: NSLocalizedString("Sorting",
+                                                                comment: ""),
                                        message: "",
                                        preferredStyle: .actionSheet)
         let filterByNftCount = UIAlertAction(title: NSLocalizedString("sorting.byCountOfNft",
-                                                                      comment: "")
-                                             ,style: .default) { _ in
+                                                                      comment: ""),
+                                             style: .default) { _ in
             self.viewModel.filterNfts(by: .byNftCount)
             self.tableView.reloadData()
         }
@@ -56,67 +51,54 @@ class CatalogViewController: UIViewController {
         }
         let closeAction = UIAlertAction(title: NSLocalizedString("CloseAction",
                                                                  comment: ""),
-                                         style: .cancel,
-                                         handler: nil)
+                                        style: .cancel,
+                                        handler: nil)
         filter.addAction(filterByNftName)
         filter.addAction(filterByNftCount)
         filter.addAction(closeAction)
         present(filter, animated: true)
     }
-    
     private func loadNfts() {
         viewModel.loadNft()
     }
-    
-    private func bind(){
+    private func bind() {
         viewModel.change = {
             self.tableView.reloadData()
             ProgressHUD.dismiss()
         }
     }
-    
-    private func errorBind(){
+    private func errorBind() {
         viewModel.showError = {
             self.showError(ErrorModel(message: NSLocalizedString("Error.network", comment: ""),
                                       actionText: NSLocalizedString("Error.repeat", comment: ""),
                                       action: self.loadNfts))
         }
     }
-    
-    
-    
-    private func setupScreen(){
+    private func setupScreen() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
         tableView.snp.makeConstraints {
             $0.left.top.right.bottom.equalToSuperview()
         }
     }
-    
 }
 
-
-
 extension CatalogViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.nfts.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CatalogCell
         cell?.config(nft: viewModel.nfts[indexPath.row])
-        cell?.separatorInset = .init(top: 0, left: tableView.frame.width / 2, bottom: 0, right: tableView.frame.width / 2)
+        cell?.separatorInset = .init(top: 0, left: tableView.frame.width / 2,
+                                     bottom: 0, right: tableView.frame.width / 2)
         return cell ?? UITableViewCell()
     }
-    
 }
 
 extension CatalogViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        // реализация в каталоге 2-3
     }
-    
 }
 
-extension CatalogViewController : ErrorView {}
+extension CatalogViewController: ErrorView {}

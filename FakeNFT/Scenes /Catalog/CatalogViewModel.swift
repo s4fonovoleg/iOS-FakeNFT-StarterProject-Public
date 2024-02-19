@@ -8,21 +8,15 @@
 import UIKit
 
 class CatalogViewModel {
-    
-    var change : (() -> Void)?
-    
-    var showError : (() -> Void)?
-    
+    var change: (() -> Void)?
+    var showError: (() -> Void)?
     private var catalogService = CatalogService()
-    
-    private(set) var nfts : [CatalogCollection] = [] {
-        didSet{
+    private(set) var nfts: [CatalogCollection] = [] {
+        didSet {
             change?()
         }
     }
-    
     private(set) var isLoading = false
-    
     func loadNft() {
         guard isLoading != true else {
             return
@@ -38,7 +32,6 @@ class CatalogViewModel {
             self?.isLoading = false
         }
     }
-    
     func filterNfts(by filter: NFTFilter) {
         switch filter {
         case .byNftCount:

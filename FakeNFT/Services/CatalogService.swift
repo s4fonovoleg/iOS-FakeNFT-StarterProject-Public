@@ -8,13 +8,15 @@
 import Foundation
 
 final class CatalogService {
-    
-    func loadNftColletion(compleition : @escaping (Result<[CatalogCollection],Error>) -> Void) {
-        var urlRequest = URLRequest(url: URL(string: "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/collections")!)
-        urlRequest.setValue("d24aac83-291f-43db-926b-2e3e3cb3d154", forHTTPHeaderField: "X-Practicum-Mobile-Token")
+    func loadNftColletion(compleition: @escaping (Result<[CatalogCollection], Error>) -> Void) {
+        var urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL + "/api/v1/collections")!)
+        urlRequest.setValue("d24aac83-291f-43db-926b-2e3e3cb3d154",
+                            forHTTPHeaderField: "X-Practicum-Mobile-Token")
         URLSession.shared.dataTask(with: urlRequest) { data, _, error in
             if let error {
-                compleition(.failure(error))
+                DispatchQueue.main.async {
+                    compleition(.failure(error))
+                }
                 return
             }
             guard let data else {
@@ -29,6 +31,4 @@ final class CatalogService {
             }
         }.resume()
     }
-    
 }
-
