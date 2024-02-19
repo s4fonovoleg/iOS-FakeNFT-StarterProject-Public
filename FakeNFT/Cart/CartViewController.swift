@@ -142,21 +142,6 @@ class CartViewController: UIViewController {
     ])
   }
   
-  private func updateNFTTableAnimatedly(with indexes: [Int: Int]) {
-    UIBlockingProgressHUD.show()
-    nftTable.performBatchUpdates({
-      for (newIndex, oldIndex) in indexes {
-        let oldIndexPath = IndexPath(row: oldIndex, section: 0)
-        let newIndexPath = IndexPath(row: newIndex, section: 0)
-        if oldIndexPath != newIndexPath {
-          nftTable.moveRow(at: oldIndexPath, to: newIndexPath)
-        }
-      }
-    }, completion: { _ in
-      UIBlockingProgressHUD.hide()
-    })
-  }
-  
   private func updatePaymentLabels() {
     let animation = CATransition()
     animation.duration = 0.5

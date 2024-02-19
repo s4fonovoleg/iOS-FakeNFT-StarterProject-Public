@@ -24,7 +24,7 @@ final class CartViewModel: CartViewModelProtocol {
   private let service: CartServiceProtocol
   
   // MARK: - Methods:
-  init(service: CartServiceProtocol = CartService()) {
+  init(service: CartServiceProtocol) {
     self.service = service
   }
   
