@@ -15,7 +15,10 @@
 "Button.sortByRatingTitle" = "По рейтингу";
 "Button.sortByNameTitle" = "По названию";
 "Button.closeButtonTitle" = "Закрыть";
+"Button.PayButtonTitle" = "Оплатить";
 "Label.priceTitle" = "Цена";
 "Label.deleteNftLabel" = "Вы уверены, что хоитите \nудалить объект из корзины?";
 "Label.sortingTitle" = "Сортировка";
 "Label.emptyCartTitle" = "Корзина пуста";
+"Label.choosePaymentTypeTitle" = "Выберите способ оплаты";
+
