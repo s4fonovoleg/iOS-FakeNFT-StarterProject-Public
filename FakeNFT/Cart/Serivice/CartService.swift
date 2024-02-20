@@ -44,12 +44,11 @@ final class CartService: CartServiceProtocol {
   }
   
   func updateOrder(with nfts: [String], completion: @escaping OrderCompletion) {
-    let request = PutOrderRequest(
-      httpMethod: .put,
-      dto: nfts)
+    let request = PutOrderRequest(nfts: nfts)
     networkClient.send(request: request, type: OrderModel.self) { result in
       switch result {
       case .success(let model):
+        print(model.self)
         completion(.success(model.nfts))
       case .failure(let error):
         completion(.failure(error))

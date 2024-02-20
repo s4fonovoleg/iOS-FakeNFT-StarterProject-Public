@@ -119,12 +119,10 @@ struct DefaultNetworkClient: NetworkClient {
     urlRequest.httpMethod = request.httpMethod.rawValue
     urlRequest.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
     
-    if let dto = request.dto,
-       let dtoEncoded = try? encoder.encode(dto) {
+    if let dtoString = request.dto as? String {
       urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-      urlRequest.httpBody = dtoEncoded
-    }
-    
+      urlRequest.httpBody = Data(dtoString.utf8)
+    }    
     return urlRequest
   }
   

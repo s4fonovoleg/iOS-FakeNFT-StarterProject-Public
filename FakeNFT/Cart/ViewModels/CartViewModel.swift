@@ -31,8 +31,8 @@ final class CartViewModel: CartViewModelProtocol {
   }
   
   func updateOrder() {
-    let updatedNFTArray = nfts.map { $0.id }
-    service.updateOrder(with: updatedNFTArray) { result in
+    let nftsId = nfts.map { $0.id }
+    service.updateOrder(with: nftsId) { result in
       switch result {
       case .success:
         print("Заказ успешно обновлен")
