@@ -89,8 +89,9 @@ final class NFTTAbleViewCell: UITableViewCell {
   
   // MARK: - Methods:
   func configureCell(for nft: NFTModel) {
+    let formattedPrice = nft.price.stringWithCommaSeparator()
     nftNameLabel.text = nft.name
-    nftPriceLabel.text = "\(nft.price) ETH"
+    nftPriceLabel.text = "\(formattedPrice) ETH"
     setNFTRating(on: nft.rating)
     let url = nft.images.first
     nftImageView.kf.indicatorType = .activity

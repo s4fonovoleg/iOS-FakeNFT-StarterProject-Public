@@ -151,8 +151,8 @@ class CartViewController: UIViewController {
     nftCountLabel.layer.add(animation, forKey: "Count")
     totalCost = viewModel.nfts.compactMap { $0.price }.reduce(0, +)
     nftsCount = viewModel.nfts.count
-    let formattedCost = String(format: "%.2f", totalCost ?? 0)
-    totalCostLabel.text = "\(formattedCost) ETH"
+    let formattedCost = totalCost?.stringWithCommaSeparator()
+    totalCostLabel.text = "\(formattedCost ?? "0") ETH"
     nftCountLabel.text = "\(nftsCount ?? 0) NFT"
   }
   
