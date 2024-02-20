@@ -4,15 +4,17 @@ protocol CartViewModelProtocol: AnyObject {
   var nfts: [NFTModel] { get }
   var sortType: SortType { get set }
   var onChange: (() -> Void)? { get set }
+  var isLoading: ((Bool) -> Void)? { get set }
   func updateOrder()
   func loadNFTModels()
   func removeModel(_ model: NFTModel)
-  func sort()
+  func sort(by type: SortType)
 }
 
 final class CartViewModel: CartViewModelProtocol {
   // MARK: - Properties:
   var onChange: (() -> Void)?
+  var isLoading: ((Bool) -> Void)?
   var sortType = SortTypeStorage.sortType
   var nfts: [NFTModel] = [] {
     didSet {
@@ -37,12 +39,12 @@ final class CartViewModel: CartViewModelProtocol {
       case .failure:
         print("Не удалось обновить заказ")
       }
-      UIBlockingProgressHUD.hide()
+      self.isLoading?(false)
     }
   }
   
   func loadNFTModels() {
-    UIBlockingProgressHUD.show()
+    isLoading?(true)
     let dispatchGroup = DispatchGroup()
     var loadedNfts: [NFTModel] = []
     
@@ -67,7 +69,7 @@ final class CartViewModel: CartViewModelProtocol {
       dispatchGroup.notify(queue: .main) {
         let sortedArray = self.sortArray(loadedNfts)
         self.nfts = sortedArray
-        UIBlockingProgressHUD.hide()
+        self.isLoading?(false)
       }
     }
   }
@@ -85,7 +87,9 @@ final class CartViewModel: CartViewModelProtocol {
     return sortedArray
   }
   
-  func sort() {
+  func sort(by type: SortType) {
+    sortType = type
+    SortTypeStorage.sortType = type
     switch sortType {
     case .byPrice:
       nfts.sort { $0.price > $1.price }

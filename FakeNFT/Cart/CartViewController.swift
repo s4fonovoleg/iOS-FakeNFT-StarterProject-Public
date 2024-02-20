@@ -190,6 +190,9 @@ extension CartViewController {
       guard let self else { return }
       updateUIElements()
     }
+    viewModel.isLoading = { isLoading in
+      isLoading ? UIBlockingProgressHUD.show() : UIBlockingProgressHUD.hide()
+    }
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -210,19 +213,13 @@ extension CartViewController {
         thirdButtonText: SortType.byName.name,
         fourthButtonText: L10n.Localizable.Button.closeButtonTitle,
         firstCompletion: {
-          self.viewModel.sortType = .byPrice
-          SortTypeStorage.sortType = .byPrice
-          self.viewModel.sort()
+          self.viewModel.sort(by: .byPrice)
         },
         secondCompletion: {
-          self.viewModel.sortType = .byRating
-          SortTypeStorage.sortType = .byRating
-          self.viewModel.sort()
+          self.viewModel.sort(by: .byRating)
         },
         thirdCompletion: {
-          self.viewModel.sortType = .byName
-          SortTypeStorage.sortType = .byName
-          self.viewModel.sort()
+          self.viewModel.sort(by: .byName)
         }), controller: self)
   }
   
