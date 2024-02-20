@@ -92,3 +92,5 @@ iOSInjectionProject/
 .DS_Store
 /Users/ruslanhalilulin/Desktop/iOS-FakeNFT-StarterProject-Public
 Pods
+FakeNFT/Resources/Generated.swift
+
