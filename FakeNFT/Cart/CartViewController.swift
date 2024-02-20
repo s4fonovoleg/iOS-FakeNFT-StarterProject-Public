@@ -66,6 +66,7 @@ class CartViewController: UIViewController {
     label.textColor = .YPGreen
     label.textAlignment = .left
     label.numberOfLines = 1
+    label.adjustsFontSizeToFitWidth = true
     
     return label
   }()
@@ -150,7 +151,8 @@ class CartViewController: UIViewController {
     nftCountLabel.layer.add(animation, forKey: "Count")
     totalCost = viewModel.nfts.compactMap { $0.price }.reduce(0, +)
     nftsCount = viewModel.nfts.count
-    totalCostLabel.text = "\(totalCost ?? 0) ETH"
+    let formattedCost = String(format: "%.2f", totalCost ?? 0)
+    totalCostLabel.text = "\(formattedCost) ETH"
     nftCountLabel.text = "\(nftsCount ?? 0) NFT"
   }
   
