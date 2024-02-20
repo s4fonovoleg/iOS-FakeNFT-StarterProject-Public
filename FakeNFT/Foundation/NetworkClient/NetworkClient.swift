@@ -122,7 +122,7 @@ struct DefaultNetworkClient: NetworkClient {
     if let dtoString = request.dto as? String {
       urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
       urlRequest.httpBody = Data(dtoString.utf8)
-    }    
+    }
     return urlRequest
   }
   
