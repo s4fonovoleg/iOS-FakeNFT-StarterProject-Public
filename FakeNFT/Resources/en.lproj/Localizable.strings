@@ -1,0 +1,9 @@
+"Tab.catalog" = "Catalog";
+"Error.network" = "Network error";
+"Error.unknown" = "Unknown error";
+"Error.repeat" = "Repeat?";
+"Error.title" = "Error";
+"Sorting" = "Sorting";
+"sorting.byName" = "By name";
+"sorting.byCountOfNft" = "By NFT count";
+"CloseAction" = "Cancel";
