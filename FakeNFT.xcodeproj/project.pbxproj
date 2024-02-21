@@ -51,6 +51,7 @@
 		4AB30ABE2B7A4C6000F86D9B /* NFTTAbleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB30ABD2B7A4C6000F86D9B /* NFTTAbleViewCell.swift */; };
 		4AC2F1C82B8642330048A4DD /* UserAgreementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC2F1C72B8642330048A4DD /* UserAgreementController.swift */; };
 		4AC2F1CA2B864F9D0048A4DD /* UserAgreementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC2F1C92B864F9D0048A4DD /* UserAgreementViewModel.swift */; };
+		4AC2F1CD2B86A8940048A4DD /* CurrencyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC2F1CC2B86A8940048A4DD /* CurrencyCollectionViewCell.swift */; };
 		4AC69EF82B7D22A60029B4B6 /* NFTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC69EF72B7D22A60029B4B6 /* NFTModel.swift */; };
 		4AC69EFA2B7D23D70029B4B6 /* CurrencyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC69EF92B7D23D70029B4B6 /* CurrencyModel.swift */; };
 		4AC69EFC2B7D24760029B4B6 /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC69EFB2B7D24760029B4B6 /* OrderModel.swift */; };
@@ -135,6 +136,7 @@
 		4AB30ABD2B7A4C6000F86D9B /* NFTTAbleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NFTTAbleViewCell.swift; path = FakeNFT/Cart/TableView/NFTTAbleViewCell.swift; sourceTree = SOURCE_ROOT; };
 		4AC2F1C72B8642330048A4DD /* UserAgreementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgreementController.swift; sourceTree = "<group>"; };
 		4AC2F1C92B864F9D0048A4DD /* UserAgreementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgreementViewModel.swift; sourceTree = "<group>"; };
+		4AC2F1CC2B86A8940048A4DD /* CurrencyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AC69EF72B7D22A60029B4B6 /* NFTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTModel.swift; sourceTree = "<group>"; };
 		4AC69EF92B7D23D70029B4B6 /* CurrencyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyModel.swift; sourceTree = "<group>"; };
 		4AC69EFB2B7D24760029B4B6 /* OrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 		4A39C98B2B8523EE000774FA /* CurrencyViewController */ = {
 			isa = PBXGroup;
 			children = (
+				4AC2F1CB2B86A82C0048A4DD /* CollectionView */,
 				4A39C98C2B852426000774FA /* CurrencyViewController.swift */,
 			);
 			path = CurrencyViewController;
@@ -473,6 +476,14 @@
 				4AC2F1C92B864F9D0048A4DD /* UserAgreementViewModel.swift */,
 			);
 			path = WebView;
+			sourceTree = "<group>";
+		};
+		4AC2F1CB2B86A82C0048A4DD /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				4AC2F1CC2B86A8940048A4DD /* CurrencyCollectionViewCell.swift */,
+			);
+			path = CollectionView;
 			sourceTree = "<group>";
 		};
 		4AFBFBA72B7A2E7800D181C7 /* Helpers */ = {
@@ -799,6 +810,7 @@
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
+				4AC2F1CD2B86A8940048A4DD /* CurrencyCollectionViewCell.swift in Sources */,
 				4AC7448C2B7B838B00ED6D39 /* Mocks.swift in Sources */,
 				4AA412222B7E7CB50088E115 /* GetOrderRequest.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
