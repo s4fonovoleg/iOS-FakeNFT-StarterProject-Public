@@ -13,11 +13,11 @@ final class TabBarController: UITabBarController {
 
         let catalogController = UINavigationController(rootViewController: CatalogViewController())
         catalogController.tabBarItem = catalogTabBarItem
-        catalogController.navigationBar.isTranslucent = false
+        catalogController.navigationBar.barTintColor = UIColor(named: "WhiteColor")
         tabBar.isTranslucent = false
-
+        tabBar.barTintColor = UIColor(named: "WhiteColor")
+        tabBar.tintColor = .systemBlue
         viewControllers = [catalogController]
-
         view.backgroundColor = UIColor(named: "WhiteColor")
     }
 }

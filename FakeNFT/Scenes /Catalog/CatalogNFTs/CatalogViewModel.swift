@@ -8,15 +8,21 @@
 import Foundation
 
 class CatalogViewModel {
+
     var change: (() -> Void)?
+
     var showError: (() -> Void)?
+
     private var catalogService = CatalogService()
+
     private(set) var nfts: [CatalogCollection] = [] {
         didSet {
             change?()
         }
     }
+
     private(set) var isLoading = false
+
     func loadNft() {
         guard isLoading != true else {
             return
@@ -32,6 +38,7 @@ class CatalogViewModel {
             self?.isLoading = false
         }
     }
+
     func filterNfts(by filter: NFTFilter) {
         switch filter {
         case .byNftCount:
@@ -40,6 +47,11 @@ class CatalogViewModel {
             nfts = nfts.sorted { $0.name > $1.name }
         }
     }
+
+    func collectionViewId(index: IndexPath) -> String {
+        nfts[index.row].id
+    }
+
 }
 
 enum NFTFilter {

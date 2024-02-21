@@ -11,4 +11,7 @@ struct CatalogCollection: Codable {
     var name: String
     var nfts: [String]
     var cover: String
+    var id: String
+    var description: String
+    var author: String
 }
