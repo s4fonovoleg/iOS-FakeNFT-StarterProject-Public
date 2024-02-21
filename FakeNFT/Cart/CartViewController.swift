@@ -235,8 +235,8 @@ extension CartViewController {
   
   @objc private func payButtonPressed() {
     let viewControllerToPush = CurrencyViewController()
+    viewControllerToPush.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(viewControllerToPush, animated: true)
-    navigationController?.hidesBottomBarWhenPushed = true
   }
 }
 

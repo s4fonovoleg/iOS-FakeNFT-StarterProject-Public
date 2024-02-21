@@ -16,8 +16,10 @@
 "Button.sortByNameTitle" = "By name";
 "Button.closeButtonTitle" = "Close";
 "Button.PayButtonTitle" = "Pay";
+"Button.paymentAgreementTitle" = "User Agreement";
 "Label.choosePaymentTypeTitle" = "Select a payment method";
 "Label.priceTitle" = "Price";
 "Label.deleteNftLabel" = "Are you sure you want to \ndelete the item from the cart?";
 "Label.sortingTitle" = "Sorting";
 "Label.emptyCartTitle" = "Cart is empty";
+"Label.paymentAgreement" = "By making a purchase, you agree to the terms of the";

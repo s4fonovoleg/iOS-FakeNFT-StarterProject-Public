@@ -70,7 +70,7 @@ final class NFTTAbleViewCell: UITableViewCell {
   
   private lazy var deleteButton: UIButton = {
     let button = UIButton(type: .system)
-    button.setImage(UIImage(named: "DeleteCartIcon"), for: .normal)
+    button.setImage(UIImage(named: "deleteCartIcon"), for: .normal)
     button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
     button.tintColor = .YPBlack
     
@@ -97,7 +97,7 @@ final class NFTTAbleViewCell: UITableViewCell {
     nftImageView.kf.indicatorType = .activity
     nftImageView.kf.setImage(
       with: url,
-      placeholder: UIImage(named: "Placeholder"),
+      placeholder: UIImage(named: "placeholder"),
       options: [.transition(.fade(1))])
     nftModel = nft
   }
