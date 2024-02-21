@@ -49,6 +49,7 @@ final class CurrencyViewController: UIViewController {
     if navigationController?.navigationBar != nil {
       title = L10n.Localizable.Label.choosePaymentTypeTitle
       let leftBarButton = UIBarButtonItem(image: UIImage(named: "backButtonIcon"), style: .plain, target: self, action: #selector(backButtonPressed))
+      leftBarButton.tintColor = .YPBlack
       navigationItem.leftBarButtonItem = leftBarButton
       navigationItem.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 0)
     }
@@ -109,7 +110,7 @@ extension CurrencyViewController {
   }
   
   @objc private func agreementButtonPressed() {
-    let viewToPresent = UserAgreementViewController()
+    let viewToPresent = UserAgreementViewController(viewModel: UserAgreementViewModel())
     navigationController?.pushViewController(viewToPresent, animated: true)
   }
 }
