@@ -28,6 +28,7 @@ final class CurrencyViewController: UIViewController {
     button.titleLabel?.font = .caption2
     button.setTitleColor(.YPBlue, for: .normal)
     button.setTitle(L10n.Localizable.Button.paymentAgreementTitle, for: .normal)
+    button.addTarget(self, action: #selector(agreementButtonPressed), for: .touchUpInside)
     
     return button
   }()
@@ -105,5 +106,10 @@ extension CurrencyViewController {
 extension CurrencyViewController {
   @objc private func backButtonPressed() {
     navigationController?.popViewController(animated: true)
+  }
+  
+  @objc private func agreementButtonPressed() {
+    let viewToPresent = UserAgreementViewController()
+    navigationController?.pushViewController(viewToPresent, animated: true)
   }
 }

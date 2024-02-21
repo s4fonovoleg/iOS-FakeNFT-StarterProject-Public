@@ -23,4 +23,5 @@
 "Label.emptyCartTitle" = "Корзина пуста";
 "Label.choosePaymentTypeTitle" = "Выберите способ оплаты";
 "Label.paymentAgreement" = "Совершая покупку, вы соглашаетесь с условиями";
+"Label.paymentAgreementTitle" = "Пользовательское соглашение";
 
