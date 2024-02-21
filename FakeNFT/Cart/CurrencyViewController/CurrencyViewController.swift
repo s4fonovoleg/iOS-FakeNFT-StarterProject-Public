@@ -44,6 +44,19 @@ final class CurrencyViewController: UIViewController {
     
     return button
   }()
+  
+  private lazy var currencyCollection: UICollectionView = {
+    let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    collection.delegate = self
+    collection.dataSource = self
+    collection.backgroundColor = .clear
+    collection.allowsMultipleSelection = false
+    collection.isScrollEnabled = false
+    collection.register(CurrencyCollectionViewCell.self, forCellWithReuseIdentifier: CurrencyCollectionViewCell.reuseID)
+    
+    return collection
+  }()
+  
   // MARK: - Private methods:
   private func setupNavBar() {
     if navigationController?.navigationBar != nil {
@@ -112,5 +125,26 @@ extension CurrencyViewController {
   @objc private func agreementButtonPressed() {
     let viewToPresent = UserAgreementViewController(viewModel: UserAgreementViewModel())
     navigationController?.pushViewController(viewToPresent, animated: true)
+  }
+}
+
+// MARK: - UICollectionViewDelegate:
+extension CurrencyViewController: UICollectionViewDelegate {
+  
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout:
+extension CurrencyViewController: UICollectionViewDelegateFlowLayout {
+  
+}
+
+// MARK: - UICollectionViewDataSource:
+extension CurrencyViewController: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    <#code#>
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    
   }
 }
