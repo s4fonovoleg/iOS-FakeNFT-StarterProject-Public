@@ -11,7 +11,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = 6
     imageView.layer.masksToBounds = true
-    imageView.backgroundColor = .clear
+    imageView.backgroundColor = .YPBlackUniversal
     imageView.contentMode = .scaleAspectFit
     
     return imageView
@@ -40,7 +40,8 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
   // MARK: - Methods:
   override init(frame: CGRect) {
     super.init(frame: frame)
-    
+    setupLayout()
+    setupConstraints()
   }
   
   required init?(coder: NSCoder) {

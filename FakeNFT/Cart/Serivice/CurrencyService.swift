@@ -1,27 +1,27 @@
 import Foundation
 
-typealias CurrencyCompletion = (Result<CurrencyModel, Error>) -> Void
+typealias CurrencyCompletion = (Result<[CurrencyModel], Error>) -> Void
 
 protocol CurrencyServiceProtocol: AnyObject {
-  func loadCurrencies(completion: @escaping CurrencyCompletion) -> [CurrencyModel]
+  func loadCurrencies(completion: @escaping CurrencyCompletion)
 }
 
-final class CurrencyService {
+final class CurrencyService: CurrencyServiceProtocol {
   // MARK: - Private Properties:
   private let networkClient: NetworkClient
   
   // MARK: - Methods:
-  init(networkClient: NetworkClient) {
+  init(networkClient: NetworkClient = DefaultNetworkClient()) {
     self.networkClient = networkClient
   }
   
-  func loadCurrencies(completion: @escaping CurrencyCompletion) -> [CurrencyModel] {
+  func loadCurrencies(completion: @escaping CurrencyCompletion) {
     let request = CurrenciesRequest()
-    networkClient.send(request: request, type: CurrencyModel.self) { result in
+    networkClient.send(request: request, type: [CurrencyModel].self) { result in
       switch result {
-      case .success(let currency):
-        print(currency)
-        completion(.success(currency))
+      case .success(let currencies):
+        print(currencies)
+        completion(.success(currencies))
       case .failure(let error):
         print(error)
         completion(.failure(error))

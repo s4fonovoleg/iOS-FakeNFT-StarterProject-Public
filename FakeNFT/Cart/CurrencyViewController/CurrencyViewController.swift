@@ -3,6 +3,8 @@ import UIKit
 
 final class CurrencyViewController: UIViewController {
   // MARK: - Private Properties:
+  private let viewModel: CurrencyViewModelProtocol
+  private let geometricParams = GeometricParams(cellCount: 2, leftInset: 16, rightInset: 16, cellSpacing: 7)
   private lazy var paymentView: UIView = {
     let view = UIView()
     view.backgroundColor = .YPLightGrey
@@ -52,12 +54,23 @@ final class CurrencyViewController: UIViewController {
     collection.backgroundColor = .clear
     collection.allowsMultipleSelection = false
     collection.isScrollEnabled = false
+    collection.showsHorizontalScrollIndicator = false
+    collection.showsVerticalScrollIndicator = false
     collection.register(CurrencyCollectionViewCell.self, forCellWithReuseIdentifier: CurrencyCollectionViewCell.reuseID)
     
     return collection
   }()
   
   // MARK: - Private methods:
+  init(viewModel: CurrencyViewModelProtocol) {
+    self.viewModel = viewModel
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   private func setupNavBar() {
     if navigationController?.navigationBar != nil {
       title = L10n.Localizable.Label.choosePaymentTypeTitle
@@ -69,7 +82,7 @@ final class CurrencyViewController: UIViewController {
   }
   
   private func setupLayout() {
-    [paymentView].forEach {
+    [currencyCollection, paymentView].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
       view.addSubview($0)
     }
@@ -81,6 +94,11 @@ final class CurrencyViewController: UIViewController {
   
   private func setupConstraints() {
     NSLayoutConstraint.activate([
+      currencyCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      currencyCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      currencyCollection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+      currencyCollection.heightAnchor.constraint(equalToConstant: 230),
+      
       paymentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       paymentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       paymentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -102,6 +120,10 @@ final class CurrencyViewController: UIViewController {
       payButton.topAnchor.constraint(equalTo: agreementButton.bottomAnchor, constant: 20)
     ])
   }
+  
+  private func loadCurrencies() {
+    viewModel.loadCurrencies()
+  }
 }
 
 // MARK: - LifeCycle:
@@ -109,10 +131,18 @@ extension CurrencyViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    viewModel.onChange = { [weak self] in
+      guard let self else { return }
+      self.currencyCollection.reloadData()
+    }
+    viewModel.onChangeLoader = { isLoading in
+      isLoading ? UIBlockingProgressHUD.show() : UIBlockingProgressHUD.hide()
+    }
     self.view.backgroundColor = .YPWhite
     setupNavBar()
     setupLayout()
     setupConstraints()
+    loadCurrencies()
   }
 }
 
@@ -135,16 +165,45 @@ extension CurrencyViewController: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDelegateFlowLayout:
 extension CurrencyViewController: UICollectionViewDelegateFlowLayout {
+  func numberOfSections(in collectionView: UICollectionView) -> Int {
+    1
+  }
   
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let availableWidth = collectionView.frame.size.width - geometricParams.paddingWidth
+    let cellWidth = availableWidth / CGFloat(geometricParams.cellCount)
+    
+    return CGSize(width: cellWidth, height: 46)
+  }
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    geometricParams.cellSpacing
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    7
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    UIEdgeInsets(top: 20, left: geometricParams.leftInset, bottom: 0, right: geometricParams.rightInset)
+  }
 }
 
 // MARK: - UICollectionViewDataSource:
 extension CurrencyViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    <#code#>
+    viewModel.currencies.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let currency = viewModel.currencies[indexPath.row]
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CurrencyCollectionViewCell.reuseID, for: indexPath) as? CurrencyCollectionViewCell else {
+      return UICollectionViewCell()
+    }
+    cell.configureCell(currency)
+    cell.layer.cornerRadius = 12
+    cell.layer.masksToBounds = true
+    cell.backgroundColor = .YPLightGrey
     
+    return cell
   }
 }
