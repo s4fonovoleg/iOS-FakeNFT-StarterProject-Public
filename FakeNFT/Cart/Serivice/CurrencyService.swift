@@ -20,10 +20,8 @@ final class CurrencyService: CurrencyServiceProtocol {
     networkClient.send(request: request, type: [CurrencyModel].self) { result in
       switch result {
       case .success(let currencies):
-        print(currencies)
         completion(.success(currencies))
       case .failure(let error):
-        print(error)
         completion(.failure(error))
       }
     }

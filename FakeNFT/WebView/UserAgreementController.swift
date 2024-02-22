@@ -90,7 +90,7 @@ final class UserAgreementViewController: UIViewController {
 extension UserAgreementViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    
     viewModel.onChangeProgress = { [weak self] value in
       guard let self else { return }
       self.setProgressValue(value)

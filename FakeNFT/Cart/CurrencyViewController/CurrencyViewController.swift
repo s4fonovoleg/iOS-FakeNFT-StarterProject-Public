@@ -131,7 +131,7 @@ final class CurrencyViewController: UIViewController {
   }
   
   private func updatePayButtonCondition() {
-    if let selectedIndexPath {
+    if selectedIndexPath != nil {
       payButton.isEnabled = true
     } else {
       payButton.isEnabled = false
@@ -201,6 +201,7 @@ extension CurrencyViewController: UICollectionViewDelegateFlowLayout {
     
     return CGSize(width: cellWidth, height: 46)
   }
+  
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
     geometricParams.cellSpacing
   }
