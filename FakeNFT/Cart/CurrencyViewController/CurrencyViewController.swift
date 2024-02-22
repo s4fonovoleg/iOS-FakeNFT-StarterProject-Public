@@ -4,6 +4,11 @@ import UIKit
 final class CurrencyViewController: UIViewController {
   // MARK: - Private Properties:
   private let viewModel: CurrencyViewModelProtocol
+  private var selectedIndexPath: IndexPath? {
+    didSet {
+      updatePayButtonCondition()
+    }
+  }
   private let geometricParams = GeometricParams(cellCount: 2, leftInset: 16, rightInset: 16, cellSpacing: 7)
   private lazy var paymentView: UIView = {
     let view = UIView()
@@ -124,6 +129,14 @@ final class CurrencyViewController: UIViewController {
   private func loadCurrencies() {
     viewModel.loadCurrencies()
   }
+  
+  private func updatePayButtonCondition() {
+    if let selectedIndexPath {
+      payButton.isEnabled = true
+    } else {
+      payButton.isEnabled = false
+    }
+  }
 }
 
 // MARK: - LifeCycle:
@@ -143,6 +156,12 @@ extension CurrencyViewController {
     setupLayout()
     setupConstraints()
     loadCurrencies()
+    updatePayButtonCondition()
+  }
+  
+  override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    super.traitCollectionDidChange(previousTraitCollection)
+    currencyCollection.reloadData()
   }
 }
 
@@ -160,7 +179,14 @@ extension CurrencyViewController {
 
 // MARK: - UICollectionViewDelegate:
 extension CurrencyViewController: UICollectionViewDelegate {
-  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    if selectedIndexPath == indexPath {
+      selectedIndexPath = nil
+    } else {
+      selectedIndexPath = indexPath
+    }
+    collectionView.reloadData()
+  }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout:
@@ -196,6 +222,7 @@ extension CurrencyViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let currency = viewModel.currencies[indexPath.row]
+    let isSelected = selectedIndexPath == indexPath ? true : false
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CurrencyCollectionViewCell.reuseID, for: indexPath) as? CurrencyCollectionViewCell else {
       return UICollectionViewCell()
     }
@@ -203,6 +230,14 @@ extension CurrencyViewController: UICollectionViewDataSource {
     cell.layer.cornerRadius = 12
     cell.layer.masksToBounds = true
     cell.backgroundColor = .YPLightGrey
+    
+    if isSelected {
+      cell.layer.borderWidth = 1
+      cell.layer.borderColor = UIColor.YPBlack.cgColor
+    } else {
+      cell.layer.borderWidth = 0
+      cell.layer.borderColor = .none
+    }
     
     return cell
   }
