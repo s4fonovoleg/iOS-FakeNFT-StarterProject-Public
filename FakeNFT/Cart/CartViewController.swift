@@ -46,6 +46,7 @@ class CartViewController: UIViewController {
     button.backgroundColor = .YPBlack
     button.layer.cornerRadius = 16
     button.layer.masksToBounds = true
+    button.addTarget(self, action: #selector(payButtonPressed), for: .touchUpInside)
     
     return button
   }()
@@ -230,6 +231,12 @@ extension CartViewController {
       self.viewModel.loadNFTModels()
       self.refreshControl.endRefreshing()
     }
+  }
+  
+  @objc private func payButtonPressed() {
+    let viewControllerToPush = CurrencyViewController(viewModel: CurrencyControllerViewModel(service: CurrencyService()))
+    viewControllerToPush.hidesBottomBarWhenPushed = true
+    navigationController?.pushViewController(viewControllerToPush, animated: true)
   }
 }
 

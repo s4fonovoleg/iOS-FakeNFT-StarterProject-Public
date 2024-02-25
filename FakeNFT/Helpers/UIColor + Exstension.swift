@@ -21,6 +21,7 @@ extension UIColor {
     UIColor(named: "YPYellow") ?? .yellow }
   static var YPBackground: UIColor {
     UIColor(named: "YPBackground") ?? .systemBackground }
+  static var YPBlackAndBlue: UIColor { UIColor(named: "YPBlackAndBlue") ?? .systemBlue}
 }
 
 extension UIColor {
