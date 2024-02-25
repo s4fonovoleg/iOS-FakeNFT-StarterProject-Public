@@ -231,14 +231,8 @@ extension CurrencyViewController: UICollectionViewDataSource {
     cell.layer.cornerRadius = 12
     cell.layer.masksToBounds = true
     cell.backgroundColor = .YPLightGrey
-    
-    if isSelected {
-      cell.layer.borderWidth = 1
-      cell.layer.borderColor = UIColor.YPBlack.cgColor
-    } else {
-      cell.layer.borderWidth = 0
-      cell.layer.borderColor = .none
-    }
+    cell.layer.borderWidth = isSelected ? 1 : 0
+    cell.layer.borderColor = isSelected ? UIColor.YPBlack.cgColor : .none
     
     return cell
   }
