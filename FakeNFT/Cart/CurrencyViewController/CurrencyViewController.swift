@@ -142,6 +142,20 @@ final class CurrencyViewController: UIViewController, SuccessfulPaymentViewContr
       payButton.isEnabled = false
     }
   }
+  
+  private func showSuccessfulPaymentView() {
+    let viewToPresent = SuccessfulPaymentViewController()
+    viewToPresent.delegate = self
+    viewToPresent.modalPresentationStyle = .fullScreen
+    viewToPresent.modalTransitionStyle = .crossDissolve
+    self.present(viewToPresent, animated: true)
+  }
+  
+  private func showFailedPaymentAlert() {
+    AlertPresenter.showAlert(model: ModelOfError(message: L10n.Localizable.Label.paymentErrorTitle, actionText: L10n.Localizable.Button.tryAgainTitle, cancelText: L10n.Localizable.Button.cancelTitle, action: {
+      self.payButtonTapped()
+    }), controller: self)
+  }
 }
 
 // MARK: - LifeCycle:
@@ -155,6 +169,14 @@ extension CurrencyViewController {
     }
     viewModel.onChangeLoader = { isLoading in
       isLoading ? UIBlockingProgressHUD.show() : UIBlockingProgressHUD.hide()
+    }
+    viewModel.onChangeSuccess = { [weak self] in
+      guard let self else { return }
+      self.showSuccessfulPaymentView()
+    }
+    viewModel.onChangeFail = { [weak self] in
+      guard let self else { return }
+      self.showFailedPaymentAlert()
     }
     self.view.backgroundColor = Asset.CustomColors.ypWhite.color
     setupNavBar()
@@ -182,11 +204,9 @@ extension CurrencyViewController {
   }
   
   @objc private func payButtonTapped() {
-    let viewToPresent = SuccessfulPaymentViewController()
-    viewToPresent.delegate = self
-    viewToPresent.modalPresentationStyle = .fullScreen
-    viewToPresent.modalTransitionStyle = .crossDissolve
-    self.present(viewToPresent, animated: true)
+    guard let selectedIndexPath else { return }
+    let currency = viewModel.currencies[selectedIndexPath.row]
+    viewModel.makePayment(with: Int(currency.id) ?? 0)
   }
 }
 

@@ -18,6 +18,9 @@
 "Button.PayButtonTitle" = "Pay";
 "Button.paymentAgreementTitle" = "User agreement";
 "Button.backToCatalogTitle" = "Return to catalog";
+"Button.cancelTitle" = "Cancel";
+"Button.tryAgainTitle" = "Try again";
+"Label.paymentErrorTitle" = "Failed to make \npayment";
 "Label.choosePaymentTypeTitle" = "Select a payment method";
 "Label.priceTitle" = "Price";
 "Label.deleteNftLabel" = "Are you sure you want to \ndelete the item from the cart?";

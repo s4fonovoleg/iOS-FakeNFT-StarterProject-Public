@@ -18,6 +18,9 @@
 "Button.PayButtonTitle" = "Оплатить";
 "Button.paymentAgreementTitle" = "Пользовательского соглашения";
 "Button.backToCatalogTitle" = "Вернуться в каталог";
+"Button.cancelTitle" = "Отмена";
+"Button.tryAgainTitle" = "Повторить";
+"Label.paymentErrorTitle" = "Не удалось произвести \nоплату";
 "Label.priceTitle" = "Цена";
 "Label.deleteNftLabel" = "Вы уверены, что хоитите \nудалить объект из корзины?";
 "Label.sortingTitle" = "Сортировка";

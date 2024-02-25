@@ -1,11 +1,7 @@
 import Foundation
 import UIKit
 
-protocol SortingAlertPresenterProtocol: AnyObject {
-  static func showAlert(model: SortingAlertModel, controller: UIViewController)
-}
-
-final class SortingAlertPresenter: SortingAlertPresenterProtocol {
+final class SortingAlertPresenter {
   // MARK: - Methods:
   static func showAlert(model: SortingAlertModel, controller: UIViewController) {
     let alert = UIAlertController(
