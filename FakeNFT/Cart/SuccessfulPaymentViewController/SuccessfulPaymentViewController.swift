@@ -2,6 +2,8 @@ import Foundation
 import UIKit
 
 final class SuccessfulPaymentViewController: UIViewController {
+  // MARK: - Properties:
+  weak var delegate: SuccessfulPaymentViewControllerDelegate?
   // MARK: - Privatre Properties:
   private lazy var successImageView: UIImageView = {
     let imageView = UIImageView()
@@ -30,6 +32,7 @@ final class SuccessfulPaymentViewController: UIViewController {
     button.setTitleColor(Asset.CustomColors.ypWhite.color, for: .normal)
     button.layer.cornerRadius = 16
     button.layer.masksToBounds = true
+    button.addTarget(self, action: #selector(backToCatalogButtonPressed), for: .touchUpInside)
     
     return button
   }()
@@ -76,11 +79,13 @@ extension SuccessfulPaymentViewController {
 // MARK: - Objc-Methods:
 extension SuccessfulPaymentViewController {
   @objc private func backToCatalogButtonPressed() {
-    if let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController {
+    if let window = UIApplication.shared.windows.first(where: {$0.isKeyWindow}),
+       let tabBarController = window.rootViewController as? UITabBarController {
       DispatchQueue.main.async {
         tabBarController.selectedIndex = 1
       }
       self.dismiss(animated: true)
+      delegate?.backButtonPressed()
     }
   }
 }

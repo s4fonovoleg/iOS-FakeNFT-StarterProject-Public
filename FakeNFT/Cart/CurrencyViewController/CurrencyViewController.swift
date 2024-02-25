@@ -1,7 +1,11 @@
 import Foundation
 import UIKit
 
-final class CurrencyViewController: UIViewController {
+protocol SuccessfulPaymentViewControllerDelegate: AnyObject {
+  func backButtonPressed()
+}
+
+final class CurrencyViewController: UIViewController, SuccessfulPaymentViewControllerDelegate {
   // MARK: - Private Properties:
   private let viewModel: CurrencyViewModelProtocol
   private var selectedIndexPath: IndexPath? {
@@ -48,6 +52,7 @@ final class CurrencyViewController: UIViewController {
     button.backgroundColor = Asset.CustomColors.ypBlack.color
     button.layer.cornerRadius = 16
     button.layer.masksToBounds = true
+    button.addTarget(self, action: #selector(payButtonTapped), for: .touchUpInside)
     
     return button
   }()
@@ -167,13 +172,21 @@ extension CurrencyViewController {
 
 // MARK: - Objc-Methods:
 extension CurrencyViewController {
-  @objc private func backButtonPressed() {
+  @objc func backButtonPressed() {
     navigationController?.popViewController(animated: true)
   }
   
   @objc private func agreementButtonPressed() {
     let viewToPresent = UserAgreementViewController(viewModel: UserAgreementViewModel())
     navigationController?.pushViewController(viewToPresent, animated: true)
+  }
+  
+  @objc private func payButtonTapped() {
+    let viewToPresent = SuccessfulPaymentViewController()
+    viewToPresent.delegate = self
+    viewToPresent.modalPresentationStyle = .fullScreen
+    viewToPresent.modalTransitionStyle = .crossDissolve
+    self.present(viewToPresent, animated: true)
   }
 }
 
