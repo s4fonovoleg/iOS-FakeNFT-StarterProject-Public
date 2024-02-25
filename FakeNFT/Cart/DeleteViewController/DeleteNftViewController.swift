@@ -32,7 +32,7 @@ final class DeleteNftViewController: UIViewController {
     let label = UILabel()
     label.font = .caption2
     label.text = L10n.Localizable.Label.deleteNftLabel
-    label.textColor = .YPBlack
+    label.textColor = Asset.CustomColors.ypBlack.color
     label.numberOfLines = 2
     label.textAlignment = .center
     
@@ -41,9 +41,9 @@ final class DeleteNftViewController: UIViewController {
   
   private lazy var deleteButton: UIButton = {
     let button = UIButton(type: .system)
-    button.setTitleColor(.YPRed, for: .normal)
+    button.setTitleColor(Asset.CustomColors.ypRed.color, for: .normal)
     button.setTitle(L10n.Localizable.Button.deleteTitle, for: .normal)
-    button.backgroundColor = .YPBlack
+    button.backgroundColor = Asset.CustomColors.ypBlack.color
     button.layer.cornerRadius = 12
     button.layer.masksToBounds = true
     button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
@@ -53,9 +53,9 @@ final class DeleteNftViewController: UIViewController {
   
   private lazy var returnButton: UIButton = {
     let button = UIButton(type: .system)
-    button.setTitleColor(.YPWhite, for: .normal)
+    button.setTitleColor(Asset.CustomColors.ypWhite.color, for: .normal)
     button.setTitle(L10n.Localizable.Button.returnTitle, for: .normal)
-    button.backgroundColor = .YPBlack
+    button.backgroundColor = Asset.CustomColors.ypBlack.color
     button.layer.cornerRadius = 12
     button.layer.masksToBounds = true
     button.addTarget(self, action: #selector(returnButtonTapped), for: .touchUpInside)

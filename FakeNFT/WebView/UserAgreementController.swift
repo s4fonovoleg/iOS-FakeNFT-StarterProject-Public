@@ -15,9 +15,9 @@ final class UserAgreementViewController: UIViewController {
   
   private lazy var progressView: UIProgressView = {
     let progress = UIProgressView()
-    progress.progressTintColor = .YPBlackAndBlue
+    progress.progressTintColor = Asset.CustomColors.ypBlackAndBlue.color
     progress.progressViewStyle = .bar
-    progress.trackTintColor = .YPWhiteUniversal
+    progress.trackTintColor = Asset.CustomColors.ypWhiteUniversal.color
     
     return progress
   }()
@@ -35,8 +35,8 @@ final class UserAgreementViewController: UIViewController {
   private func setupNavBar() {
     if navigationController?.navigationBar != nil {
       title = L10n.Localizable.Label.paymentAgreementTitle
-      let leftBarButton = UIBarButtonItem(image: UIImage(named: "backButtonIcon"), style: .plain, target: self, action: #selector(backButtonPressed))
-      leftBarButton.tintColor = .YPBlack
+      let leftBarButton = UIBarButtonItem(image: Asset.CustomIcons.backButtonIcon.image, style: .plain, target: self, action: #selector(backButtonPressed))
+      leftBarButton.tintColor = Asset.CustomColors.ypBlack.color
       navigationItem.leftBarButtonItem = leftBarButton
       navigationItem.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 0)
     }

@@ -12,7 +12,7 @@ final class CurrencyViewController: UIViewController {
   private let geometricParams = GeometricParams(cellCount: 2, leftInset: 16, rightInset: 16, cellSpacing: 7)
   private lazy var paymentView: UIView = {
     let view = UIView()
-    view.backgroundColor = .YPLightGrey
+    view.backgroundColor = Asset.CustomColors.ypLightGrey.color
     view.layer.cornerRadius = 12
     view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     
@@ -21,7 +21,7 @@ final class CurrencyViewController: UIViewController {
   
   private lazy var agreementLabel: UILabel = {
     let label = UILabel()
-    label.textColor = .YPBlack
+    label.textColor = Asset.CustomColors.ypBlack.color
     label.font = .caption2
     label.text = L10n.Localizable.Label.paymentAgreement
     label.textAlignment = .left
@@ -33,7 +33,7 @@ final class CurrencyViewController: UIViewController {
     let button = UIButton(type: .system)
     button.backgroundColor = .clear
     button.titleLabel?.font = .caption2
-    button.setTitleColor(.YPBlue, for: .normal)
+    button.setTitleColor(Asset.CustomColors.ypBlue.color, for: .normal)
     button.setTitle(L10n.Localizable.Button.paymentAgreementTitle, for: .normal)
     button.addTarget(self, action: #selector(agreementButtonPressed), for: .touchUpInside)
     
@@ -43,9 +43,9 @@ final class CurrencyViewController: UIViewController {
   private lazy var payButton: UIButton = {
     let button = UIButton(type: .system)
     button.setTitle(L10n.Localizable.Button.payTitle, for: .normal)
-    button.tintColor = .YPWhite
+    button.tintColor = Asset.CustomColors.ypWhite.color
     button.titleLabel?.font = .bodyBold
-    button.backgroundColor = .YPBlack
+    button.backgroundColor = Asset.CustomColors.ypBlack.color
     button.layer.cornerRadius = 16
     button.layer.masksToBounds = true
     
@@ -79,8 +79,8 @@ final class CurrencyViewController: UIViewController {
   private func setupNavBar() {
     if navigationController?.navigationBar != nil {
       title = L10n.Localizable.Label.choosePaymentTypeTitle
-      let leftBarButton = UIBarButtonItem(image: UIImage(named: "backButtonIcon"), style: .plain, target: self, action: #selector(backButtonPressed))
-      leftBarButton.tintColor = .YPBlack
+      let leftBarButton = UIBarButtonItem(image: Asset.CustomIcons.backButtonIcon.image, style: .plain, target: self, action: #selector(backButtonPressed))
+      leftBarButton.tintColor = Asset.CustomColors.ypBlack.color
       navigationItem.leftBarButtonItem = leftBarButton
       navigationItem.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 0)
     }
@@ -151,7 +151,7 @@ extension CurrencyViewController {
     viewModel.onChangeLoader = { isLoading in
       isLoading ? UIBlockingProgressHUD.show() : UIBlockingProgressHUD.hide()
     }
-    self.view.backgroundColor = .YPWhite
+    self.view.backgroundColor = Asset.CustomColors.ypWhite.color
     setupNavBar()
     setupLayout()
     setupConstraints()
@@ -230,9 +230,9 @@ extension CurrencyViewController: UICollectionViewDataSource {
     cell.configureCell(currency)
     cell.layer.cornerRadius = 12
     cell.layer.masksToBounds = true
-    cell.backgroundColor = .YPLightGrey
+    cell.backgroundColor = Asset.CustomColors.ypLightGrey.color
     cell.layer.borderWidth = isSelected ? 1 : 0
-    cell.layer.borderColor = isSelected ? UIColor.YPBlack.cgColor : .none
+    cell.layer.borderColor = isSelected ? Asset.CustomColors.ypBlack.color.cgColor : .none
     
     return cell
   }
