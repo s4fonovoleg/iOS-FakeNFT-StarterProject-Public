@@ -50,6 +50,7 @@ internal enum Asset {
   }
   internal enum CustomImages {
     internal static let placeholder = ImageAsset(name: "placeholder")
+    internal static let successPayment = ImageAsset(name: "successPayment")
     internal static let zeusIcon = ImageAsset(name: "zeusIcon")
   }
   internal static let close = ImageAsset(name: "close")

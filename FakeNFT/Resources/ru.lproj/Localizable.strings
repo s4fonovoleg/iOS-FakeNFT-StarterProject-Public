@@ -17,6 +17,7 @@
 "Button.closeButtonTitle" = "Закрыть";
 "Button.PayButtonTitle" = "Оплатить";
 "Button.paymentAgreementTitle" = "Пользовательского соглашения";
+"Button.backToCatalogTitle" = "Вернуться в каталог";
 "Label.priceTitle" = "Цена";
 "Label.deleteNftLabel" = "Вы уверены, что хоитите \nудалить объект из корзины?";
 "Label.sortingTitle" = "Сортировка";
@@ -24,4 +25,5 @@
 "Label.choosePaymentTypeTitle" = "Выберите способ оплаты";
 "Label.paymentAgreement" = "Совершая покупку, вы соглашаетесь с условиями";
 "Label.paymentAgreementTitle" = "Пользовательское соглашение";
+"Label.successPaymentTitle" = "Успех! Оплата прошла,\nпоздравляем с покупкой!";
 
