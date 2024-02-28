@@ -34,7 +34,6 @@ final class CurrencyService: CurrencyServiceProtocol {
     networkClient.send(request: request, type: PaymentModel.self) { result in
       switch result {
       case .success(let model):
-        print(model.success)
         completion(.success(model.success))
       case .failure(let error):
         completion(.failure(error))

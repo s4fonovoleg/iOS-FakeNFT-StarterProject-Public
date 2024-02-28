@@ -24,6 +24,7 @@ final class CurrencyControllerViewModel: CurrencyViewModelProtocol {
   }
   // MARK: - Private Properties:
   private let service: CurrencyServiceProtocol
+  private let cartService = CartService()
   
   // MARK: - Methods:
   init(service: CurrencyServiceProtocol) {
@@ -51,14 +52,19 @@ final class CurrencyControllerViewModel: CurrencyViewModelProtocol {
       switch result {
       case .success(let response):
         if response == true {
-          print("Оплата прошла успешно")
           self.onChangeSuccess?()
+          self.cartService.updateOrder(with: []) { result in // Добавил данный метод, т.к. корзина
+            switch result { // не очищается самостоятельно сервером, согласовано с наставником!
+            case .success:
+              print("Заказ успешно обновлен")
+            case .failure:
+              print("Не удалось обновить заказ")
+            }
+          }
         } else {
-          print("Не удалось оплатить заказ")
           self.onChangeFail?()
         }
       case .failure:
-        print("Не удалось оплатить заказ")
         onChangeFail?()
       }
     }
