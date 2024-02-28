@@ -24,7 +24,7 @@ final class CurrencyControllerViewModel: CurrencyViewModelProtocol {
   }
   // MARK: - Private Properties:
   private let service: CurrencyServiceProtocol
-  private let cartService = CartService()
+  private let cartService = CartService() // Для удаления данных из корзины
   
   // MARK: - Methods:
   init(service: CurrencyServiceProtocol) {
@@ -52,9 +52,10 @@ final class CurrencyControllerViewModel: CurrencyViewModelProtocol {
       switch result {
       case .success(let response):
         if response == true {
+          self.onChangeLoader?(false)
           self.onChangeSuccess?()
           self.cartService.updateOrder(with: []) { result in // Добавил данный метод, т.к. корзина
-            switch result { // не очищается самостоятельно сервером, согласовано с наставником!
+            switch result { // не очищается сервером после оплаты, согласовано с наставником!
             case .success:
               print("Заказ успешно обновлен")
             case .failure:
@@ -62,12 +63,13 @@ final class CurrencyControllerViewModel: CurrencyViewModelProtocol {
             }
           }
         } else {
+          self.onChangeLoader?(false)
           self.onChangeFail?()
         }
       case .failure:
+        self.onChangeLoader?(false)
         onChangeFail?()
       }
     }
-    self.onChangeLoader?(false)
   }
 }

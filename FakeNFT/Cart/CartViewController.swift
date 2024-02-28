@@ -161,7 +161,7 @@ class CartViewController: UIViewController {
   
   private func updateSortButtonCondition() {
     if (navigationController?.navigationBar) != nil {
-      navigationItem.rightBarButtonItem?.isEnabled = viewModel.nfts.isEmpty ? false : true
+      navigationController?.isNavigationBarHidden = viewModel.nfts.isEmpty
     }
   }
   
