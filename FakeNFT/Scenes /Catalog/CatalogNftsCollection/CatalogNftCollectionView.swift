@@ -9,13 +9,22 @@ import UIKit
 import SnapKit
 import ProgressHUD
 
-final class CatalogNftCollectionView: UIViewController {
+protocol CatalogCollectionCellDelegate: AnyObject {
+    func tapOnLike()
+    func tapOnCart()
+}
 
-    private var service = CatalogNftService()
+final class CatalogNftCollectionView: UIViewController {
 
     var id: String?
 
-    private var scrollView = UIScrollView()
+    private var viewModel = CatalogCollectionViewModel()
+
+    private var scrollView: UIScrollView = {
+        var scroll = UIScrollView()
+        scroll.showsVerticalScrollIndicator = false
+        return scroll
+    }()
 
     private var imageView: UIImageView = {
         var image = UIImageView()
@@ -36,54 +45,95 @@ final class CatalogNftCollectionView: UIViewController {
     private var nameOfAuthor: UILabel = {
         var label = UILabel()
         label.font = .caption2
+        label.text = "Автор колекции:"
         label.textColor = UIColor(named: "BlackColor")
         return label
+    }()
+
+    private var nameOfAuthorButton: UIButton = {
+        var button = UIButton()
+        button.titleLabel?.font = .caption2
+        button.setTitleColor(.systemBlue, for: .normal)
+        return button
     }()
 
     private var nftDescription: UILabel = {
         var label = UILabel()
         label.font = .caption2
         label.numberOfLines = 0
-        label.clipsToBounds = true
         label.textColor = UIColor(named: "BlackColor")
         return label
     }()
 
     private var collectionView: UICollectionView = {
         var collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-//        collection.backgroundColor = UIColor(named: "White")
-        collection.contentInset = UIEdgeInsets(top: 6, left: 16, bottom: 24, right: 16)
+        collection.backgroundColor = UIColor(named: "WhiteColor")
+        collection.contentInset = UIEdgeInsets(top: 6, left: 0, bottom: 24, right: 0)
         return collection
     }()
 
+    convenience init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, id: String) {
+        self.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        viewModel.id = id
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isTranslucent = true
+        collectionView.register(CatalogCollectionCell.self,
+                                forCellWithReuseIdentifier: CatalogCollectionCell.catalofNftId)
         setupScreen()
-        service.loadNftColletion(compleition: { result in
-            switch result {
-            case .success(let res):
-                self.imageView.kf.setImage(with: URL(string: res.cover))
-                self.nameOfNFTCollectionLabel.text = res.name
-                self.nameOfAuthor.text = "Автор коллекции: " + res.author
-                self.nftDescription.text = res.description
-            case .failure(_):
-                print("lol")
-            }}, id: id!)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        bind()
+        navigationController?.navigationBar.isTranslucent = true
+        ProgressHUD.show()
+        viewModel.loadNft()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        ProgressHUD.dismiss()
+    }
+
+    private func bind() {
+        viewModel.showError = {
+            self.showError(ErrorModel(message: NSLocalizedString("Error.network", comment: ""),
+                                      actionText: NSLocalizedString("Error.repeat", comment: ""),
+                                      action: { self.viewModel.loadNft()})
+            )
+        }
+        viewModel.collectionChange = {
+            ProgressHUD.dismiss()
+            self.collectionView.reloadData()
+        }
+        viewModel.imageChange = {
+            self.imageView.kf.setImage(with: self.viewModel.imageURL)
+        }
+        viewModel.descriptionChange = {
+            self.nftDescription.text = self.viewModel.nftDescription
+        }
+        viewModel.nameOfAuthorChange = {
+            self.nameOfAuthorButton.setTitle(self.viewModel.nameOfAuthor, for: .normal)
+        }
+        viewModel.nameOfNFTCollectionChange = {
+            self.nameOfNFTCollectionLabel.text = self.viewModel.nameOfNFTCollection
+        }
     }
 
     private func setupScreen() {
         view.addSubview(scrollView)
+        scrollView.showsVerticalScrollIndicator = false
         scrollView.contentInsetAdjustmentBehavior = .never
         [imageView,
-        nameOfNFTCollectionLabel,
-        nameOfAuthor,
+         nameOfNFTCollectionLabel,
+         nameOfAuthor,
+         nameOfAuthorButton,
          nftDescription,
-        collectionView].forEach {
+         collectionView].forEach {
             self.scrollView.addSubview($0)
         }
         scrollView.snp.makeConstraints {
-            $0.left.bottom.right.top.equalToSuperview()
+            $0.left.right.top.bottom.equalToSuperview()
         }
         imageView.snp.makeConstraints {
             $0.top.left.equalToSuperview()
@@ -98,9 +148,13 @@ final class CatalogNftCollectionView: UIViewController {
         }
         nameOfAuthor.snp.makeConstraints {
             $0.top.equalTo(nameOfNFTCollectionLabel.snp_bottomMargin).offset(20)
+            $0.height.equalTo(28)
             $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
-            $0.width.equalToSuperview().offset(-32)
+        }
+        nameOfAuthorButton.snp.makeConstraints {
+            $0.top.equalTo(nameOfNFTCollectionLabel.snp_bottomMargin).offset(20)
+            $0.height.equalTo(28)
+            $0.left.equalTo(nameOfAuthor.snp_rightMargin).offset(10)
         }
         nftDescription.snp.makeConstraints {
             $0.top.equalTo(nameOfAuthor.snp_bottomMargin).offset(15)
@@ -112,9 +166,54 @@ final class CatalogNftCollectionView: UIViewController {
             $0.top.equalTo(nftDescription.snp_bottomMargin).offset(15)
             $0.left.equalToSuperview().offset(16)
             $0.right.equalToSuperview().offset(-16)
-            $0.width.equalToSuperview().offset(-32)
-            $0.bottom.greaterThanOrEqualToSuperview()
+            $0.height.equalTo(500)
+            $0.bottom.equalToSuperview()
         }
         view.backgroundColor = UIColor(named: "WhiteColor")
+    }
+}
+
+extension CatalogNftCollectionView: ErrorView {}
+
+extension CatalogNftCollectionView: UICollectionViewDataSource {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        viewModel.colletotionData.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CatalogCollectionCell.catalofNftId,
+                                                      for: indexPath) as? CatalogCollectionCell
+        cell?.config(viewModel.colletotionData[indexPath.row])
+        cell?.delegate = self
+        return cell ?? UICollectionViewCell()
+    }
+
+}
+
+extension CatalogNftCollectionView: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: 108, height: 192)
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        5
+    }
+}
+
+extension CatalogNftCollectionView: CatalogCollectionCellDelegate {
+
+    func tapOnLike() {
+        print(1)
+    }
+
+    func tapOnCart() {
+        print(2)
     }
 }

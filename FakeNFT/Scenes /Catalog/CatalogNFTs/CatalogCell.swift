@@ -41,6 +41,7 @@ final class CatalogCell: UITableViewCell {
         contentView.addSubview(nftLable)
         selectionStyle = .none
         backgroundColor = UIColor(named: "WhiteColor")
+
         nftImageView.snp.makeConstraints {
             $0.height.equalTo(140)
             $0.top.equalToSuperview()
@@ -49,11 +50,9 @@ final class CatalogCell: UITableViewCell {
         }
 
         nftLable.snp.makeConstraints {
-            $0.left.equalTo(nftImageView)
-            $0.top.equalTo(nftImageView.snp_bottomMargin).offset(12)
-            $0.bottom.equalToSuperview()
-            $0.right.equalTo(nftImageView)
+            $0.left.right.equalTo(nftImageView)
+            $0.top.equalTo(nftImageView.snp_bottomMargin).offset(10)
         }
-
     }
+
 }

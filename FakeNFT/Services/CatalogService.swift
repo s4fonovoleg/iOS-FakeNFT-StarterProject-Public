@@ -8,7 +8,7 @@
 import Foundation
 
 final class CatalogService {
-    
+
     func loadNftColletion(compleition: @escaping (Result<[CatalogCollection], Error>) -> Void) {
         var urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL + "/api/v1/collections")!)
         urlRequest.setValue(RequestConstants.token,

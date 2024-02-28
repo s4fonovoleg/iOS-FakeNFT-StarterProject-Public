@@ -25,11 +25,38 @@ final class CatalogNftService {
             }
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
-            if let resutl = try? decoder.decode(CatalogCollection.self, from: data) {
+            if let result = try? decoder.decode(CatalogCollection.self, from: data) {
+
                 DispatchQueue.main.async {
-                    compleition(.success(resutl))
+                    compleition(.success(result))
                 }
             }
         }.resume()
+    }
+
+    func loadNfts( nfts: [String], compleition: @escaping (Result<[Nft], Error>) -> Void) {
+        let group = DispatchGroup()
+        var nft = [Nft]()
+        for id in nfts {
+            var urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL + "/api/v1/nft/\(id)")!)
+            urlRequest.setValue(RequestConstants.token,
+                                forHTTPHeaderField: "X-Practicum-Mobile-Token")
+            group.enter()
+            URLSession.shared.dataTask(with: urlRequest) { data, _, _ in
+                guard let data else {
+                    group.leave()
+                    return
+                }
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                if let result = try? decoder.decode(Nft.self, from: data) {
+                    nft.append(result)
+                }
+                group.leave()
+            }.resume()
+        }
+        group.notify(queue: .main) {
+            compleition(.success(nft))
+        }
     }
 }

@@ -21,7 +21,7 @@ class CatalogViewModel {
         }
     }
 
-    private(set) var isLoading = false
+    private var isLoading = false
 
     func loadNft() {
         guard isLoading != true else {

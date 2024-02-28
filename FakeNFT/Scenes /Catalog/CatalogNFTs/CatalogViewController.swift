@@ -89,6 +89,8 @@ class CatalogViewController: UIViewController {
     private func setupScreen() {
         tableView.backgroundColor = UIColor(named: "WhiteColor")
         view.backgroundColor = UIColor(named: "WhiteColor")
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
         navigationItem.title = ""
         tableView.snp.makeConstraints {
@@ -118,8 +120,7 @@ extension CatalogViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let id = viewModel.collectionViewId(index: indexPath)
-        let view = CatalogNftCollectionView()
-        view.id = id
+        let view = CatalogNftCollectionView(nibName: nil, bundle: nil, id: id)
         navigationController?.pushViewController(view, animated: true)
     }
 }
