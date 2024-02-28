@@ -28,6 +28,7 @@ final class SuccessfulPaymentViewController: UIViewController {
   private lazy var backToCatalogButton: UIButton = {
     let button = UIButton(type: .system)
     button.setTitle(L10n.Localizable.Button.backToCatalogTitle, for: .normal)
+    button.titleLabel?.font = .bodyBold
     button.backgroundColor = Asset.CustomColors.ypBlack.color
     button.setTitleColor(Asset.CustomColors.ypWhite.color, for: .normal)
     button.layer.cornerRadius = 16
