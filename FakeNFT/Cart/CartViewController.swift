@@ -1,8 +1,6 @@
 import UIKit
 
 class CartViewController: UIViewController {
-  // MARK: - Properties:
-  
   // MARK: - Properties properties:
   private var nftsCount: Int?
   private var totalCost: Float?
@@ -173,12 +171,19 @@ class CartViewController: UIViewController {
     }
   }
   
+  private func configureOverScroll() {
+    let tableHeight = nftTable.frame.height
+    let nftsHeight = CGFloat(viewModel.nfts.count * 140)
+    nftTable.contentInset.bottom = nftsHeight >= tableHeight  ? 76 : 0
+  }
+  
   private func updateUIElements() {
     nftTable.reloadData()
     updatePaymentLabels()
     showOrHideEmptyCartLabel()
     updateSortButtonCondition()
     showOrHidePaymentInfo()
+    configureOverScroll()
   }
 }
 

@@ -43,7 +43,7 @@ final class NFTTAbleViewCell: UITableViewCell {
     let stack = UIStackView()
     stack.axis = .horizontal
     stack.spacing = 2
-
+    
     return stack
   }()
   
