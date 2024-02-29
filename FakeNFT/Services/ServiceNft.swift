@@ -9,4 +9,111 @@ import Foundation
 
 final class ServiceNft {
 
+    func loadOrderId(completion: @escaping ([String]) -> Void) {
+        var urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL + "/api/v1/orders/1")!)
+        urlRequest.setValue(RequestConstants.token,
+                            forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+        URLSession.shared.dataTask(with: urlRequest) { data, _, _ in
+            guard let data else {
+                return
+            }
+            let result = try? JSONDecoder().decode(OrderNft.self, from: data)
+            if let nfts = result?.nfts {
+                DispatchQueue.main.async {
+                    completion(nfts)
+                }
+            }
+        }.resume()
+    }
+
+    func loadLikes(completion: @escaping ([String]) -> Void) {
+        var urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL + "/api/v1/profile/1")!)
+        urlRequest.setValue(RequestConstants.token,
+                            forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+        URLSession.shared.dataTask(with: urlRequest) { data, _, _ in
+            guard let data else {
+                return
+            }
+            let result = try? JSONDecoder().decode(Likes.self, from: data)
+            if let nfts = result?.likes {
+                DispatchQueue.main.async {
+                    completion(nfts)
+                }
+            }
+        }.resume()
+    }
+
+    func putToCart(id: [String]) {
+        var urlRequest: URLRequest
+        if id.isEmpty {
+            urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL +
+                                                 "/api/v1/orders/1")!)
+        } else {
+            urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL +
+                                                 "/api/v1/orders/1?nfts=" +
+                                                 id.joined(separator: ","))!)
+        }
+        urlRequest.setValue(RequestConstants.token,
+                            forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpMethod = "PUT"
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            if let error = error {
+                        print("Error: \(error)")
+                    } else if let data = data {
+                        if let httpResponse = response as? HTTPURLResponse {
+                            switch httpResponse.statusCode {
+                            case 200...299:
+                                print("Запрос выполнен успешно")
+                                print(httpResponse.statusCode)
+                            case 400...499:
+                                print("Ошибка клиентской стороны")
+                            case 500...599:
+                                print("Ошибка серверной стороны")
+                            default:
+                                print("Неизвестный статус кода: \(httpResponse.statusCode)")
+                            }
+                        }
+                    }
+        }.resume()
+    }
+
+    func putToFavorite(id: [String]) {
+        var urlRequest: URLRequest
+        if id.isEmpty {
+            urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL +
+                                                 "/api/v1/profile/1")!)
+        } else {
+            urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL +
+                                                 "/api/v1/profile/1?likes=" +
+                                                 id.joined(separator: ","))!)
+        }
+        urlRequest.setValue(RequestConstants.token,
+                            forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpMethod = "PUT"
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            if let error = error {
+                        print("Error: \(error)")
+                    } else if let data = data {
+                        if let httpResponse = response as? HTTPURLResponse {
+                            switch httpResponse.statusCode {
+                            case 200...299:
+                                print("Запрос выполнен успешно")
+                                print(httpResponse.statusCode)
+                            case 400...499:
+                                print("Ошибка клиентской стороны")
+                            case 500...599:
+                                print("Ошибка серверной стороны")
+                            default:
+                                print("Неизвестный статус кода: \(httpResponse.statusCode)")
+                            }
+                        }
+                    }
+        }.resume()
+    }
 }

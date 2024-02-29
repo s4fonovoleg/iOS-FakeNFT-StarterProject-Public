@@ -10,8 +10,8 @@ import SnapKit
 import ProgressHUD
 
 protocol CatalogCollectionCellDelegate: AnyObject {
-    func tapOnLike()
-    func tapOnCart()
+    func tapOnLike(id: String)
+    func tapOnCart(id: String)
 }
 
 final class CatalogNftCollectionView: UIViewController {
@@ -45,7 +45,8 @@ final class CatalogNftCollectionView: UIViewController {
     private var nameOfAuthor: UILabel = {
         var label = UILabel()
         label.font = .caption2
-        label.text = "Автор колекции:"
+        label.text = NSLocalizedString("nameOfAuthor.text", comment: "")
+        label.isHidden = true
         label.textColor = UIColor(named: "BlackColor")
         return label
     }()
@@ -114,6 +115,7 @@ final class CatalogNftCollectionView: UIViewController {
         }
         viewModel.nameOfAuthorChange = {
             self.nameOfAuthorButton.setTitle(self.viewModel.nameOfAuthor, for: .normal)
+            self.nameOfAuthor.isHidden = false
         }
         viewModel.nameOfNFTCollectionChange = {
             self.nameOfNFTCollectionLabel.text = self.viewModel.nameOfNFTCollection
@@ -185,6 +187,12 @@ extension CatalogNftCollectionView: UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CatalogCollectionCell.catalofNftId,
                                                       for: indexPath) as? CatalogCollectionCell
+        cell?.isOnCart = viewModel.cartCollection.contains(where: { id in
+            id == viewModel.colletotionData[indexPath.row].id
+        })
+        cell?.isLike = viewModel.likesCollection.contains(where: { id in
+            id == viewModel.colletotionData[indexPath.row].id
+        })
         cell?.config(viewModel.colletotionData[indexPath.row])
         cell?.delegate = self
         return cell ?? UICollectionViewCell()
@@ -208,12 +216,11 @@ extension CatalogNftCollectionView: UICollectionViewDelegateFlowLayout {
 }
 
 extension CatalogNftCollectionView: CatalogCollectionCellDelegate {
-
-    func tapOnLike() {
-        print(1)
+    func tapOnCart(id: String) {
+        viewModel.putNft(id: id)
     }
 
-    func tapOnCart() {
-        print(2)
+    func tapOnLike(id: String) {
+        viewModel.putLikes(id: id)
     }
 }

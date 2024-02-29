@@ -13,6 +13,7 @@ final class CatalogNftService {
         var urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL + "/api/v1/collections/\(id)")!)
         urlRequest.setValue(RequestConstants.token,
                             forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
         URLSession.shared.dataTask(with: urlRequest) { data, _, error in
             if let error {
                 DispatchQueue.main.async {
@@ -41,6 +42,7 @@ final class CatalogNftService {
             var urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL + "/api/v1/nft/\(id)")!)
             urlRequest.setValue(RequestConstants.token,
                                 forHTTPHeaderField: "X-Practicum-Mobile-Token")
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
             group.enter()
             URLSession.shared.dataTask(with: urlRequest) { data, _, _ in
                 guard let data else {

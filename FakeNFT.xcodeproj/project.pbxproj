@@ -43,6 +43,8 @@
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		47A1C5872A1B0F9CE488F21F /* Pods_FakeNFTTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8018150FDAFDFF0378F79C /* Pods_FakeNFTTests.framework */; };
 		9B5F5BE4AA25427FB8E00949 /* Pods_FakeNFT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D285E5DA4263594642DB119 /* Pods_FakeNFT.framework */; };
+		C71370152B8F8C8800117133 /* OrderNft.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71370142B8F8C8800117133 /* OrderNft.swift */; };
+		C71370172B902D2000117133 /* Likes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71370162B902D2000117133 /* Likes.swift */; };
 		C7213DAA2B7EFAE300F2BF5B /* CatalogCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7213DA92B7EFAE300F2BF5B /* CatalogCollection.swift */; };
 		C73525AD2B7E747D006FA590 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C73525AF2B7E747D006FA590 /* Localizable.strings */; };
 		C748FA4A2B7DA68E0035340D /* CatalogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748FA492B7DA68E0035340D /* CatalogService.swift */; };
@@ -137,6 +139,8 @@
 		9CD7BFEE095F91E245B230F7 /* Pods-FakeNFT-FakeNFTUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT-FakeNFTUITests.release.xcconfig"; path = "Target Support Files/Pods-FakeNFT-FakeNFTUITests/Pods-FakeNFT-FakeNFTUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AB8018150FDAFDFF0378F79C /* Pods_FakeNFTTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeNFTTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6D788E0E607C739080DF296 /* Pods_FakeNFT_FakeNFTUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeNFT_FakeNFTUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C71370142B8F8C8800117133 /* OrderNft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNft.swift; sourceTree = "<group>"; };
+		C71370162B902D2000117133 /* Likes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Likes.swift; sourceTree = "<group>"; };
 		C7213DA82B7E814400F2BF5B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C7213DA92B7EFAE300F2BF5B /* CatalogCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogCollection.swift; sourceTree = "<group>"; };
 		C73525AE2B7E747D006FA590 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -374,6 +378,8 @@
 			children = (
 				0CFCB7412A78013E0009A829 /* Nft.swift */,
 				C7213DA92B7EFAE300F2BF5B /* CatalogCollection.swift */,
+				C71370142B8F8C8800117133 /* OrderNft.swift */,
+				C71370162B902D2000117133 /* Likes.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -705,6 +711,7 @@
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				C7E1B98E2B8ECE31008C92EF /* ServiceNft.swift in Sources */,
+				C71370152B8F8C8800117133 /* OrderNft.swift in Sources */,
 				C748FA4C2B7DB53C0035340D /* CatalogViewModel.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* NftService.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
@@ -730,6 +737,7 @@
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				0CFCB7442A7802440009A829 /* NftDetailInput.swift in Sources */,
 				0C79EE632A76DD1900EE90EA /* RequestConstants.swift in Sources */,
+				C71370172B902D2000117133 /* Likes.swift in Sources */,
 				C7C2AE7E2B8542C500A214CE /* CatalogNftCollectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

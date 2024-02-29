@@ -15,6 +15,12 @@ final class CatalogCollectionCell: UICollectionViewCell {
 
     weak var delegate: CatalogCollectionCellDelegate?
 
+    private var id: String!
+
+    var isOnCart: Bool = false
+
+    var isLike: Bool = false
+
     private let nftImage: UIImageView = {
         var image = UIImageView()
         image.contentMode = .scaleToFill
@@ -23,7 +29,7 @@ final class CatalogCollectionCell: UICollectionViewCell {
         return image
     }()
 
-    private lazy var addTofavorite: UIButton = {
+    private lazy var addTofavoriteButton: UIButton = {
         var button = UIButton()
         button.setImage(UIImage(named: "LikeOff"), for: .normal)
         button.contentVerticalAlignment = .fill
@@ -32,12 +38,13 @@ final class CatalogCollectionCell: UICollectionViewCell {
         return button
     }()
 
-    private let addToCart: UIButton = {
+    private lazy var addToCartButton: UIButton = {
         var button = UIButton()
         button.setImage(UIImage(named: "CartOff"), for: .normal)
         button.tintColor = .red
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill
+        button.addTarget(self, action: #selector(tapOnCart), for: .touchUpInside)
         return button
     }()
 
@@ -64,8 +71,9 @@ final class CatalogCollectionCell: UICollectionViewCell {
     func config(_ nft: Nft) {
         setupScreen()
         nftImage.kf.setImage(with: URL(string: nft.images.first!))
-        nameOfNftLabel.text = nft.name 
+        nameOfNftLabel.text = nft.name
         priceLabel.text = "\(nft.price)" + " ETH"
+        id = nft.id
         switch nft.rating {
         case 0:
             ratingImage.image = UIImage(named: "ZeroStars")
@@ -89,9 +97,18 @@ final class CatalogCollectionCell: UICollectionViewCell {
         contentView.addSubview(ratingImage)
         contentView.addSubview(nameOfNftLabel)
         contentView.addSubview(priceLabel)
-        contentView.addSubview(addTofavorite)
-        contentView.addSubview(addToCart)
-
+        contentView.addSubview(addTofavoriteButton)
+        contentView.addSubview(addToCartButton)
+        if isOnCart {
+            addToCartButton.setImage(UIImage(named: "CartOn"), for: .normal)
+        } else {
+            addToCartButton.setImage(UIImage(named: "CartOff"), for: .normal)
+        }
+        if isLike {
+            addTofavoriteButton.setImage(UIImage(named: "LikeOn"), for: .normal)
+        } else {
+            addTofavoriteButton.setImage(UIImage(named: "LikeOff"), for: .normal)
+        }
         nftImage.snp.makeConstraints {
             $0.top.left.equalToSuperview()
             $0.height.width.equalTo(108)
@@ -110,21 +127,33 @@ final class CatalogCollectionCell: UICollectionViewCell {
             $0.left.equalToSuperview()
             $0.top.equalTo(nameOfNftLabel.snp_bottomMargin).offset(10)
         }
-        addTofavorite.snp.makeConstraints {
+        addTofavoriteButton.snp.makeConstraints {
             $0.width.height.equalTo(42)
             $0.right.top.equalToSuperview()
         }
-        addToCart.snp.makeConstraints {
+        addToCartButton.snp.makeConstraints {
             $0.width.height.equalTo(42)
             $0.right.bottom.equalToSuperview()
         }
         backgroundColor = UIColor(named: "WhiteColor")
     }
     @objc private func tapOnLike() {
-        delegate?.tapOnLike()
+        delegate?.tapOnLike(id: id)
+        isLike = !isLike
+        if isLike {
+            addTofavoriteButton.setImage(UIImage(named: "LikeOn"), for: .normal)
+        } else {
+            addTofavoriteButton.setImage(UIImage(named: "LikeOff"), for: .normal)
+        }
     }
 
     @objc private func tapOnCart() {
-        delegate?.tapOnCart()
+        delegate?.tapOnCart(id: id)
+        isOnCart = !isOnCart
+        if isOnCart {
+            addToCartButton.setImage(UIImage(named: "CartOn"), for: .normal)
+        } else {
+            addToCartButton.setImage(UIImage(named: "CartOff"), for: .normal)
+        }
     }
 }

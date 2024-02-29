@@ -7,3 +7,4 @@
 "sorting.byName" = "По названию";
 "sorting.byCountOfNft" = "По количесвут NFT";
 "CloseAction" = "Закрыть";
+"nameOfAuthor.text" = "Автор коллекции:";

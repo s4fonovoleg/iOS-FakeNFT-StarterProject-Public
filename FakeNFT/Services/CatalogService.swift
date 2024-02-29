@@ -13,6 +13,7 @@ final class CatalogService {
         var urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL + "/api/v1/collections")!)
         urlRequest.setValue(RequestConstants.token,
                             forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
         URLSession.shared.dataTask(with: urlRequest) { data, _, error in
             if let error {
                 DispatchQueue.main.async {
