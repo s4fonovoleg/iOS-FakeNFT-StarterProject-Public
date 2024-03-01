@@ -8,10 +8,10 @@
 import Foundation
 
 struct CatalogCollection: Codable {
-    var name: String
-    var nfts: [String]
-    var cover: String
-    var id: String
-    var description: String
-    var author: String
+    let name: String
+    let nfts: [String]
+    let cover: String
+    let id: String
+    let description: String
+    let author: String
 }

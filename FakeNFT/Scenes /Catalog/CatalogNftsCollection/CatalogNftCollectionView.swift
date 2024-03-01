@@ -23,6 +23,7 @@ final class CatalogNftCollectionView: UIViewController {
     private var scrollView: UIScrollView = {
         var scroll = UIScrollView()
         scroll.showsVerticalScrollIndicator = false
+        scroll.contentInsetAdjustmentBehavior = .never
         return scroll
     }()
 
@@ -124,8 +125,6 @@ final class CatalogNftCollectionView: UIViewController {
 
     private func setupScreen() {
         view.addSubview(scrollView)
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.contentInsetAdjustmentBehavior = .never
         [imageView,
          nameOfNFTCollectionLabel,
          nameOfAuthor,

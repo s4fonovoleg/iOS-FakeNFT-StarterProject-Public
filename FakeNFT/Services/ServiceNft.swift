@@ -7,7 +7,19 @@
 
 import Foundation
 
-final class ServiceNft {
+protocol NftServiceLoading {
+    func loadOrderId(completion: @escaping ([String]) -> Void)
+    func loadLikes(completion: @escaping ([String]) -> Void)
+}
+
+protocol NftServicePut {
+    func putToCart(id: [String])
+    func putToFavorite(id: [String])
+}
+
+protocol NftServiceFull: NftServiceLoading, NftServicePut {}
+
+final class ServiceNft: NftServiceFull {
 
     func loadOrderId(completion: @escaping ([String]) -> Void) {
         var urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL + "/api/v1/orders/1")!)

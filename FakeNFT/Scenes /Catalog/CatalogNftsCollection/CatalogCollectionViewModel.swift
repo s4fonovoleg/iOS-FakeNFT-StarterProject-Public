@@ -40,10 +40,10 @@ final class CatalogCollectionViewModel {
     }
 
     private(set) var colletotionData = [Nft]() {
-         didSet {
-             collectionChange?()
-         }
-     }
+        didSet {
+            collectionChange?()
+        }
+    }
 
     var descriptionChange: (() -> Void)?
 
@@ -57,39 +57,50 @@ final class CatalogCollectionViewModel {
 
     var nameOfAuthorChange: (() -> Void)?
 
-    private var service = CatalogNftService()
+    private var service: CatalogNftServiceLoading = CatalogNftService()
 
-    private var serviceNft = ServiceNft()
+    private var serviceNft: NftServiceFull = ServiceNft()
 
     func loadNft() {
         guard let id else {
             return
         }
-        service.loadNftColletion(compleition: { result in
+        service.loadNftColletion(compleition: { [weak self] result in
+            guard let self else {
+                return
+            }
+            let dispatch = DispatchGroup()
+            dispatch.enter()
             self.serviceNft.loadOrderId {
                 self.cartCollection = $0
+                dispatch.leave()
             }
+            dispatch.enter()
             self.serviceNft.loadLikes {
                 self.likesCollection = $0
+                dispatch.leave()
             }
-            switch result {
-            case .success(let res):
-                self.service.loadNfts(nfts: res.nfts) { result in
-                    switch result {
-                    case .success(let nft):
-                        self.colletotionData = nft
-                        self.imageURL = URL(string: res.cover)
-                        self.nameOfNFTCollection = "\(res.name.first!.uppercased())" +
-                        res.name.suffix(res.name.count - 1)
-                        self.nameOfAuthor = res.author
-                        self.nftDescription = res.description
-                    case .failure(_):
-                        print(0)
+            dispatch.notify(queue: .main) {
+                switch result {
+                case .success(let res):
+                    self.service.loadNfts(nfts: res.nfts) { result in
+                        switch result {
+                        case .success(let nft):
+                            self.colletotionData = nft
+                            self.imageURL = URL(string: res.cover)
+                            self.nameOfNFTCollection = "\(res.name.first!.uppercased())" +
+                            res.name.suffix(res.name.count - 1)
+                            self.nameOfAuthor = res.author
+                            self.nftDescription = res.description
+                        case .failure(_):
+                            self.showError?()
+                        }
                     }
+                case .failure(_):
+                    self.showError?()
                 }
-            case .failure(_):
-                self.showError?()
-            }}, id: id)
+            }
+        }, id: id)
     }
 
     func putNft(id: String) {

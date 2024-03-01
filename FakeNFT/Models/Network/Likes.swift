@@ -7,6 +7,6 @@
 
 import Foundation
 
-final class Likes: Codable {
+struct Likes: Codable {
     let likes: [String]
 }

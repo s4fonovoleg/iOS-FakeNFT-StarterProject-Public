@@ -93,12 +93,14 @@ final class CatalogCollectionCell: UICollectionViewCell {
     }
 
     private func setupScreen() {
-        contentView.addSubview(nftImage)
-        contentView.addSubview(ratingImage)
-        contentView.addSubview(nameOfNftLabel)
-        contentView.addSubview(priceLabel)
-        contentView.addSubview(addTofavoriteButton)
-        contentView.addSubview(addToCartButton)
+        [nftImage,
+        ratingImage,
+        nameOfNftLabel,
+        priceLabel,
+        addTofavoriteButton,
+        addToCartButton].forEach {
+            contentView.addSubview($0)
+        }
         if isOnCart {
             addToCartButton.setImage(UIImage(named: "CartOn"), for: .normal)
         } else {

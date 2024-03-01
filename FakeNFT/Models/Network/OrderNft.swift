@@ -7,6 +7,6 @@
 
 import Foundation
 
-final class OrderNft: Codable {
+struct OrderNft: Codable {
     let nfts: [String]
 }
