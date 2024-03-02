@@ -7,3 +7,4 @@
 "sorting.byName" = "By name";
 "sorting.byCountOfNft" = "By NFT count";
 "CloseAction" = "Cancel";
+"nameOfAuthor.text" = "Author:";

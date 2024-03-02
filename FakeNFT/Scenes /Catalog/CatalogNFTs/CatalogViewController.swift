@@ -3,7 +3,9 @@ import SnapKit
 import ProgressHUD
 
 class CatalogViewController: UIViewController {
+
     private var viewModel = CatalogViewModel()
+
     private let tableView: UITableView = {
         var table = UITableView()
         table.tableHeaderView = UIView()
@@ -11,6 +13,7 @@ class CatalogViewController: UIViewController {
         table.rowHeight = 179
         return table
     }()
+
     private lazy var sortButton: UIButton = {
         var button = UIButton()
         button.setImage(UIImage(systemName: "text.justifyleft"), for: .normal)
@@ -18,6 +21,7 @@ class CatalogViewController: UIViewController {
         button.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
         return button
     }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
@@ -31,6 +35,10 @@ class CatalogViewController: UIViewController {
         setupScreen()
         loadNfts()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isTranslucent = false
+    }
+
     @objc
     private func filterButtonTapped() {
         let filter = UIAlertController(title: NSLocalizedString("Sorting",
@@ -58,15 +66,18 @@ class CatalogViewController: UIViewController {
         filter.addAction(closeAction)
         present(filter, animated: true)
     }
+
     private func loadNfts() {
         viewModel.loadNft()
     }
+
     private func bind() {
         viewModel.change = {
             self.tableView.reloadData()
             ProgressHUD.dismiss()
         }
     }
+
     private func errorBind() {
         viewModel.showError = {
             self.showError(ErrorModel(message: NSLocalizedString("Error.network", comment: ""),
@@ -74,8 +85,14 @@ class CatalogViewController: UIViewController {
                                       action: self.loadNfts))
         }
     }
+
     private func setupScreen() {
+        tableView.backgroundColor = UIColor(named: "WhiteColor")
+        view.backgroundColor = UIColor(named: "WhiteColor")
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
+        navigationItem.title = ""
         tableView.snp.makeConstraints {
             $0.left.top.right.bottom.equalToSuperview()
         }
@@ -83,9 +100,11 @@ class CatalogViewController: UIViewController {
 }
 
 extension CatalogViewController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.nfts.count
     }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CatalogCell.cellId,
                                                  for: indexPath) as? CatalogCell
@@ -94,11 +113,15 @@ extension CatalogViewController: UITableViewDataSource {
                                      bottom: 0, right: tableView.frame.width / 2)
         return cell ?? UITableViewCell()
     }
+
 }
 
 extension CatalogViewController: UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // реализация в каталоге 2-3
+        let id = viewModel.collectionViewId(index: indexPath)
+        let view = CatalogNftCollectionView(nibName: nil, bundle: nil, id: id)
+        navigationController?.pushViewController(view, animated: true)
     }
 }
 
