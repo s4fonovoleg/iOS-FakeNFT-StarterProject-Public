@@ -76,7 +76,8 @@ final class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.reuseIdentifier)
         
-        setupUI()
+        setupUIElements()
+        setupUILayout()
     }
     
     @objc
@@ -127,12 +128,17 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    private func setupUI(){
+    private func setupUIElements(){
         
         [imageViewUserPicture, labelUserName, textViewDescription, buttonUserPage, tableView].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
+        buttonUserPage.addTarget(self, action: #selector(userPageTapped), for: .touchUpInside)
+        tableView.separatorColor = .clear
+    }
+    
+    private func setupUILayout(){
         
         NSLayoutConstraint.activate([
             imageViewUserPicture.heightAnchor.constraint(equalToConstant: 70),
@@ -155,9 +161,6 @@ final class ProfileViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
         ])
-        
-        buttonUserPage.addTarget(self, action: #selector(userPageTapped), for: .touchUpInside)
-        tableView.separatorColor = .clear
     }
     
     @objc

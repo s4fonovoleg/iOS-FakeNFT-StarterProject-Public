@@ -133,7 +133,8 @@ final class ProfileEditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUI()
+        setupUIElements()
+        setupUILayout()
         
         textFieldChangePicture.delegate = self
         textFieldSite.delegate = self
@@ -216,8 +217,7 @@ final class ProfileEditViewController: UIViewController {
         }
     }
     
-    private func setupUI(){
-        
+    private func setupUIElements(){
         view.backgroundColor = UIColor(named: ColorNames.white)
         view.addSubview(scrollView)
         
@@ -237,6 +237,15 @@ final class ProfileEditViewController: UIViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
+        
+        buttonClose.addTarget(self, action: #selector(buttonCloseTapped), for: .touchUpInside)
+        contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewDidTapped)))
+        
+        labelChangePicture.isUserInteractionEnabled = true
+        labelChangePicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(labelChangePictureToggle)))
+    }
+    
+    private func setupUILayout() {
         
         scrollViewBottomConstraint = scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         scrollViewBottomConstraint?.constant = 0
@@ -301,12 +310,6 @@ final class ProfileEditViewController: UIViewController {
             textFieldSite.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             textFieldSite.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
-        
-        buttonClose.addTarget(self, action: #selector(buttonCloseTapped), for: .touchUpInside)
-        contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewDidTapped)))
-        
-        labelChangePicture.isUserInteractionEnabled = true
-        labelChangePicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(labelChangePictureToggle)))
     }
     
     @objc
