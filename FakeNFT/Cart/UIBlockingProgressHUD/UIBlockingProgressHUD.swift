@@ -12,8 +12,8 @@ final class UIBlockingProgressHUD {
     window?.isUserInteractionEnabled = false
     ProgressHUD.show()
     ProgressHUD.animationType = .activityIndicator
-    ProgressHUD.colorAnimation = .YPBlack
-    ProgressHUD.colorStatus = .YPBlack
+    ProgressHUD.colorAnimation = Asset.CustomColors.ypBlack.color
+    ProgressHUD.colorStatus = Asset.CustomColors.ypBlack.color
     ProgressHUD.mediaSize = 30
     ProgressHUD.marginSize = 30
   }

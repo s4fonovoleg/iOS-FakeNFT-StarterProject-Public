@@ -11,7 +11,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = 6
     imageView.layer.masksToBounds = true
-    imageView.backgroundColor = .YPBlackUniversal
+    imageView.backgroundColor = Asset.CustomColors.ypBlackUniversal.color
     imageView.contentMode = .scaleAspectFit
     
     return imageView
@@ -21,7 +21,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
     let label = UILabel()
     label.numberOfLines = 1
     label.textAlignment = .left
-    label.textColor = .YPBlack
+    label.textColor = Asset.CustomColors.ypBlack.color
     label.font = .caption2
     
     return label
@@ -31,7 +31,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
     let label = UILabel()
     label.numberOfLines = 1
     label.textAlignment = .left
-    label.textColor = .YPGreen
+    label.textColor = Asset.CustomColors.ypGreen.color
     label.font = .caption2
     
     return label
@@ -52,7 +52,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
     guard let url = URL(string: model.image) else { return }
     currencyImageView.kf.setImage(
       with: url,
-      placeholder: UIImage(named: "placeholder"),
+      placeholder: Asset.CustomImages.placeholder.image,
       options: [.transition(.fade(1))])
     currencyNameLabel.text = model.title
     currencyShortNameLabel.text = model.name

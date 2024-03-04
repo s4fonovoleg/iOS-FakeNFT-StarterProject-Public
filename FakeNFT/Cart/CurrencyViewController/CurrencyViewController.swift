@@ -1,7 +1,11 @@
 import Foundation
 import UIKit
 
-final class CurrencyViewController: UIViewController {
+protocol SuccessfulPaymentViewControllerDelegate: AnyObject {
+  func backButtonPressed()
+}
+
+final class CurrencyViewController: UIViewController, SuccessfulPaymentViewControllerDelegate {
   // MARK: - Private Properties:
   private let viewModel: CurrencyViewModelProtocol
   private var selectedIndexPath: IndexPath? {
@@ -12,7 +16,7 @@ final class CurrencyViewController: UIViewController {
   private let geometricParams = GeometricParams(cellCount: 2, leftInset: 16, rightInset: 16, cellSpacing: 7)
   private lazy var paymentView: UIView = {
     let view = UIView()
-    view.backgroundColor = .YPLightGrey
+    view.backgroundColor = Asset.CustomColors.ypLightGrey.color
     view.layer.cornerRadius = 12
     view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     
@@ -21,7 +25,7 @@ final class CurrencyViewController: UIViewController {
   
   private lazy var agreementLabel: UILabel = {
     let label = UILabel()
-    label.textColor = .YPBlack
+    label.textColor = Asset.CustomColors.ypBlack.color
     label.font = .caption2
     label.text = L10n.Localizable.Label.paymentAgreement
     label.textAlignment = .left
@@ -33,7 +37,7 @@ final class CurrencyViewController: UIViewController {
     let button = UIButton(type: .system)
     button.backgroundColor = .clear
     button.titleLabel?.font = .caption2
-    button.setTitleColor(.YPBlue, for: .normal)
+    button.setTitleColor(Asset.CustomColors.ypBlue.color, for: .normal)
     button.setTitle(L10n.Localizable.Button.paymentAgreementTitle, for: .normal)
     button.addTarget(self, action: #selector(agreementButtonPressed), for: .touchUpInside)
     
@@ -43,11 +47,12 @@ final class CurrencyViewController: UIViewController {
   private lazy var payButton: UIButton = {
     let button = UIButton(type: .system)
     button.setTitle(L10n.Localizable.Button.payTitle, for: .normal)
-    button.tintColor = .YPWhite
+    button.tintColor = Asset.CustomColors.ypWhite.color
     button.titleLabel?.font = .bodyBold
-    button.backgroundColor = .YPBlack
+    button.backgroundColor = Asset.CustomColors.ypBlack.color
     button.layer.cornerRadius = 16
     button.layer.masksToBounds = true
+    button.addTarget(self, action: #selector(payButtonTapped), for: .touchUpInside)
     
     return button
   }()
@@ -79,8 +84,8 @@ final class CurrencyViewController: UIViewController {
   private func setupNavBar() {
     if navigationController?.navigationBar != nil {
       title = L10n.Localizable.Label.choosePaymentTypeTitle
-      let leftBarButton = UIBarButtonItem(image: UIImage(named: "backButtonIcon"), style: .plain, target: self, action: #selector(backButtonPressed))
-      leftBarButton.tintColor = .YPBlack
+      let leftBarButton = UIBarButtonItem(image: Asset.CustomIcons.backButtonIcon.image, style: .plain, target: self, action: #selector(backButtonPressed))
+      leftBarButton.tintColor = Asset.CustomColors.ypBlack.color
       navigationItem.leftBarButtonItem = leftBarButton
       navigationItem.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 0)
     }
@@ -137,6 +142,20 @@ final class CurrencyViewController: UIViewController {
       payButton.isEnabled = false
     }
   }
+  
+  private func showSuccessfulPaymentView() {
+    let viewToPresent = SuccessfulPaymentViewController()
+    viewToPresent.delegate = self
+    viewToPresent.modalPresentationStyle = .fullScreen
+    viewToPresent.modalTransitionStyle = .crossDissolve
+    self.present(viewToPresent, animated: true)
+  }
+  
+  private func showFailedPaymentAlert() {
+    AlertPresenter.showAlert(model: ModelOfError(message: L10n.Localizable.Label.paymentErrorTitle, actionText: L10n.Localizable.Button.tryAgainTitle, cancelText: L10n.Localizable.Button.cancelTitle, action: {
+      self.payButtonTapped()
+    }), controller: self)
+  }
 }
 
 // MARK: - LifeCycle:
@@ -151,7 +170,15 @@ extension CurrencyViewController {
     viewModel.onChangeLoader = { isLoading in
       isLoading ? UIBlockingProgressHUD.show() : UIBlockingProgressHUD.hide()
     }
-    self.view.backgroundColor = .YPWhite
+    viewModel.onChangeSuccess = { [weak self] in
+      guard let self else { return }
+      self.showSuccessfulPaymentView()
+    }
+    viewModel.onChangeFail = { [weak self] in
+      guard let self else { return }
+      self.showFailedPaymentAlert()
+    }
+    self.view.backgroundColor = Asset.CustomColors.ypWhite.color
     setupNavBar()
     setupLayout()
     setupConstraints()
@@ -167,13 +194,19 @@ extension CurrencyViewController {
 
 // MARK: - Objc-Methods:
 extension CurrencyViewController {
-  @objc private func backButtonPressed() {
+  @objc func backButtonPressed() {
     navigationController?.popViewController(animated: true)
   }
   
   @objc private func agreementButtonPressed() {
     let viewToPresent = UserAgreementViewController(viewModel: UserAgreementViewModel())
     navigationController?.pushViewController(viewToPresent, animated: true)
+  }
+  
+  @objc private func payButtonTapped() {
+    guard let selectedIndexPath else { return }
+    let currency = viewModel.currencies[selectedIndexPath.row]
+    viewModel.makePayment(with: Int(currency.id) ?? 0)
   }
 }
 
@@ -230,15 +263,9 @@ extension CurrencyViewController: UICollectionViewDataSource {
     cell.configureCell(currency)
     cell.layer.cornerRadius = 12
     cell.layer.masksToBounds = true
-    cell.backgroundColor = .YPLightGrey
-    
-    if isSelected {
-      cell.layer.borderWidth = 1
-      cell.layer.borderColor = UIColor.YPBlack.cgColor
-    } else {
-      cell.layer.borderWidth = 0
-      cell.layer.borderColor = .none
-    }
+    cell.backgroundColor = Asset.CustomColors.ypLightGrey.color
+    cell.layer.borderWidth = isSelected ? 1 : 0
+    cell.layer.borderColor = isSelected ? Asset.CustomColors.ypBlack.color.cgColor : .none
     
     return cell
   }

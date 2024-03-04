@@ -33,7 +33,7 @@ final class NFTTAbleViewCell: UITableViewCell {
     let label = UILabel()
     label.numberOfLines = 1
     label.textAlignment = .left
-    label.textColor = .YPBlack
+    label.textColor = Asset.CustomColors.ypBlack.color
     label.font = .bodyBold
     
     return label
@@ -43,7 +43,7 @@ final class NFTTAbleViewCell: UITableViewCell {
     let stack = UIStackView()
     stack.axis = .horizontal
     stack.spacing = 2
-
+    
     return stack
   }()
   
@@ -51,7 +51,7 @@ final class NFTTAbleViewCell: UITableViewCell {
     let label = UILabel()
     label.numberOfLines = 1
     label.textAlignment = .left
-    label.textColor = .YPBlack
+    label.textColor = Asset.CustomColors.ypBlack.color
     label.text = L10n.Localizable.Label.priceTitle
     label.font = .caption2
     
@@ -62,7 +62,7 @@ final class NFTTAbleViewCell: UITableViewCell {
     let label = UILabel()
     label.numberOfLines = 1
     label.textAlignment = .left
-    label.textColor = .YPBlack
+    label.textColor = Asset.CustomColors.ypBlack.color
     label.font = .bodyBold
     
     return label
@@ -70,9 +70,9 @@ final class NFTTAbleViewCell: UITableViewCell {
   
   private lazy var deleteButton: UIButton = {
     let button = UIButton(type: .system)
-    button.setImage(UIImage(named: "deleteCartIcon"), for: .normal)
+    button.setImage(Asset.CustomIcons.deleteCartIcon.image, for: .normal)
     button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-    button.tintColor = .YPBlack
+    button.tintColor = Asset.CustomColors.ypBlack.color
     
     return button
   }()
@@ -97,7 +97,7 @@ final class NFTTAbleViewCell: UITableViewCell {
     nftImageView.kf.indicatorType = .activity
     nftImageView.kf.setImage(
       with: url,
-      placeholder: UIImage(named: "placeholder"),
+      placeholder: Asset.CustomImages.placeholder.image,
       options: [.transition(.fade(1))])
     nftModel = nft
   }
@@ -155,7 +155,7 @@ final class NFTTAbleViewCell: UITableViewCell {
     let image = UIImage(systemName: "star.fill")
     for _ in 0..<5 {
       let starImageView = UIImageView(image: image)
-      starImageView.tintColor = .YPLightGrey
+      starImageView.tintColor = Asset.CustomColors.ypLightGrey.color
       NSLayoutConstraint.activate([
         starImageView.heightAnchor.constraint(equalToConstant: 12),
         starImageView.widthAnchor.constraint(equalToConstant: 12)
@@ -168,11 +168,11 @@ final class NFTTAbleViewCell: UITableViewCell {
     let value = rating
     let defaultValue = value <= 5 ? value: 5
     for value in 0..<defaultValue {
-      ratingStackView.arrangedSubviews[value].tintColor = .YPYellow
+      ratingStackView.arrangedSubviews[value].tintColor = Asset.CustomColors.ypYellow.color
     }
     
     for value in defaultValue..<5 {
-      ratingStackView.arrangedSubviews[value].tintColor = .YPLightGrey
+      ratingStackView.arrangedSubviews[value].tintColor = Asset.CustomColors.ypLightGrey.color
     }
   }
 }

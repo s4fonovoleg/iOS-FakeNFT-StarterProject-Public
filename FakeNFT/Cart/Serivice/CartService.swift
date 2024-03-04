@@ -48,7 +48,6 @@ final class CartService: CartServiceProtocol {
     networkClient.send(request: request, type: OrderModel.self) { result in
       switch result {
       case .success(let model):
-        print(model.self)
         completion(.success(model.nfts))
       case .failure(let error):
         completion(.failure(error))

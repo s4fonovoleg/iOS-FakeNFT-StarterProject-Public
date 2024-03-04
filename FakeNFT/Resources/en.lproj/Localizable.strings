@@ -17,6 +17,10 @@
 "Button.closeButtonTitle" = "Close";
 "Button.PayButtonTitle" = "Pay";
 "Button.paymentAgreementTitle" = "User agreement";
+"Button.backToCatalogTitle" = "Return to catalog";
+"Button.cancelTitle" = "Cancel";
+"Button.tryAgainTitle" = "Try again";
+"Label.paymentErrorTitle" = "Failed to make \npayment";
 "Label.choosePaymentTypeTitle" = "Select a payment method";
 "Label.priceTitle" = "Price";
 "Label.deleteNftLabel" = "Are you sure you want to \ndelete the item from the cart?";
@@ -24,3 +28,4 @@
 "Label.emptyCartTitle" = "Cart is empty";
 "Label.paymentAgreement" = "By making a purchase, you agree to the terms of the";
 "Label.paymentAgreementTitle" = "User agreement";
+"Label.successPaymentTitle" = "Success! The payment has been completed,\ncongratulations on your purchase!";

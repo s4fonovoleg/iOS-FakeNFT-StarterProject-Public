@@ -1,8 +1,6 @@
 import UIKit
 
 class CartViewController: UIViewController {
-  // MARK: - Properties:
-  
   // MARK: - Properties properties:
   private var nftsCount: Int?
   private var totalCost: Float?
@@ -29,7 +27,7 @@ class CartViewController: UIViewController {
   
   private lazy var paymentView: UIView = {
     let paymentView = UIView()
-    paymentView.backgroundColor = .YPLightGrey
+    paymentView.backgroundColor = Asset.CustomColors.ypLightGrey.color
     paymentView.layer.cornerRadius = 16
     paymentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     paymentView.layer.masksToBounds = true
@@ -42,8 +40,8 @@ class CartViewController: UIViewController {
     let button = UIButton(type: .system)
     button.setTitle(L10n.Localizable.Button.proceedToPayment, for: .normal)
     button.titleLabel?.font = .bodyBold
-    button.setTitleColor(.YPWhite, for: .normal)
-    button.backgroundColor = .YPBlack
+    button.setTitleColor(Asset.CustomColors.ypWhite.color, for: .normal)
+    button.backgroundColor = Asset.CustomColors.ypBlack.color
     button.layer.cornerRadius = 16
     button.layer.masksToBounds = true
     button.addTarget(self, action: #selector(payButtonPressed), for: .touchUpInside)
@@ -54,7 +52,7 @@ class CartViewController: UIViewController {
   private lazy var nftCountLabel: UILabel = {
     let label = UILabel()
     label.font = .caption1
-    label.textColor = .YPBlack
+    label.textColor = Asset.CustomColors.ypBlack.color
     label.textAlignment = .left
     label.numberOfLines = 1
     
@@ -64,7 +62,7 @@ class CartViewController: UIViewController {
   private lazy var totalCostLabel: UILabel = {
     let label = UILabel()
     label.font = .bodyBold
-    label.textColor = .YPGreen
+    label.textColor = Asset.CustomColors.ypGreen.color
     label.textAlignment = .left
     label.numberOfLines = 1
     label.adjustsFontSizeToFitWidth = true
@@ -75,7 +73,7 @@ class CartViewController: UIViewController {
   private lazy var emptyCartLabel: UILabel = {
     let label = UILabel()
     label.font = .bodyBold
-    label.textColor = .YPBlack
+    label.textColor = Asset.CustomColors.ypBlack.color
     label.numberOfLines = 1
     label.textAlignment = .center
     label.text = L10n.Localizable.Label.emptyCartTitle
@@ -94,7 +92,7 @@ class CartViewController: UIViewController {
   }
   private func navBarSetup() {
     if (navigationController?.navigationBar) != nil {
-      let rightButton = UIBarButtonItem(image: UIImage(named: "sortIcon"), style: .plain, target: self, action: #selector(sortButtonTapped))
+      let rightButton = UIBarButtonItem(image: Asset.CustomIcons.sortIcon.image, style: .plain, target: self, action: #selector(sortButtonTapped))
       navigationItem.rightBarButtonItem = rightButton
     }
   }
@@ -163,7 +161,7 @@ class CartViewController: UIViewController {
   
   private func updateSortButtonCondition() {
     if (navigationController?.navigationBar) != nil {
-      navigationItem.rightBarButtonItem?.isEnabled = viewModel.nfts.isEmpty ? false : true
+      navigationController?.isNavigationBarHidden = viewModel.nfts.isEmpty
     }
   }
   
@@ -173,12 +171,19 @@ class CartViewController: UIViewController {
     }
   }
   
+  private func configureOverScroll() {
+    let tableHeight = nftTable.frame.height
+    let nftsHeight = CGFloat(viewModel.nfts.count * 140)
+    nftTable.contentInset.bottom = nftsHeight >= tableHeight  ? 76 : 0
+  }
+  
   private func updateUIElements() {
     nftTable.reloadData()
     updatePaymentLabels()
     showOrHideEmptyCartLabel()
     updateSortButtonCondition()
     showOrHidePaymentInfo()
+    configureOverScroll()
   }
 }
 
