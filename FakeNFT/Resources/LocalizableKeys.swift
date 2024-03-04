@@ -18,6 +18,7 @@ enum LocalizableKeys {
     static let profileEditLabelName = "Profile.edit.labelName"
     static let profileEditLabelDescription = "Profile.edit.labelDescription"
     static let profileEditLabelSite = "Profile.edit.labelSite"
+    static let profileMyNFTsTitle = "Profile.myNFTs.title"
     static let tabCatalog = "Tab.catalog"
     static let tabProfile = "Tab.profile"
 }

@@ -8,5 +8,6 @@
 "Profile.edit.labelName" = "Имя";
 "Profile.edit.labelDescription" = "Описание";
 "Profile.edit.labelSite" = "Сайт";
+"Profile.myNFTs.title" = "Мои NFT";
 "Tab.catalog" = "Каталог";
 "Tab.profile" = "Профиль";

@@ -12,7 +12,6 @@ class ProfileMyNFTsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        title = "My NFTs Page"
-        view.backgroundColor = .blue
+        title = NSLocalizedString(LocalizableKeys.profileMyNFTsTitle, comment: "")
     }
 }
