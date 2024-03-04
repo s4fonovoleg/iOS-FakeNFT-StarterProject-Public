@@ -13,6 +13,8 @@ final class AboutAuthorView: UIViewController {
 
     private var webView = WKWebView()
 
+    var url: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
@@ -30,6 +32,7 @@ final class AboutAuthorView: UIViewController {
     }
 
     private func loadWebPage() {
+        // тут должна быть url но так как она не рабочая пока это
         guard let url = URL(string: "https://practicum.yandex.ru/ios-developer") else {
             print("Invalid URL")
             return

@@ -101,6 +101,7 @@ final class CatalogNftCollectionView: UIViewController {
     @objc
     private func tapOnAuthorButton() {
         let view = AboutAuthorView()
+        view.url = viewModel.authorUrl
         navigationController?.pushViewController(view, animated: true)
     }
 
@@ -219,6 +220,11 @@ extension CatalogNftCollectionView: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         5
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let view = NftView()
+        navigationController?.pushViewController(view, animated: true)
     }
 }
 

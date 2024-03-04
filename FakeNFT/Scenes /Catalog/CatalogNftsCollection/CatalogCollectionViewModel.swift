@@ -45,6 +45,8 @@ final class CatalogCollectionViewModel {
         }
     }
 
+    private(set) var authorUrl : String?
+
     var descriptionChange: (() -> Void)?
 
     var nameOfNFTCollectionChange: (() -> Void)?
@@ -78,6 +80,7 @@ final class CatalogCollectionViewModel {
             dispatch.enter()
             self.serviceNft.loadLikes {
                 self.likesCollection = $0
+                self.authorUrl = $1
                 dispatch.leave()
             }
             dispatch.notify(queue: .main) {
