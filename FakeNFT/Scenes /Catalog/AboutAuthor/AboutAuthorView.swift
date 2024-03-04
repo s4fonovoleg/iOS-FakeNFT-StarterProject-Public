@@ -13,14 +13,18 @@ final class AboutAuthorView: UIViewController {
 
     private var webView = WKWebView()
 
+    private var viewModel = AboutAuthorViewModel()
+
     var url: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
         setupScreen()
-        ProgressHUD.show()
-        loadWebPage()
+        bind()
+        if let url {
+            viewModel.setUrl(stringUrl: url)
+        }
     }
 
     private func setupScreen() {
@@ -31,20 +35,27 @@ final class AboutAuthorView: UIViewController {
         }
     }
 
-    private func loadWebPage() {
-        // тут должна быть url но так как она не рабочая пока это
-        guard let url = URL(string: "https://practicum.yandex.ru/ios-developer") else {
-            print("Invalid URL")
-            return
+    private func bind() {
+        viewModel.loadWebView = {
+            // тут должна быть url но так как она не рабочая пока это
+            guard let url = URL(string: "https://practicum.yandex.ru/ios-developer") else {
+                print("Invalid URL")
+                return
+            }
+            let request = URLRequest(url: url)
+            self.webView.load(request)
         }
-
-        let request = URLRequest(url: url)
-        webView.load(request)
     }
 }
 
 extension AboutAuthorView: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        ProgressHUD.dismiss()
+        if webView.isLoading {
+            ProgressHUD.show()
+        } else {
+            ProgressHUD.dismiss()
+        }
     }
 }
+
+extension AboutAuthorView: ErrorView {}

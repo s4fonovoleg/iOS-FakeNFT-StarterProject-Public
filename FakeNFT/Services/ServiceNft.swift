@@ -9,7 +9,7 @@ import Foundation
 
 protocol NftServiceLoading {
     func loadOrderId(completion: @escaping ([String]) -> Void)
-    func loadLikes(completion: @escaping ([String],String) -> Void)
+    func loadLikes(completion: @escaping (Likes) -> Void)
 }
 
 protocol NftServicePut {
@@ -39,7 +39,7 @@ final class ServiceNft: NftServiceFull {
         }.resume()
     }
 
-    func loadLikes(completion: @escaping ([String],String) -> Void) {
+    func loadLikes(completion: @escaping (Likes) -> Void) {
         var urlRequest = URLRequest(url: URL(string: RequestConstants.baseURL + "/api/v1/profile/1")!)
         urlRequest.setValue(RequestConstants.token,
                             forHTTPHeaderField: "X-Practicum-Mobile-Token")
@@ -49,9 +49,9 @@ final class ServiceNft: NftServiceFull {
                 return
             }
             let result = try? JSONDecoder().decode(Likes.self, from: data)
-            if let nfts = result {
+            if let nft = result {
                 DispatchQueue.main.async {
-                    completion(nfts.likes,nfts.website)
+                    completion(nft)
                 }
             }
         }.resume()

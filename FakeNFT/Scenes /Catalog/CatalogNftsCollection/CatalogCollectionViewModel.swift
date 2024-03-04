@@ -79,8 +79,8 @@ final class CatalogCollectionViewModel {
             }
             dispatch.enter()
             self.serviceNft.loadLikes {
-                self.likesCollection = $0
-                self.authorUrl = $1
+                self.likesCollection = $0.likes
+                self.authorUrl = $0.website
                 dispatch.leave()
             }
             dispatch.notify(queue: .main) {
