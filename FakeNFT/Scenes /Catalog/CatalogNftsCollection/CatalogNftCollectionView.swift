@@ -52,10 +52,11 @@ final class CatalogNftCollectionView: UIViewController {
         return label
     }()
 
-    private var nameOfAuthorButton: UIButton = {
+    private lazy var nameOfAuthorButton: UIButton = {
         var button = UIButton()
         button.titleLabel?.font = .caption2
         button.setTitleColor(.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(tapOnAuthorButton), for: .touchUpInside)
         return button
     }()
 
@@ -95,6 +96,12 @@ final class CatalogNftCollectionView: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         ProgressHUD.dismiss()
+    }
+
+    @objc
+    private func tapOnAuthorButton() {
+        let view = AboutAuthorView()
+        navigationController?.pushViewController(view, animated: true)
     }
 
     private func bind() {
@@ -171,6 +178,7 @@ final class CatalogNftCollectionView: UIViewController {
             $0.bottom.equalToSuperview()
         }
         view.backgroundColor = UIColor(named: "WhiteColor")
+        navigationItem.title = ""
     }
 }
 

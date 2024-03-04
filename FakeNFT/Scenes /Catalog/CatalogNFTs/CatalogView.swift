@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import ProgressHUD
 
-class CatalogViewController: UIViewController {
+class CatalogView: UIViewController {
 
     private var viewModel = CatalogViewModel()
 
@@ -99,7 +99,7 @@ class CatalogViewController: UIViewController {
     }
 }
 
-extension CatalogViewController: UITableViewDataSource {
+extension CatalogView: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.nfts.count
@@ -116,7 +116,7 @@ extension CatalogViewController: UITableViewDataSource {
 
 }
 
-extension CatalogViewController: UITableViewDelegate {
+extension CatalogView: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let id = viewModel.collectionViewId(index: indexPath)
@@ -125,4 +125,4 @@ extension CatalogViewController: UITableViewDelegate {
     }
 }
 
-extension CatalogViewController: ErrorView {}
+extension CatalogView: ErrorView {}

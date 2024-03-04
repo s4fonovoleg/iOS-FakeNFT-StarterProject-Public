@@ -125,4 +125,8 @@ final class CatalogCollectionViewModel {
         serviceNft.putToFavorite(id: likesCollection)
     }
 
+    func tapOnAuthor() {
+
+    }
+
 }
