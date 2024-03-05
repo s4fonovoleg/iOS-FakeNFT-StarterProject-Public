@@ -45,7 +45,7 @@ final class CatalogCollectionViewModel {
         }
     }
 
-    private(set) var authorUrl : String?
+    private(set) var authorUrl: String?
 
     var descriptionChange: (() -> Void)?
 

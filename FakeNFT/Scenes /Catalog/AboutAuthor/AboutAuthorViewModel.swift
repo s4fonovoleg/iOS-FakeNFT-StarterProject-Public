@@ -15,7 +15,7 @@ final class AboutAuthorViewModel {
         }
     }
 
-    func setUrl(stringUrl : String) {
+    func setUrl(stringUrl: String) {
         authorUrl = stringUrl
     }
 
