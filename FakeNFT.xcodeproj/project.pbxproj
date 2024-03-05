@@ -42,6 +42,7 @@
 		4A26B87A2B9761BA00AE591A /* FirstPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A26B8792B9761BA00AE591A /* FirstPageViewController.swift */; };
 		4A26B87C2B97673500AE591A /* SecondPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A26B87B2B97673500AE591A /* SecondPageViewController.swift */; };
 		4A26B87E2B97677E00AE591A /* ThirdPageCiewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A26B87D2B97677E00AE591A /* ThirdPageCiewController.swift */; };
+		4A26B8822B97CE4300AE591A /* OnboradingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A26B8812B97CE4300AE591A /* OnboradingViewModel.swift */; };
 		4A27E9092B77E1AF007906B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4A27E90B2B77E1AF007906B0 /* Localizable.strings */; };
 		4A27E90F2B77E43E007906B0 /* Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E90E2B77E43E007906B0 /* Generated.swift */; };
 		4A39C98D2B852426000774FA /* CurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A39C98C2B852426000774FA /* CurrencyViewController.swift */; };
@@ -140,6 +141,7 @@
 		4A26B8792B9761BA00AE591A /* FirstPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageViewController.swift; sourceTree = "<group>"; };
 		4A26B87B2B97673500AE591A /* SecondPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondPageViewController.swift; sourceTree = "<group>"; };
 		4A26B87D2B97677E00AE591A /* ThirdPageCiewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPageCiewController.swift; sourceTree = "<group>"; };
+		4A26B8812B97CE4300AE591A /* OnboradingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboradingViewModel.swift; sourceTree = "<group>"; };
 		4A27E90C2B77E1B1007906B0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4A27E90D2B77E1DA007906B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4A27E90E2B77E43E007906B0 /* Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generated.swift; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				4A26B8712B97587900AE591A /* SpalshViewController */,
 				4A26B8722B97588900AE591A /* Pages */,
 				4A26B8772B975C4500AE591A /* OnboardingViewController.swift */,
+				4A26B8812B97CE4300AE591A /* OnboradingViewModel.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -867,6 +870,7 @@
 				4AC2F1C82B8642330048A4DD /* UserAgreementController.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
+				4A26B8822B97CE4300AE591A /* OnboradingViewModel.swift in Sources */,
 				4A584C422B7BB0370053865E /* DeleteNftViewController.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
 				4AC69EFE2B7D25360029B4B6 /* PaymentModel.swift in Sources */,

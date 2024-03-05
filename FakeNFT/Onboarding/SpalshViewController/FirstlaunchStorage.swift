@@ -14,12 +14,4 @@ final class FirstLaunchStorage {
   
   // MARK: - Private properties:
   private var userDefaults = UserDefaults.standard
-  
-  // MARK: - Methods:
-  func cleanUserDefaults() {
-    let domain = Bundle.main.bundleIdentifier!
-    UserDefaults.standard.removePersistentDomain(forName: domain)
-    UserDefaults.standard.synchronize()
-    print(Array(UserDefaults.standard.dictionaryRepresentation().keys))
-  }
 }

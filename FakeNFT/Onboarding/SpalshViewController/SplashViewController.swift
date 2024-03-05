@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-final class SpalshViewController: UIViewController {
+final class SplashViewController: UIViewController {
   // MARK: - Private Properties:
   private let firstLaunchStorage = FirstLaunchStorage.shared
   
@@ -34,7 +34,9 @@ final class SpalshViewController: UIViewController {
       fatalError("Не удалось инициализировать AppDelegate")
     }
     if firstLaunchStorage.wasLaunchedBefore {
-      appDelegate.window?.rootViewController = TabBarController()
+      let tabBarController = TabBarController()
+      tabBarController.tabBar.configureTabBarAppearance()
+      appDelegate.window?.rootViewController = tabBarController
     } else {
       appDelegate.window?.rootViewController = OnboardingViewController()
       firstLaunchStorage.wasLaunchedBefore = true
@@ -43,12 +45,13 @@ final class SpalshViewController: UIViewController {
 }
 
 // MARK: - LifeCycle:
-extension SpalshViewController {
+extension SplashViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
     view.backgroundColor = .white
     setupLayout()
     setupConstraints()
+    checkIfFirstLaunch()
   }
 }

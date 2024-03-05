@@ -20,7 +20,7 @@
 "Button.backToCatalogTitle" = "Return to catalog";
 "Button.cancelTitle" = "Cancel";
 "Button.tryAgainTitle" = "Try again";
-"Button.whatsInsideTitle" = "Что внутри?";
+"Button.whatsInsideTitle" = "What's inside?";
 "Label.paymentErrorTitle" = "Failed to make \npayment";
 "Label.choosePaymentTypeTitle" = "Select a payment method";
 "Label.priceTitle" = "Price";
@@ -31,8 +31,8 @@
 "Label.paymentAgreementTitle" = "User agreement";
 "Label.successPaymentTitle" = "Success! The payment has been completed,\ncongratulations on your purchase!";
 "Label.firstPageResearchTitle" = "Explore";
-"Label.firstPageTitle" = "Join us and discover a new world \nof unique NFTs for collectors";
+"Label.firstPageTitle" = "Join us and discover a new world of unique NFTs \nfor collectors";
 "Label.secondPageCollectTitle" = "Collect";
-"Label.secondPageTitle" = "Expand your collection with exclusive \npictures created by the neural network!";
+"Label.secondPageTitle" = "Expand your collection with exclusive pictures \ncreated by the neural network!";
 "Label.thirdPageCompeteTitle" = "Compete";
-"Label.thirdPageTitle" = "See the statistics of others and show everyone \nthat you have the most valuable collection";
+"Label.thirdPageTitle" = "See the statistics of others and show everyone that \nyou have the most valuable collection";
