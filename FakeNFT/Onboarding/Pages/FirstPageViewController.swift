@@ -6,7 +6,7 @@ final class FirstPageViewController: UIViewController {
   private lazy var imageView: UIImageView = {
     let image = Asset.CustomImages.firstPageImage.image
     let imageView = UIImageView(image: image)
-    imageView.contentMode = .scaleAspectFill
+    imageView.contentMode = .scaleAspectFit
     
     return imageView
   }()
@@ -56,8 +56,15 @@ final class FirstPageViewController: UIViewController {
       textLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
       textLabel.topAnchor.constraint(equalTo: headerTitle.bottomAnchor, constant: 12),
       textLabel.heightAnchor.constraint(equalToConstant: 40)
-      
     ])
+  }
+  
+  private func makeGradient() {
+    let gradientLayer = CAGradientLayer()
+    gradientLayer.frame = view.frame
+    gradientLayer.colors = [Asset.CustomColors.ypBlackUniversal.color.cgColor, UIColor.clear.cgColor]
+    gradientLayer.locations = [0.0, 0.7]
+    imageView.layer.addSublayer(gradientLayer)
   }
 }
 
@@ -68,5 +75,6 @@ extension FirstPageViewController {
     
     setupLayout()
     setupConstraints()
+    makeGradient()
   }
 }

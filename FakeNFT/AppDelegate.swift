@@ -11,7 +11,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
   ) -> Bool {
     tabBarController.tabBar.configureTabBarAppearance()
     window = UIWindow(frame: UIScreen.main.bounds)
-    window?.rootViewController = tabBarController
+    window?.rootViewController =  ThirdPageViewController()//tabBarController 
     window?.makeKeyAndVisible()
     
     return true
