@@ -20,6 +20,7 @@
 "Button.backToCatalogTitle" = "Вернуться в каталог";
 "Button.cancelTitle" = "Отмена";
 "Button.tryAgainTitle" = "Повторить";
+"Button.whatsInsideTitle" = "Что внутри?";
 "Label.paymentErrorTitle" = "Не удалось произвести \nоплату";
 "Label.priceTitle" = "Цена";
 "Label.deleteNftLabel" = "Вы уверены, что хоитите \nудалить объект из корзины?";
@@ -29,4 +30,9 @@
 "Label.paymentAgreement" = "Совершая покупку, вы соглашаетесь с условиями";
 "Label.paymentAgreementTitle" = "Пользовательское соглашение";
 "Label.successPaymentTitle" = "Успех! Оплата прошла,\nпоздравляем с покупкой!";
-
+"Label.firstPageResearchTitle" = "Исследуйте";
+"Label.firstPageTitle" = "Присоединяйтесь и откройте новый мир \nуникальных NFT для коллекционеров";
+"Label.secondPageCollectTitle" = "Коллекционируйте";
+"Label.secondPageTitle" = "Пополняйте свою коллекцию эксклюзивными \nкартинками, созданными нейросетью!";
+"Label.thirdPageCompeteTitle" = "Состязайтесь";
+"Label.thirdPageTitle" = "Смотрите статистику других и покажите всем, \nчто у вас самая ценная коллекция";
