@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 import WebKit
 
 final class AboutAuthorView: UIViewController {
@@ -18,19 +19,10 @@ final class AboutAuthorView: UIViewController {
 
     private var progressView = UIProgressView()
 
-    private lazy var backButton: UIButton = {
-        var button = UIButton()
-        button.tintColor = UIColor(named: "BlackColor")
-        button.setImage(UIImage(named: "BackButton"), for: .normal)
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
-        button.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
-        return button
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
+        tabBarController?.tabBar.isTranslucent = true
         webView.navigationDelegate = self
         setupScreen()
         bind()
@@ -40,25 +32,22 @@ final class AboutAuthorView: UIViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = false
+        tabBarController?.tabBar.isHidden = false
+        tabBarController?.tabBar.isTranslucent = false
     }
 
     private func setupScreen() {
         view.backgroundColor = UIColor(named: "WhiteColor")
         view.addSubview(webView)
-        view.addSubview(backButton)
         view.addSubview(progressView)
         webView.snp.makeConstraints {
-            $0.left.right.bottom.top.equalToSuperview()
+            $0.left.right.bottom.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
         }
-        backButton.snp.makeConstraints {
-            $0.height.width.equalTo(30)
-            $0.left.equalToSuperview().offset(3)
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(4)
-        }
+
         progressView.snp.makeConstraints {
             $0.left.right.equalToSuperview()
-            $0.top.equalTo(backButton.snp.bottom)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(2)
         }
     }
@@ -75,10 +64,6 @@ final class AboutAuthorView: UIViewController {
         }
     }
 
-    @objc
-    private func tapBackButton() {
-        navigationController?.popViewController(animated: true)
-    }
 }
 
 extension AboutAuthorView: WKNavigationDelegate {
