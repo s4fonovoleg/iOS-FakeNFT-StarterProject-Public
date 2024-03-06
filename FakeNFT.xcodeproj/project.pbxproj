@@ -36,6 +36,7 @@
 		3FC8C39129D2453B0081F015 /* CurrenciesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* CurrenciesRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		4A1BF8F62B7FA74D00040027 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1BF8F52B7FA74D00040027 /* CartViewModel.swift */; };
+		4A1DE34B2B9930CD008B75E3 /* ReviewRequestStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DE34A2B9930CD008B75E3 /* ReviewRequestStorage.swift */; };
 		4A26B8742B9758A000AE591A /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A26B8732B9758A000AE591A /* SplashViewController.swift */; };
 		4A26B8762B97592300AE591A /* FirstlaunchStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A26B8752B97592300AE591A /* FirstlaunchStorage.swift */; };
 		4A26B8782B975C4500AE591A /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A26B8772B975C4500AE591A /* OnboardingViewController.swift */; };
@@ -135,6 +136,7 @@
 		3FC8C39029D2453B0081F015 /* CurrenciesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		4A1BF8F52B7FA74D00040027 /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
+		4A1DE34A2B9930CD008B75E3 /* ReviewRequestStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRequestStorage.swift; sourceTree = "<group>"; };
 		4A26B8732B9758A000AE591A /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		4A26B8752B97592300AE591A /* FirstlaunchStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstlaunchStorage.swift; sourceTree = "<group>"; };
 		4A26B8772B975C4500AE591A /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 		3F68068A29CBBAF100B4F915 = {
 			isa = PBXGroup;
 			children = (
+				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069529CBBAF100B4F915 /* FakeNFT */,
 				3F6806AC29CBBAF200B4F915 /* FakeNFTTests */,
 				3F6806B629CBBAF200B4F915 /* FakeNFTUITests */,
@@ -291,7 +294,6 @@
 				4AC2F1C62B8642210048A4DD /* WebView */,
 				4AB30ABF2B7A4CC100F86D9B /* Cart */,
 				4AFBFBA72B7A2E7800D181C7 /* Helpers */,
-				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
 				3F6806CE29CBBD1B00B4F915 /* Foundation */,
 				3F6806C929CBBCAF00B4F915 /* Models */,
@@ -498,6 +500,7 @@
 			isa = PBXGroup;
 			children = (
 				4A7CA6752B80D249008B50F7 /* SortTypeStorage.swift */,
+				4A1DE34A2B9930CD008B75E3 /* ReviewRequestStorage.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -929,6 +932,7 @@
 				4AC69EF82B7D22A60029B4B6 /* NFTModel.swift in Sources */,
 				4A39C98D2B852426000774FA /* CurrencyViewController.swift in Sources */,
 				4AC69EFC2B7D24760029B4B6 /* OrderModel.swift in Sources */,
+				4A1DE34B2B9930CD008B75E3 /* ReviewRequestStorage.swift in Sources */,
 				0C79EE632A76DD1900EE90EA /* RequestConstants.swift in Sources */,
 				4AC2F1D32B86C06A0048A4DD /* GeometricParams.swift in Sources */,
 			);

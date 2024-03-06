@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import StoreKit
 
 final class SuccessfulPaymentViewController: UIViewController {
   // MARK: - Properties:
@@ -21,6 +22,7 @@ final class SuccessfulPaymentViewController: UIViewController {
     label.textColor = Asset.CustomColors.ypBlack.color
     label.font = .headline3
     label.text = L10n.Localizable.Label.successPaymentTitle
+    label.adjustsFontSizeToFitWidth = true
     
     return label
   }()
@@ -64,6 +66,21 @@ final class SuccessfulPaymentViewController: UIViewController {
       backToCatalogButton.heightAnchor.constraint(equalToConstant: 60)
     ])
   }
+  
+  private func askForReview() {
+    let counter = ReviewRequestStorage.reviewRequestCounter
+    if counter != 0 && counter % 50 == 0 {
+      guard let scene = view.window?.windowScene else {
+        print("no scene")
+        return
+      }
+      if #available(iOS 14.0, *) {
+        SKStoreReviewController.requestReview(in: scene)
+      } else {
+        // Fallback on earlier versions
+      }
+    }
+  }
 }
 
 // MARK: - LifeCycle:
@@ -87,6 +104,7 @@ extension SuccessfulPaymentViewController {
       }
       self.dismiss(animated: true)
       delegate?.backButtonPressed()
+      askForReview()
     }
   }
 }

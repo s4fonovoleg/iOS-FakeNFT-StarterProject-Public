@@ -18,3 +18,22 @@ import Foundation
     }
   }
 }
+
+@propertyWrapper struct UserDefaultsReviewCounter {
+  let userDefaults: UserDefaults
+  let key: String
+  
+  init(userDefaults: UserDefaults = .standard, key: String) {
+    self.userDefaults = userDefaults
+    self.key = key
+  }
+  
+  var wrappedValue: Int {
+    get {
+      userDefaults.integer(forKey: key)
+    }
+    set {
+      userDefaults.set(newValue, forKey: key)
+    }
+  }
+}

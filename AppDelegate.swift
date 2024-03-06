@@ -8,6 +8,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     _: UIApplication,
     didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    ReviewRequestStorage.reviewRequestCounter += 1
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = SplashViewController()
     window?.makeKeyAndVisible()
