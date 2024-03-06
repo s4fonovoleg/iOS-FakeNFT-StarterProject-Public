@@ -9,4 +9,5 @@ import Foundation
 
 struct Likes: Codable {
     let likes: [String]
+    let website: String
 }

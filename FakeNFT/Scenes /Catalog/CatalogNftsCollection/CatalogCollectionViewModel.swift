@@ -45,6 +45,8 @@ final class CatalogCollectionViewModel {
         }
     }
 
+    private(set) var authorUrl: String?
+
     var descriptionChange: (() -> Void)?
 
     var nameOfNFTCollectionChange: (() -> Void)?
@@ -77,7 +79,8 @@ final class CatalogCollectionViewModel {
             }
             dispatch.enter()
             self.serviceNft.loadLikes {
-                self.likesCollection = $0
+                self.likesCollection = $0.likes
+                self.authorUrl = $0.website
                 dispatch.leave()
             }
             dispatch.notify(queue: .main) {
@@ -123,6 +126,10 @@ final class CatalogCollectionViewModel {
             self.likesCollection.append(id)
         }
         serviceNft.putToFavorite(id: likesCollection)
+    }
+
+    func tapOnAuthor() {
+
     }
 
 }

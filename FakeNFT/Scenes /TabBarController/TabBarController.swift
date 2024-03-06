@@ -11,9 +11,11 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let catalogController = UINavigationController(rootViewController: CatalogViewController())
+        let catalogController = UINavigationController(rootViewController: CatalogView())
         catalogController.tabBarItem = catalogTabBarItem
         catalogController.navigationBar.barTintColor = UIColor(named: "WhiteColor")
+        catalogController.navigationBar.tintColor = UIColor(named: "BlackColor")
+        
         tabBar.isTranslucent = false
         tabBar.barTintColor = UIColor(named: "WhiteColor")
         tabBar.tintColor = .systemBlue
