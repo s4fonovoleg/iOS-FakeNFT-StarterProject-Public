@@ -5,9 +5,10 @@
 //  Created by Eugene Dmitrichenko on 20.02.2024.
 //
 
+import UIKit
 import Combine
 import Kingfisher
-import UIKit
+import ProgressHUD
 
 final class ProfileViewController: UIViewController {
     
@@ -16,7 +17,7 @@ final class ProfileViewController: UIViewController {
     private var subscriptions = Set<AnyCancellable>()
     private var website: String?
     private var favoriteNFTs: [String]?
-    private var myNFTs: [String]?
+    private var myNFTIDs: [String]?
     
     private let buttonUserPage: UIButton = {
         let button = UIButton()
@@ -49,6 +50,7 @@ final class ProfileViewController: UIViewController {
         textView.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         textView.textContainer.maximumNumberOfLines = 3
         textView.isEditable = false
+        textView.backgroundColor = UIColor(named: ColorNames.white)
         return textView
     }()
     
@@ -66,18 +68,13 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let editButton = UIBarButtonItem(image: UIImage(named: ImageNames.buttonEdit), style: .plain, target: self, action: #selector(buttonEditTapped))
-        
-        editButton.tintColor = UIColor(named: ColorNames.black)
-        
-        navigationItem.rightBarButtonItem = editButton
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.reuseIdentifier)
         
         setupUIElements()
         setupUILayout()
+        ProgressHUD.show()
     }
     
     @objc
@@ -92,6 +89,9 @@ final class ProfileViewController: UIViewController {
     private func setupBindings(){
         
         profileViewModel.$avatar.sink(receiveValue: { [weak self] avatar in
+            
+            ProgressHUD.dismiss()
+            
             if let self = self, let url = avatar, let imageUrl = URL(string: url) {
                 let roundCornerEffect = RoundCornerImageProcessor(cornerRadius: 8.0)
                 self.imageViewUserPicture.kf.indicatorType = .activity
@@ -108,7 +108,7 @@ final class ProfileViewController: UIViewController {
         }).store(in: &subscriptions)
         
         profileViewModel.$myNFTs.sink(receiveValue: { [weak self] myNFTs in
-            self?.myNFTs = myNFTs
+            self?.myNFTIDs = myNFTs
             self?.tableView.reloadData()
         }).store(in: &subscriptions)
         
@@ -129,6 +129,17 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupUIElements(){
+        
+        view.backgroundColor = UIColor(named: ColorNames.white)
+        
+        let editButton = UIBarButtonItem(image: UIImage(named: ImageNames.buttonEdit), style: .plain, target: self, action: #selector(buttonEditTapped))
+        editButton.tintColor = UIColor(named: ColorNames.black)
+        
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        backButton.tintColor = UIColor(named: ColorNames.black)
+        
+        navigationItem.rightBarButtonItem = editButton
+        navigationItem.backBarButtonItem = backButton
         
         [imageViewUserPicture, labelUserName, textViewDescription, buttonUserPage, tableView].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -186,7 +197,11 @@ extension ProfileViewController: UITableViewDelegate {
         
         switch indexPath.row {
         case 0:
-            viewController = ProfileMyNFTsController()
+            let myNFTsViewModel = profileViewModel.genMyNFTsViewModel()
+            
+            myNFTsViewModel.getNFTs(by: myNFTIDs)
+            
+            viewController = ProfileMyNFTsController(myNFTsViewModel: myNFTsViewModel)
         case 1:
             viewController = ProfileFavoriteNFTsController()
         default:
@@ -211,7 +226,7 @@ extension ProfileViewController: UITableViewDataSource {
         
         switch indexPath.row {
         case 0:
-            let number = myNFTs?.count ?? 0
+            let number = myNFTIDs?.count ?? 0
             cell.textLabel?.text = "Мои NFT ( \(number.description) )"
         case 1:
             let number = favoriteNFTs?.count ?? 0

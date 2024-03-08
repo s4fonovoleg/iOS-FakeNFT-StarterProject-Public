@@ -22,6 +22,7 @@ final class ProfileTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         accessoryView = myAccessoryView
         textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        self.backgroundColor = UIColor(named: ColorNames.white)
     }
     
     required init?(coder: NSCoder) {

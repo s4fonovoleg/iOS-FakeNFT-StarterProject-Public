@@ -23,10 +23,22 @@ final class ProfileViewModel {
         didSet {
             avatar = profile?.avatar
             description = profile?.description
-            favoriteNFTs = profile?.likes
-            myNFTs = profile?.nfts
             name = profile?.name
             website = profile?.website
+            favoriteNFTs = profile?.likes
+            
+            // FIXME: Используем мокковые данные пока в профиле отсутствуют реальные
+//            myNFTs = profile?.nfts
+            
+            let mockNFTsList = [
+                "d6a02bd1-1255-46cd-815b-656174c1d9c0",
+                "b2f44171-7dcd-46d7-a6d3-e2109aacf520",
+                "594aaf01-5962-4ab7-a6b5-470ea37beb93",
+                "9e472edf-ed51-4901-8cfc-8eb3f617519f",
+                "a4edeccd-ad7c-4c7f-b09e-6edec02a812b",
+                "2c9d09f6-25ac-4d6f-8d6a-175c4de2b42f"
+            ]
+            myNFTs = mockNFTsList
         }
     }
     
@@ -63,5 +75,10 @@ final class ProfileViewModel {
         
         guard let profile = profile else { return nil }
         return ProfileEditViewModel(servicesAssembly: servicesAssembly, parentViewModel: self, with: profile)
+    }
+    
+    func genMyNFTsViewModel() -> ProfileMyNFTsViewModel {
+        
+        return ProfileMyNFTsViewModel(servicesAssembly: servicesAssembly)
     }
 }
