@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class ProfileMyNFTsTableViewCell: UITableViewCell {
+final class ProfileMyNFTsTableViewCell: UITableViewCell {
     
     static let reuseIdentifier = "MyNFTsTableViewCell"
     
@@ -116,10 +116,11 @@ class ProfileMyNFTsTableViewCell: UITableViewCell {
     }
     
     private func setupUI(){
-        
         self.accessoryType = .none
         
-        [imageViewNFT, imageViewFavorite, stackNFT, stackNFTLeft, labelName, stackRating, viewAuthor, labelFrom, labelAuthor, stackNFTRight, labelPrice, labelPriceValue, viewNFTContent].forEach {
+        [imageViewNFT, imageViewFavorite, stackNFT,
+         stackNFTLeft, labelName, stackRating, viewAuthor, labelFrom, labelAuthor,
+         stackNFTRight, labelPrice, labelPriceValue, viewNFTContent].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
@@ -144,9 +145,7 @@ class ProfileMyNFTsTableViewCell: UITableViewCell {
     }
     
     private func setupUILayout(){
-        
         NSLayoutConstraint.activate([
-            
             viewNFTContent.heightAnchor.constraint(equalToConstant: 108),
             viewNFTContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             viewNFTContent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -26),
@@ -186,7 +185,6 @@ class ProfileMyNFTsTableViewCell: UITableViewCell {
     }
     
     func setup(with nft: Nft){
-        
         labelName.text = nft.name
         labelAuthor.text = nft.author
         labelPriceValue.text = nft.price.description + " ETH"
@@ -196,9 +194,6 @@ class ProfileMyNFTsTableViewCell: UITableViewCell {
             self.imageViewNFT.kf.indicatorType = .activity
             self.imageViewNFT.kf.setImage(with: imageUrl)
         }
-        
-        print(nft)
-        print("Rating: \(nft.rating)")
         
         for i in 0...4 {
             

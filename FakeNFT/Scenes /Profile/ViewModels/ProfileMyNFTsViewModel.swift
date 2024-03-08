@@ -21,7 +21,6 @@ final class ProfileMyNFTsViewModel {
     }
     
     func getNFTs(by idList: [String]?){
-        
         var nftList: [Nft] = [Nft]()
         var gotError: Int = 0
         
@@ -30,7 +29,6 @@ final class ProfileMyNFTsViewModel {
         ProgressHUD.show()
         
         idList?.forEach({ id in
-            
             gettingNFTs.enter()
             
             servicesAssembly.nftService.loadNft(id: id) { result in
@@ -50,7 +48,6 @@ final class ProfileMyNFTsViewModel {
         })
         
         gettingNFTs.notify(queue: .main) {
-            
             self.myNFTs = nftList
             
             if gotError == idList?.count {

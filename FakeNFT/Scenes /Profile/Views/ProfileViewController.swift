@@ -19,14 +19,14 @@ final class ProfileViewController: UIViewController {
     private var favoriteNFTs: [String]?
     private var myNFTIDs: [String]?
     
-    private let buttonUserPage: UIButton = {
+    private lazy var buttonUserPage: UIButton = {
         let button = UIButton()
         button.setTitleColor(UIColor(named: ColorNames.blue), for: .normal)
         button.contentHorizontalAlignment = .leading
         return button
     }()
     
-    private let imageViewUserPicture: UIImageView = {
+    private lazy var imageViewUserPicture: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 35
@@ -35,7 +35,7 @@ final class ProfileViewController: UIViewController {
         return imageView
     }()
     
-    private let labelUserName: UILabel = {
+    private lazy var labelUserName: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         label.numberOfLines = 1
@@ -43,9 +43,15 @@ final class ProfileViewController: UIViewController {
         return label
     }()
     
-    private let tableView = UITableView()
+    private lazy var tableView: UITableView = {
+        let table = UITableView()
+        table.delegate = self
+        table.dataSource = self
+        table.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.reuseIdentifier)
+        return table
+    }()
     
-    private let textViewDescription: UITextView = {
+    private lazy var textViewDescription: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         textView.textContainer.maximumNumberOfLines = 3
@@ -68,10 +74,6 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.reuseIdentifier)
-        
         setupUIElements()
         setupUILayout()
         ProgressHUD.show()
@@ -79,7 +81,6 @@ final class ProfileViewController: UIViewController {
     
     @objc
     private func buttonEditTapped(){
-        
         if let profileEditViewModel = profileViewModel.genEditViewModel() {
             let editVC = ProfileEditViewController(profileEditViewModel: profileEditViewModel)
             present(editVC, animated: true)
@@ -87,7 +88,6 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupBindings(){
-        
         profileViewModel.$avatar.sink(receiveValue: { [weak self] avatar in
             
             ProgressHUD.dismiss()
@@ -129,7 +129,6 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupUIElements(){
-        
         view.backgroundColor = UIColor(named: ColorNames.white)
         
         let editButton = UIBarButtonItem(image: UIImage(named: ImageNames.buttonEdit), style: .plain, target: self, action: #selector(buttonEditTapped))
@@ -150,7 +149,6 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupUILayout(){
-        
         NSLayoutConstraint.activate([
             imageViewUserPicture.heightAnchor.constraint(equalToConstant: 70),
             imageViewUserPicture.widthAnchor.constraint(equalToConstant: 70),
@@ -215,7 +213,6 @@ extension ProfileViewController: UITableViewDelegate {
 }
 
 extension ProfileViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         3
     }

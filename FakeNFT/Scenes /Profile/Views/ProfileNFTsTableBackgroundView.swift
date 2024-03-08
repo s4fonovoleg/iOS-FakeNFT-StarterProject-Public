@@ -10,8 +10,8 @@ import UIKit
 final class ProfileNFTsTableBackgroundView: UIView {
     
     enum NFTsType {
-        case my
-        case favorite
+        case myNFTs
+        case favoriteNFTs
     }
     
     private var nftsType: NFTsType
@@ -40,7 +40,7 @@ final class ProfileNFTsTableBackgroundView: UIView {
         
         self.backgroundColor = UIColor(named: ColorNames.white)
         
-        label.text = nftsType == .my ? "You dont have NFTs yet ..." : "You dont have favorite NFTs"
+        label.text = nftsType == .myNFTs ? "You dont have NFTs yet ..." : "You dont have favorite NFTs"
         
         self.addSubview(label)
         

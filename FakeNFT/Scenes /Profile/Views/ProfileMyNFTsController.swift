@@ -20,16 +20,18 @@ final class ProfileMyNFTsController: UIViewController {
     private let myNFTsViewModel: ProfileMyNFTsViewModel
     private var subscriptions = Set<AnyCancellable>()
     
-    private let tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let table = UITableView()
-        table.backgroundView = ProfileNFTsTableBackgroundView(frame: .zero, nftsType: .my)
+        table.backgroundView = ProfileNFTsTableBackgroundView(frame: .zero, nftsType: .myNFTs)
         table.backgroundColor = UIColor(named: ColorNames.white)
         table.translatesAutoresizingMaskIntoConstraints = false
+        table.delegate = self
+        table.dataSource = self
+        table.register(ProfileMyNFTsTableViewCell.self, forCellReuseIdentifier: ProfileMyNFTsTableViewCell.reuseIdentifier)
         return table
     }()
     
     init(myNFTsViewModel: ProfileMyNFTsViewModel) {
-        
         self.myNFTsViewModel = myNFTsViewModel
         super.init(nibName: nil, bundle: nil)
         
@@ -43,17 +45,12 @@ final class ProfileMyNFTsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(ProfileMyNFTsTableViewCell.self, forCellReuseIdentifier: ProfileMyNFTsTableViewCell.reuseIdentifier)
-        
         setupUI()
         setupUILayout()
     }
     
     @objc
     private func sortNFTsButtonTapped(){
-        
         guard myNFTs.count > 0 else { return }
             
         let actionSortByPrice = UIAlertAction(title: NSLocalizedString(LocalizableKeys.profileMyNFTsSortByPrice, comment: ""),
@@ -78,7 +75,6 @@ final class ProfileMyNFTsController: UIViewController {
     }
     
     private func setupBindings(){
-        
         myNFTsViewModel.$myNFTs.sink(receiveValue: { [weak self] list in
             
             if let nftList = list {
@@ -87,15 +83,14 @@ final class ProfileMyNFTsController: UIViewController {
             }
         }).store(in: &subscriptions)
         
-        myNFTsViewModel.alertInfo = { (title, buttonTitle, message) in
-            
+        myNFTsViewModel.alertInfo = { [weak self] (title, buttonTitle, message) in
+            guard let self = self else { return }
             let action = UIAlertAction(title: buttonTitle, style: .cancel)
             AlertPresenter.shared.presentAlert(title: title, message: message, actions: [action], target: self)
         }
     }
     
     private func setupUI(){
-        
         title = NSLocalizedString(LocalizableKeys.profileMyNFTsTitle, comment: "")
         
         let editButton = UIBarButtonItem(image: UIImage(named: ImageNames.buttonSort),
@@ -109,11 +104,9 @@ final class ProfileMyNFTsController: UIViewController {
         view.backgroundColor = UIColor(named: ColorNames.white)
         view.addSubview(tableView)
         tableView.separatorStyle = .none
-        
     }
     
     private func setupUILayout() {
-        
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
@@ -123,7 +116,6 @@ final class ProfileMyNFTsController: UIViewController {
     }
     
     private func sortNFTList(by property: OrderProperty){
-        
         switch property {
         case .name:
             myNFTs = myNFTs.sorted { $0.name < $1.name }
@@ -138,7 +130,6 @@ final class ProfileMyNFTsController: UIViewController {
 }
 
 extension ProfileMyNFTsController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         140
     }
@@ -149,7 +140,6 @@ extension ProfileMyNFTsController: UITableViewDelegate {
 }
 
 extension ProfileMyNFTsController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         let number = myNFTs.count
