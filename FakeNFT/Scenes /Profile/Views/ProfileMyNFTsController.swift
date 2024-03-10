@@ -5,8 +5,9 @@
 //  Created by Eugene Dmitrichenko on 24.02.2024.
 //
 
-import UIKit
 import Combine
+import ProgressHUD
+import UIKit
 
 final class ProfileMyNFTsController: UIViewController {
     
@@ -16,6 +17,11 @@ final class ProfileMyNFTsController: UIViewController {
         case rating = "rating"
     }
     
+    private var gotNFTsData: Bool = false {
+        didSet{
+            ProgressHUD.dismiss()
+        }
+    }
     private var myNFTs: [Nft] = [Nft]()
     private let myNFTsViewModel: ProfileMyNFTsViewModel
     private var subscriptions = Set<AnyCancellable>()
@@ -28,6 +34,7 @@ final class ProfileMyNFTsController: UIViewController {
         table.delegate = self
         table.dataSource = self
         table.register(ProfileMyNFTsTableViewCell.self, forCellReuseIdentifier: ProfileMyNFTsTableViewCell.reuseIdentifier)
+        table.separatorStyle = .none
         return table
     }()
     
@@ -53,45 +60,57 @@ final class ProfileMyNFTsController: UIViewController {
     private func sortNFTsButtonTapped(){
         guard myNFTs.count > 0 else { return }
             
-        let actionSortByPrice = UIAlertAction(title: NSLocalizedString(LocalizableKeys.profileMyNFTsSortByPrice, comment: ""),
-                                              style: .default) { [weak self] _ in
+        let actionSortByPrice = UIAlertAction(
+            title: NSLocalizedString(LocalizableKeys.profileMyNFTsSortByPrice,comment: ""),
+            style: .default
+        ) { [weak self] _ in
             self?.sortNFTList(by: .prise)
         }
-        let actionSortByRating = UIAlertAction(title: NSLocalizedString(LocalizableKeys.profileMyNFTsSortByRating, comment: ""),
-                                              style: .default) { [weak self] _ in
+        let actionSortByRating = UIAlertAction(
+            title: NSLocalizedString(LocalizableKeys.profileMyNFTsSortByRating, comment: ""),
+            style: .default
+        ) { [weak self] _ in
             self?.sortNFTList(by: .rating)
         }
-        let actionSortByName = UIAlertAction(title: NSLocalizedString(LocalizableKeys.profileMyNFTsSortByName, comment: ""),
-                                              style: .default) { [weak self] _ in
+        let actionSortByName = UIAlertAction(
+            title: NSLocalizedString(LocalizableKeys.profileMyNFTsSortByName, comment: ""),
+            style: .default
+        ) { [weak self] _ in
             self?.sortNFTList(by: .name)
         }
-        let actionClose = UIAlertAction(title: NSLocalizedString(LocalizableKeys.profileMyNFTsSortByClose, comment: ""), style: .cancel)
-        
-        AlertPresenter.shared.presentAlert(title: "",
-                                           message: NSLocalizedString(LocalizableKeys.profileMyNFTsSortTitle, comment: ""),
-                                           actions: [actionSortByPrice, actionSortByRating, actionSortByName, actionClose],
-                                           target: self,
-                                           preferredStyle: .actionSheet)
+        let actionClose = UIAlertAction(
+            title: NSLocalizedString(LocalizableKeys.profileMyNFTsSortByClose, comment: ""),
+            style: .cancel
+        )
+        AlertPresenter.shared.presentAlert(
+            title: "",
+            message: NSLocalizedString(LocalizableKeys.profileMyNFTsSortTitle, comment: ""),
+            actions: [actionSortByPrice, actionSortByRating, actionSortByName, actionClose],
+            target: self,
+            preferredStyle: .actionSheet
+        )
     }
     
     private func setupBindings(){
         myNFTsViewModel.$myNFTs.sink(receiveValue: { [weak self] list in
             
+            guard let self else { return }
             if let nftList = list {
-                self?.myNFTs = nftList
-                self?.tableView.reloadData()
+                self.myNFTs = nftList
+                self.tableView.reloadData()
+                self.gotNFTsData = true
             }
         }).store(in: &subscriptions)
         
         myNFTsViewModel.alertInfo = { [weak self] (title, buttonTitle, message) in
-            guard let self = self else { return }
+            guard let self else { return }
             let action = UIAlertAction(title: buttonTitle, style: .cancel)
             AlertPresenter.shared.presentAlert(title: title, message: message, actions: [action], target: self)
         }
     }
     
     private func setupUI(){
-        title = NSLocalizedString(LocalizableKeys.profileMyNFTsTitle, comment: "")
+        title = NSLocalizedString(LocalizableKeys.profileMyNFTs, comment: "")
         
         let editButton = UIBarButtonItem(image: UIImage(named: ImageNames.buttonSort),
                                          style: .plain,
@@ -103,7 +122,9 @@ final class ProfileMyNFTsController: UIViewController {
         
         view.backgroundColor = UIColor(named: ColorNames.white)
         view.addSubview(tableView)
-        tableView.separatorStyle = .none
+        if gotNFTsData == false {
+            ProgressHUD.show()
+        }
     }
     
     private func setupUILayout() {
@@ -143,7 +164,7 @@ extension ProfileMyNFTsController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         let number = myNFTs.count
-        tableView.backgroundView?.isHidden = number > 0 ? true : false
+        tableView.backgroundView?.isHidden = number > 0
         
         return number
     }

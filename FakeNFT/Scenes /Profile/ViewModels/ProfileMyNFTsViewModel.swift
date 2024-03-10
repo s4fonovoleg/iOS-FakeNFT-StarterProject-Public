@@ -14,7 +14,13 @@ final class ProfileMyNFTsViewModel {
     
     private let servicesAssembly: ServicesAssembly
     
-    var alertInfo: (( _ title: String, _ buttonTitle: String, _ message: String) -> Void)?
+    var alertInfo: (
+        (
+            _ title: String,
+            _ buttonTitle: String,
+            _ message: String
+        ) -> Void
+    )?
     
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
@@ -26,21 +32,16 @@ final class ProfileMyNFTsViewModel {
         
         let gettingNFTs: DispatchGroup = DispatchGroup()
         
-        ProgressHUD.show()
-        
         idList?.forEach({ id in
             gettingNFTs.enter()
             
             servicesAssembly.nftService.loadNft(id: id) { result in
-                
                 switch result {
                 case .success(let nft):
-                    
                     nftList.append(nft)
                     gettingNFTs.leave()
                     
                 case .failure(_):
-                    
                     gotError += 1
                     gettingNFTs.leave()
                 }
@@ -51,16 +52,18 @@ final class ProfileMyNFTsViewModel {
             self.myNFTs = nftList
             
             if gotError == idList?.count {
-                self.alertInfo?(NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
-                                NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
-                                NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorAll, comment: ""))
+                self.alertInfo?(
+                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
+                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
+                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorAll, comment: "")
+                )
             } else if gotError > 0 {
-                self.alertInfo?(NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
-                                NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
-                                NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorSome, comment: ""))
+                self.alertInfo?(
+                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
+                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
+                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorSome, comment: "")
+                )
             }
-            
-            ProgressHUD.dismiss()
         }
     }
 }

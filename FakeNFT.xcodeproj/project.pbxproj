@@ -431,12 +431,12 @@
 				FB0725FD2B852E1B002F33C2 /* ProfileEditViewController.swift */,
 				FB23DE252B89D36900E61BE3 /* ProfileFavoriteNFTsController.swift */,
 				FB23DE232B89D2DF00E61BE3 /* ProfileMyNFTsController.swift */,
+				FB8255172B98E2DB001193CA /* ProfileMyNFTsTableViewCell.swift */,
 				FB0725F92B852B40002F33C2 /* ProfileNavigationController.swift */,
+				FBCEFBA32B978BC70064E48D /* ProfileNFTsTableBackgroundView.swift */,
 				FB23DE212B89D01A00E61BE3 /* ProfileTableViewCell.swift */,
 				FB0725FB2B852E08002F33C2 /* ProfileViewController.swift */,
 				FB23DE2F2B8E5B5A00E61BE3 /* ProfileWebViewController.swift */,
-				FBCEFBA32B978BC70064E48D /* ProfileNFTsTableBackgroundView.swift */,
-				FB8255172B98E2DB001193CA /* ProfileMyNFTsTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -444,9 +444,9 @@
 		FBA6CAE32B8234F800F54D73 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				FB23DE2D2B8D25E800E61BE3 /* ProfileViewModel.swift */,
 				FBCEFB972B924ECB0064E48D /* ProfileEditViewModel.swift */,
 				FBCEFBA52B979D9C0064E48D /* ProfileMyNFTsViewModel.swift */,
+				FB23DE2D2B8D25E800E61BE3 /* ProfileViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";

@@ -24,11 +24,8 @@ final class ProfileNFTsTableBackgroundView: UIView {
     }()
 
     init(frame: CGRect, nftsType: NFTsType){
-        
         self.nftsType = nftsType
-        
         super.init(frame: frame)
-        
         setupUI()
     }
     
@@ -37,10 +34,12 @@ final class ProfileNFTsTableBackgroundView: UIView {
     }
     
     private func setupUI(){
-        
         self.backgroundColor = UIColor(named: ColorNames.white)
         
-        label.text = nftsType == .myNFTs ? "You dont have NFTs yet ..." : "You dont have favorite NFTs"
+        label.text = nftsType == .myNFTs ? 
+        NSLocalizedString(LocalizableKeys.profileMyNFTsyouDontHave, comment: "")
+        :
+        NSLocalizedString(LocalizableKeys.profileMyNFTsyouDontHaveFavorite, comment: "")
         
         self.addSubview(label)
         

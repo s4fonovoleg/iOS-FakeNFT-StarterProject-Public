@@ -48,6 +48,7 @@ final class ProfileViewController: UIViewController {
         table.delegate = self
         table.dataSource = self
         table.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.reuseIdentifier)
+        table.isScrollEnabled = false
         return table
     }()
     
@@ -92,7 +93,7 @@ final class ProfileViewController: UIViewController {
             
             ProgressHUD.dismiss()
             
-            if let self = self, let url = avatar, let imageUrl = URL(string: url) {
+            if let self, let url = avatar, let imageUrl = URL(string: url) {
                 let roundCornerEffect = RoundCornerImageProcessor(cornerRadius: 8.0)
                 self.imageViewUserPicture.kf.indicatorType = .activity
                 self.imageViewUserPicture.kf.setImage(with: imageUrl, options: [.processor(roundCornerEffect)])
@@ -122,7 +123,7 @@ final class ProfileViewController: UIViewController {
         }).store(in: &subscriptions)
         
         profileViewModel.alertInfo = {[weak self] (title, buttonTitle, message) in
-            guard let self = self else { return }
+            guard let self else { return }
             let action = UIAlertAction(title: buttonTitle, style: .cancel)
             AlertPresenter.shared.presentAlert(title: title, message: message, actions: [action], target: self)
         }
@@ -224,12 +225,17 @@ extension ProfileViewController: UITableViewDataSource {
         switch indexPath.row {
         case 0:
             let number = myNFTIDs?.count ?? 0
-            cell.textLabel?.text = "Мои NFT ( \(number.description) )"
+            cell.textLabel?.text = 
+            NSLocalizedString(LocalizableKeys.profileMyNFTs, comment: "") +
+            " (\(number.description))"
         case 1:
             let number = favoriteNFTs?.count ?? 0
-            cell.textLabel?.text = "Избранные NFT ( \(number.description) )"
+            cell.textLabel?.text =
+            NSLocalizedString(LocalizableKeys.profileFavoriteNFTs, comment: "") + 
+            " (\(number.description))"
         default:
-            cell.textLabel?.text = "О разработчике"
+            cell.textLabel?.text =
+            NSLocalizedString(LocalizableKeys.profileAbout, comment: "")
         }
         
         return cell

@@ -3,12 +3,14 @@
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
 "Error.title" = "Ошибка";
+"Profile.about" = "О разработчике";
+"Profile.myNFTs" = "Мои NFT";
+"Profile.favoriteNFTs" = "Избранные NFT";
 "Profile.edit.changePicLabel" = "Сменить\nфото";
 "Profile.edit.changePicURL" = "Адрес фото";
 "Profile.edit.labelName" = "Имя";
 "Profile.edit.labelDescription" = "Описание";
 "Profile.edit.labelSite" = "Сайт";
-"Profile.myNFTs.title" = "Мои NFT";
 "Profile.myNFTs.sortTitle" = "Сортировка";
 "Profile.myNFTs.sortByPrice" = "По цене";
 "Profile.myNFTs.sortByRating" = "По рейтингу";
@@ -20,5 +22,7 @@
 "Profile.myNFTs.loadErrorSome" = "К сожалению, не удалось загрузить некоторые NFT";
 "Profile.myNFTs.labelPrice" = "Цена";
 "Profile.myNFTs.from" = "от";
+"Profile.myNFTs.youDontHave" = "У Вас ещё нет NFT";
+"Profile.myNFTs.youDontHaveFavorite" = "У Вас ещё нет избранных NFT";
 "Tab.catalog" = "Каталог";
 "Tab.profile" = "Профиль";
