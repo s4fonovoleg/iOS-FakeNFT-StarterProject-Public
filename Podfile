@@ -7,6 +7,9 @@ target 'FakeNFT' do
 
   # Pods for FakeNFT
 	pod 'SwiftLint'
+	pod 'SnapKit', '~> 5.6.0'
+	pod 'Kingfisher', '~> 7.0'
+	pod 'ProgressHUD'
 
   target 'FakeNFTTests' do
     inherit! :search_paths

@@ -26,7 +26,7 @@ class CatalogView: UIViewController {
         super.viewDidLoad()
         bind()
         errorBind()
-        ProgressHUD.show()
+        ProgressHUD.animate()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(CatalogCell.self, forCellReuseIdentifier: CatalogCell.cellId)

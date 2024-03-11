@@ -89,7 +89,7 @@ final class CatalogNftCollectionView: UIViewController {
         collectionView.delegate = self
         bind()
         navigationController?.navigationBar.isTranslucent = true
-        ProgressHUD.show()
+        ProgressHUD.animate()
         viewModel.loadNft()
     }
 
