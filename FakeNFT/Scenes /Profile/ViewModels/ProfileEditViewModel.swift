@@ -16,16 +16,17 @@ final class ProfileEditViewModel {
     @Published var name: String?
     @Published var website: String?
     
-    private let servicesAssembly: ServicesAssembly
-    private weak var parentViewModel: ProfileViewModel?
+    @Published var profile: CurrentValueSubject<Profile?, Never>
     
-    private var profile: Profile? {
+    private let servicesAssembly: ServicesAssembly
+    
+    private var editableProfile: Profile? {
         didSet {
-            avatar = profile?.avatar
-            description = profile?.description
-            favoriteNFTs = profile?.likes
-            name = profile?.name
-            website = profile?.website
+            avatar = editableProfile?.avatar
+            description = editableProfile?.description
+            favoriteNFTs = editableProfile?.likes
+            name = editableProfile?.name
+            website = editableProfile?.website
             
             newAvatar = avatar
             newDescription = description
@@ -41,26 +42,31 @@ final class ProfileEditViewModel {
     var newName: String?
     var newWebsite: String?
     
-    var alertInfo: (( _ title: String, _ buttonTitle: String, _ message: String, _ shouldDismiss: Bool) -> Void)?
+    var alertInfo: (
+        (
+            _ title: String,
+            _ buttonTitle: String,
+            _ message: String,
+            _ shouldDismiss: Bool
+        ) -> Void
+    )?
     
-    init(servicesAssembly: ServicesAssembly, parentViewModel: ProfileViewModel, with profile: Profile) {
+    init(servicesAssembly: ServicesAssembly, profile: CurrentValueSubject<Profile?, Never>) {
         self.servicesAssembly = servicesAssembly
-        self.parentViewModel = parentViewModel
+        self.profile = profile
         
-        self.setProfile(with: profile)
+        self.setProfile(with: profile.value)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setProfile(with originProfile: Profile) {
-        
-        self.profile = originProfile
+    private func setProfile(with originProfile: Profile?) {
+        self.editableProfile = originProfile
     }
     
     func saveProfile(){
-        
         var newProfileData: [(String, String)] = [(String,String)]()
         
         newProfileData.append(("avatar", newAvatar ?? ""))
@@ -76,17 +82,26 @@ final class ProfileEditViewModel {
         let profileData = Urlencoding.urlEncoded(formDataSet: newProfileData)
         
         servicesAssembly.profileService.saveProfile(profileData){ [weak self] result in
-            
-            guard let self = self else { return }
+            guard let self else { return }
             
             switch result{
             case .success(let profile):
-                self.parentViewModel?.profile = profile
+                self.profile.send(profile)
                 
-               // TODO: Локализовать уведомления в следующей итерации
-                self.alertInfo?("Готово", "Отлично!", "Изменения внесены в профиль", true)
+                // TODO: Локализовать уведомления в следующей итерации
+                self.alertInfo?(
+                    "Готово",
+                    "Отлично!",
+                    "Изменения внесены в профиль",
+                    true
+                )
+                
             case .failure( _ ):
-                self.alertInfo?("Ой-ой-ой ...", "Жаль", "Не удалось обновить данные профиля", false)
+                self.alertInfo?(
+                    "Ой-ой-ой ...",
+                    "Жаль",
+                    "Не удалось обновить данные профиля",
+                    false)
             }
         }
     }

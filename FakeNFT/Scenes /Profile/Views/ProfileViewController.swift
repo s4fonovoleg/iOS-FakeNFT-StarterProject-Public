@@ -5,9 +5,10 @@
 //  Created by Eugene Dmitrichenko on 20.02.2024.
 //
 
+import UIKit
 import Combine
 import Kingfisher
-import UIKit
+import ProgressHUD
 
 final class ProfileViewController: UIViewController {
     
@@ -16,16 +17,16 @@ final class ProfileViewController: UIViewController {
     private var subscriptions = Set<AnyCancellable>()
     private var website: String?
     private var favoriteNFTs: [String]?
-    private var myNFTs: [String]?
+    private var myNFTIDs: [String]?
     
-    private let buttonUserPage: UIButton = {
+    private lazy var buttonUserPage: UIButton = {
         let button = UIButton()
         button.setTitleColor(UIColor(named: ColorNames.blue), for: .normal)
         button.contentHorizontalAlignment = .leading
         return button
     }()
     
-    private let imageViewUserPicture: UIImageView = {
+    private lazy var imageViewUserPicture: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 35
@@ -34,7 +35,7 @@ final class ProfileViewController: UIViewController {
         return imageView
     }()
     
-    private let labelUserName: UILabel = {
+    private lazy var labelUserName: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         label.numberOfLines = 1
@@ -42,13 +43,21 @@ final class ProfileViewController: UIViewController {
         return label
     }()
     
-    private let tableView = UITableView()
+    private lazy var tableView: UITableView = {
+        let table = UITableView()
+        table.delegate = self
+        table.dataSource = self
+        table.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.reuseIdentifier)
+        table.isScrollEnabled = false
+        return table
+    }()
     
-    private let textViewDescription: UITextView = {
+    private lazy var textViewDescription: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         textView.textContainer.maximumNumberOfLines = 3
         textView.isEditable = false
+        textView.backgroundColor = UIColor(named: ColorNames.white)
         return textView
     }()
     
@@ -66,23 +75,13 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let editButton = UIBarButtonItem(image: UIImage(named: ImageNames.buttonEdit), style: .plain, target: self, action: #selector(buttonEditTapped))
-        
-        editButton.tintColor = UIColor(named: ColorNames.black)
-        
-        navigationItem.rightBarButtonItem = editButton
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.reuseIdentifier)
-        
         setupUIElements()
         setupUILayout()
+        ProgressHUD.show()
     }
     
     @objc
     private func buttonEditTapped(){
-        
         if let profileEditViewModel = profileViewModel.genEditViewModel() {
             let editVC = ProfileEditViewController(profileEditViewModel: profileEditViewModel)
             present(editVC, animated: true)
@@ -90,9 +89,11 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupBindings(){
-        
         profileViewModel.$avatar.sink(receiveValue: { [weak self] avatar in
-            if let self = self, let url = avatar, let imageUrl = URL(string: url) {
+            
+            ProgressHUD.dismiss()
+            
+            if let self, let url = avatar, let imageUrl = URL(string: url) {
                 let roundCornerEffect = RoundCornerImageProcessor(cornerRadius: 8.0)
                 self.imageViewUserPicture.kf.indicatorType = .activity
                 self.imageViewUserPicture.kf.setImage(with: imageUrl, options: [.processor(roundCornerEffect)])
@@ -108,7 +109,7 @@ final class ProfileViewController: UIViewController {
         }).store(in: &subscriptions)
         
         profileViewModel.$myNFTs.sink(receiveValue: { [weak self] myNFTs in
-            self?.myNFTs = myNFTs
+            self?.myNFTIDs = myNFTs
             self?.tableView.reloadData()
         }).store(in: &subscriptions)
         
@@ -122,13 +123,23 @@ final class ProfileViewController: UIViewController {
         }).store(in: &subscriptions)
         
         profileViewModel.alertInfo = {[weak self] (title, buttonTitle, message) in
-            guard let self = self else { return }
+            guard let self else { return }
             let action = UIAlertAction(title: buttonTitle, style: .cancel)
             AlertPresenter.shared.presentAlert(title: title, message: message, actions: [action], target: self)
         }
     }
     
     private func setupUIElements(){
+        view.backgroundColor = UIColor(named: ColorNames.white)
+        
+        let editButton = UIBarButtonItem(image: UIImage(named: ImageNames.buttonEdit), style: .plain, target: self, action: #selector(buttonEditTapped))
+        editButton.tintColor = UIColor(named: ColorNames.black)
+        
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        backButton.tintColor = UIColor(named: ColorNames.black)
+        
+        navigationItem.rightBarButtonItem = editButton
+        navigationItem.backBarButtonItem = backButton
         
         [imageViewUserPicture, labelUserName, textViewDescription, buttonUserPage, tableView].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -139,7 +150,6 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupUILayout(){
-        
         NSLayoutConstraint.activate([
             imageViewUserPicture.heightAnchor.constraint(equalToConstant: 70),
             imageViewUserPicture.widthAnchor.constraint(equalToConstant: 70),
@@ -186,7 +196,11 @@ extension ProfileViewController: UITableViewDelegate {
         
         switch indexPath.row {
         case 0:
-            viewController = ProfileMyNFTsController()
+            let myNFTsViewModel = profileViewModel.genMyNFTsViewModel()
+            
+            myNFTsViewModel.getNFTs(by: myNFTIDs)
+            
+            viewController = ProfileMyNFTsController(myNFTsViewModel: myNFTsViewModel)
         case 1:
             viewController = ProfileFavoriteNFTsController()
         default:
@@ -200,7 +214,6 @@ extension ProfileViewController: UITableViewDelegate {
 }
 
 extension ProfileViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         3
     }
@@ -211,13 +224,18 @@ extension ProfileViewController: UITableViewDataSource {
         
         switch indexPath.row {
         case 0:
-            let number = myNFTs?.count ?? 0
-            cell.textLabel?.text = "Мои NFT ( \(number.description) )"
+            let number = myNFTIDs?.count ?? 0
+            cell.textLabel?.text = 
+            NSLocalizedString(LocalizableKeys.profileMyNFTs, comment: "") +
+            " (\(number.description))"
         case 1:
             let number = favoriteNFTs?.count ?? 0
-            cell.textLabel?.text = "Избранные NFT ( \(number.description) )"
+            cell.textLabel?.text =
+            NSLocalizedString(LocalizableKeys.profileFavoriteNFTs, comment: "") + 
+            " (\(number.description))"
         default:
-            cell.textLabel?.text = "О разработчике"
+            cell.textLabel?.text =
+            NSLocalizedString(LocalizableKeys.profileAbout, comment: "")
         }
         
         return cell

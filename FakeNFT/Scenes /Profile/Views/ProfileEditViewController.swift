@@ -154,7 +154,7 @@ final class ProfileEditViewController: UIViewController {
     private func setupBindings(){
         
         profileEditViewModel.$avatar.sink(receiveValue: { [weak self] avatar in
-            if let self = self, let url = avatar, let imageUrl = URL(string: url) {
+            if let self, let url = avatar, let imageUrl = URL(string: url) {
                 let roundCornerEffect = RoundCornerImageProcessor(cornerRadius: 8.0)
                 self.imageViewUserPicture.kf.indicatorType = .activity
                 self.imageViewUserPicture.kf.setImage(with: imageUrl, options: [.processor(roundCornerEffect)])
@@ -175,14 +175,14 @@ final class ProfileEditViewController: UIViewController {
         
         NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: textFieldChangePicture)
             .sink { [weak self] notification in
-                guard let self = self, let textField = notification.object as? UITextField else { return }
+                guard let self, let textField = notification.object as? UITextField else { return }
                 self.profileEditViewModel.newAvatar = textField.text
                 changesMade = true
             }.store(in: &subscriptions)
         
         NotificationCenter.default.publisher(for: UITextView.textDidChangeNotification, object: textViewDescription)
             .sink { [weak self] notification in
-                guard let self = self, let textView = notification.object as? UITextView else { return }
+                guard let self, let textView = notification.object as? UITextView else { return }
                 self.profileEditViewModel.newDescription = textView.text
                 changesMade = true
             }
@@ -190,7 +190,7 @@ final class ProfileEditViewController: UIViewController {
         
         NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: textFieldUserName)
             .sink { [weak self] notification in
-                guard let self = self, let textField = notification.object as? UITextField else { return }
+                guard let self, let textField = notification.object as? UITextField else { return }
                 self.profileEditViewModel.newName = textField.text
                 changesMade = true
             }
@@ -198,14 +198,14 @@ final class ProfileEditViewController: UIViewController {
         
         NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: textFieldSite)
             .sink { [weak self] notification in
-                guard let self = self, let textField = notification.object as? UITextField else { return }
+                guard let self, let textField = notification.object as? UITextField else { return }
                 self.profileEditViewModel.newWebsite = textField.text
                 changesMade = true
             }
             .store(in: &subscriptions)
         
         profileEditViewModel.alertInfo = {[weak self] (title, buttonTitle, message, shouldDismiss) in
-            guard let self = self else { return }
+            guard let self else { return }
             let action = UIAlertAction(title: buttonTitle, style: .cancel) { _ in
                 if shouldDismiss {
                     self.dismiss(animated: true)
