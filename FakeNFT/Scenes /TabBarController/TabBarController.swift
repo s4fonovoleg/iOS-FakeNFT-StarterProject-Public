@@ -34,6 +34,6 @@ extension TabBarController {
     tabBar.isTranslucent = false
     view.backgroundColor = .systemBackground
     setupTabs()
-    selectedIndex = 2
+    selectedIndex = 1
   }
 }
