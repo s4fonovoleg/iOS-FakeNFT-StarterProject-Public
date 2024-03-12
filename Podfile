@@ -6,8 +6,11 @@ target 'FakeNFT' do
   use_frameworks!
 
   # Pods for FakeNFT
-pod 'SwiftGen', '~> 6.0'
-pod 'SwiftLint'
+	pod 'SwiftGen', '~> 6.0'
+	pod 'SwiftLint'
+	pod 'SnapKit', '~> 5.6.0'
+	pod 'Kingfisher', '~> 7.0'
+	pod 'ProgressHUD'
   target 'FakeNFTTests' do
     inherit! :search_paths
     # Pods for testing
