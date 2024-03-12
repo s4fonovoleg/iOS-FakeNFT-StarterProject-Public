@@ -36,3 +36,13 @@
 "Label.secondPageTitle" = "Expand your collection with exclusive pictures \ncreated by the neural network!";
 "Label.thirdPageCompeteTitle" = "Compete";
 "Label.thirdPageTitle" = "See the statistics of others and show everyone that \nyou have the most valuable collection";
+"Tab.catalog" = "Catalog";
+"Error.network" = "Network error";
+"Error.unknown" = "Unknown error";
+"Error.repeat" = "Repeat?";
+"Error.title" = "Error";
+"Sorting" = "Sorting";
+"sorting.byName" = "By name";
+"sorting.byCountOfNft" = "By NFT count";
+"CloseAction" = "Cancel";
+"nameOfAuthor.text" = "Author:";

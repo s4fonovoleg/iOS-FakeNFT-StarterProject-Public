@@ -3,7 +3,7 @@ import UIKit
 final class TabBarController: UITabBarController {
   // MARK: - Private Properties:
   private let profileNavigationViewController = UINavigationController(rootViewController: UIViewController())
-  private let catalogNavigationViewController = UINavigationController(rootViewController: UIViewController())
+  private let catalogNavigationViewController = UINavigationController(rootViewController: CatalogView())
   private let cartNavigationViewController = UINavigationController(rootViewController: CartViewController(viewModel: CartViewModel(service: CartService())))
   private let statisticsNavigationViewController = UINavigationController(rootViewController: UIViewController())
   private let profileTabBarItem = UITabBarItem(title: L10n.Localizable.Button.profileTitle, image: Asset.CustomIcons.profileIcon.image, tag: 0)
