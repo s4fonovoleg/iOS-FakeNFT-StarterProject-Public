@@ -1,20 +1,32 @@
 PODS:
+  - Kingfisher (7.11.0)
+  - ProgressHUD (14.1.1)
+  - SnapKit (5.6.0)
   - SwiftGen (6.6.2)
   - SwiftLint (0.54.0)
 
 DEPENDENCIES:
+  - Kingfisher (~> 7.0)
+  - ProgressHUD
+  - SnapKit (~> 5.6.0)
   - SwiftGen (~> 6.0)
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - Kingfisher
+    - ProgressHUD
+    - SnapKit
     - SwiftGen
     - SwiftLint
 
 SPEC CHECKSUMS:
+  Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
+  ProgressHUD: abb9136ae23c85204236828562cb9a8ec98efb44
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
   SwiftLint: c1de071d9d08c8aba837545f6254315bc900e211
 
-PODFILE CHECKSUM: fbbe580eb7b3469033f265508822d97ecb52b8d3
+PODFILE CHECKSUM: eded1b9f69589fbb5132870c276e3101532897e2
 
 COCOAPODS: 1.15.2
