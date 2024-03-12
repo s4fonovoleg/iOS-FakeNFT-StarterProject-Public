@@ -1,7 +1,7 @@
 # ТЗ мобильного приложения FakeNFT
 Скринкаст с демонстрацией эпика "Корзина" - https://disk.yandex.ru/i/I2Rtc-eq5wufBQ
 
-Скринкаст с демонстрацией эпика "Корзина" - https://disk.yandex.ru/i/Y6alRnOJms_Itg
+Скринкаст с демонстрацией эпика "Каталог" - https://disk.yandex.ru/i/Y6alRnOJms_Itg
 
 # Ссылки
 
