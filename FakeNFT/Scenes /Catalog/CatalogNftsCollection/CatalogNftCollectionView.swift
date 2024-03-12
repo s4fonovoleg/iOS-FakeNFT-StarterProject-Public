@@ -70,7 +70,7 @@ final class CatalogNftCollectionView: UIViewController {
 
     private var collectionView: UICollectionView = {
         var collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collection.backgroundColor = UIColor(named: "WhiteColor")
+        collection.backgroundColor = .systemBackground
         collection.contentInset = UIEdgeInsets(top: 6, left: 0, bottom: 24, right: 0)
         return collection
     }()
@@ -178,7 +178,7 @@ final class CatalogNftCollectionView: UIViewController {
             $0.height.equalTo(500)
             $0.bottom.equalToSuperview()
         }
-        view.backgroundColor = UIColor(named: "WhiteColor")
+        view.backgroundColor = .systemBackground
         navigationItem.title = ""
     }
 }

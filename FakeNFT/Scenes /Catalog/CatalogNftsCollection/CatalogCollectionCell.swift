@@ -137,7 +137,7 @@ final class CatalogCollectionCell: UICollectionViewCell {
             $0.width.height.equalTo(42)
             $0.right.bottom.equalToSuperview()
         }
-        backgroundColor = UIColor(named: "WhiteColor")
+        backgroundColor = .systemBackground
     }
     @objc private func tapOnLike() {
         delegate?.tapOnLike(id: id)

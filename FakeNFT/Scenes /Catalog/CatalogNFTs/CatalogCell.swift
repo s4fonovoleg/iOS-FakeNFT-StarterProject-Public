@@ -40,7 +40,7 @@ final class CatalogCell: UITableViewCell {
         contentView.addSubview(nftImageView)
         contentView.addSubview(nftLable)
         selectionStyle = .none
-        backgroundColor = UIColor(named: "WhiteColor")
+        backgroundColor = .systemBackground
 
         nftImageView.snp.makeConstraints {
             $0.height.equalTo(140)

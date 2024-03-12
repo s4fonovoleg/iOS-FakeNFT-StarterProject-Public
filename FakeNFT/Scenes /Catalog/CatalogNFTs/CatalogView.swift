@@ -87,11 +87,13 @@ class CatalogView: UIViewController {
     }
 
     private func setupScreen() {
-        tableView.backgroundColor = UIColor(named: "WhiteColor")
-        view.backgroundColor = UIColor(named: "WhiteColor")
+        tableView.backgroundColor = .systemBackground
+        view.backgroundColor = .systemBackground
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
+        navigationController?.navigationBar.barTintColor = UIColor(named: "WhiteColor")
+        navigationController?.navigationBar.tintColor = UIColor(named: "BlackColor")
         navigationItem.title = ""
         tableView.snp.makeConstraints {
             $0.left.top.right.bottom.equalToSuperview()

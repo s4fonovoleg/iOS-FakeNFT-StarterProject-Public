@@ -37,7 +37,7 @@ final class AboutAuthorView: UIViewController {
     }
 
     private func setupScreen() {
-        view.backgroundColor = UIColor(named: "WhiteColor")
+        view.backgroundColor = .systemBackground
         view.addSubview(webView)
         view.addSubview(progressView)
         webView.snp.makeConstraints {
