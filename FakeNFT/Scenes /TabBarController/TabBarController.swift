@@ -5,7 +5,7 @@ final class TabBarController: UITabBarController {
   private let profileNavigationViewController = UINavigationController(rootViewController: UIViewController())
   private let catalogNavigationViewController = UINavigationController(rootViewController: CatalogView())
   private let cartNavigationViewController = UINavigationController(rootViewController: CartViewController(viewModel: CartViewModel(service: CartService())))
-  private let statisticsNavigationViewController = UINavigationController(rootViewController: UIViewController())
+  private let statisticsNavigationViewController = UINavigationController(rootViewController: StatisticsViewController())
   private let profileTabBarItem = UITabBarItem(title: L10n.Localizable.Button.profileTitle, image: Asset.CustomIcons.profileIcon.image, tag: 0)
   private let catalogTabBarItem = UITabBarItem(title: L10n.Localizable.Button.catalogTitle, image: Asset.CustomIcons.catalogIcon.image, tag: 1)
   private let cartTabBarItem = UITabBarItem(title: L10n.Localizable.Button.cartTitle, image: Asset.CustomIcons.cartIcon.image, tag: 2)

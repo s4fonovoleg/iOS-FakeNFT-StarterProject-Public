@@ -46,3 +46,10 @@
 "sorting.byCountOfNft" = "By NFT count";
 "CloseAction" = "Cancel";
 "nameOfAuthor.text" = "Author:";
+"Statistics.Rating.Sort" = "Sorting";
+"Statistics.Rating.SortByName" = "By name";
+"Statistics.Rating.SortByRating" = "By rating";
+"Statistics.Rating.SortCancel" = "Cancel";
+"Statistics.UserCard.NavigateToUserWebsite" = "Go to user website";
+"Statistics.UserCard.NFTCollection" = "NFT collection";
+"NftCollection" = "NFT collection";

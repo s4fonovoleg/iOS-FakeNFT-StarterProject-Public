@@ -46,3 +46,10 @@
 "sorting.byCountOfNft" = "По количесвут NFT";
 "CloseAction" = "Закрыть";
 "nameOfAuthor.text" = "Автор коллекции:";
+"Statistics.Rating.Sort" = "Сортировка";
+"Statistics.Rating.SortByName" = "По имени";
+"Statistics.Rating.SortByRating" = "По рейтингу";
+"Statistics.Rating.SortCancel" = "Закрыть";
+"Statistics.UserCard.NavigateToUserWebsite" = "Перейти на сайт пользователя";
+"Statistics.UserCard.NFTCollection" = "Коллекция NFT";
+"NftCollection" = "Коллекция NFT";

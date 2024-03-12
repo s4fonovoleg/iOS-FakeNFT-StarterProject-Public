@@ -123,6 +123,13 @@ struct DefaultNetworkClient: NetworkClient {
       urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
       urlRequest.httpBody = Data(dtoString.utf8)
     }
+	  
+	  if request.httpMethod == .put {
+		  urlRequest.setValue(
+			  "application/x-www-form-urlencoded",
+			  forHTTPHeaderField: "Content-Type"
+		  )
+	  }
     return urlRequest
   }
   
