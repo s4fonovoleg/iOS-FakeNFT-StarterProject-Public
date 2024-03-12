@@ -31,7 +31,7 @@ final class TabBarController: UITabBarController {
 extension TabBarController {
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    tabBar.isTranslucent = false
     view.backgroundColor = .systemBackground
     setupTabs()
     selectedIndex = 2

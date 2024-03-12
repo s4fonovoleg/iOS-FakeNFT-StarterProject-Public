@@ -16,8 +16,8 @@ class CatalogView: UIViewController {
 
     private lazy var sortButton: UIButton = {
         var button = UIButton()
-        button.setImage(UIImage(systemName: "text.justifyleft"), for: .normal)
-        button.tintColor = UIColor(named: "BlackColor")
+        button.setImage(Asset.CustomIcons.sortIcon.image, for: .normal)
+        button.tintColor = Asset.CustomColors.ypBlack.color
         button.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
         return button
     }()
