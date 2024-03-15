@@ -1,16 +1,17 @@
 //
-//  File.swift
+//  ProfileFavoriteNFTsViewModel.swift
 //  FakeNFT
 //
-//  Created by Eugene Dmitrichenko on 05.03.2024.
+//  Created by Eugene Dmitrichenko on 12.03.2024.
 //
 
+import Combine
 import Foundation
-import UIKit
 
-final class ProfileMyNFTsViewModel {
+final class ProfileFavoriteNFTsViewModel {
     
-    @Published var myNFTs: [Nft]?
+    @Published var favoriteNFTs: [Nft]?
+    @Published var profile: CurrentValueSubject<Profile?, Never>
     
     private let servicesAssembly: ServicesAssembly
     
@@ -22,8 +23,9 @@ final class ProfileMyNFTsViewModel {
         ) -> Void
     )?
     
-    init(servicesAssembly: ServicesAssembly) {
+    init(servicesAssembly: ServicesAssembly, profile: CurrentValueSubject<Profile?, Never>) {
         self.servicesAssembly = servicesAssembly
+        self.profile = profile
     }
     
     func getNFTs(by idList: [String]?){
@@ -49,7 +51,7 @@ final class ProfileMyNFTsViewModel {
         })
         
         gettingNFTs.notify(queue: .main) {
-            self.myNFTs = nftList
+            self.favoriteNFTs = nftList
             
             if gotError == idList?.count {
                 self.alertInfo?(
@@ -62,6 +64,36 @@ final class ProfileMyNFTsViewModel {
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorSome, comment: "")
+                )
+            }
+        }
+    }
+    
+    func saveProfileLikes(with likes: [String]){
+        var newProfileData: [(String, String)] = [(String,String)]()
+        
+        if !likes.isEmpty {
+            likes.forEach({
+                newProfileData.append(("likes", $0))
+            })
+        } else {
+            newProfileData.append(("likes", ""))
+        }
+        
+        let profileData = Urlencoding.urlEncoded(formDataSet: newProfileData)
+        
+        servicesAssembly.profileService.saveProfile(profileData){ [weak self] result in
+            guard let self else { return }
+            
+            switch result{
+            case .success(let profile):
+                getNFTs(by: profile.likes)
+                self.profile.send(profile)
+            case .failure( _ ):
+                self.alertInfo?(
+                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
+                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
+                    NSLocalizedString(LocalizableKeys.profileMyNFTloadErrorUpdateProfile, comment: "")
                 )
             }
         }

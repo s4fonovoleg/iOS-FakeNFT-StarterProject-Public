@@ -197,12 +197,12 @@ extension ProfileViewController: UITableViewDelegate {
         switch indexPath.row {
         case 0:
             let myNFTsViewModel = profileViewModel.genMyNFTsViewModel()
-            
             myNFTsViewModel.getNFTs(by: myNFTIDs)
-            
             viewController = ProfileMyNFTsController(myNFTsViewModel: myNFTsViewModel)
         case 1:
-            viewController = ProfileFavoriteNFTsController()
+            let favoriteNFTsViewModel = profileViewModel.getFavoriteNFTsViewModel()
+            favoriteNFTsViewModel.getNFTs(by: favoriteNFTs)
+            viewController = ProfileFavoriteNFTsController(favoriteNFTsViewModel: favoriteNFTsViewModel)
         default:
             userPageTapped()
             return

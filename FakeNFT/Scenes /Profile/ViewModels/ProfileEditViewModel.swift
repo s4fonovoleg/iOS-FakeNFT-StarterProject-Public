@@ -88,20 +88,20 @@ final class ProfileEditViewModel {
             case .success(let profile):
                 self.profile.send(profile)
                 
-                // TODO: Локализовать уведомления в следующей итерации
                 self.alertInfo?(
-                    "Готово",
-                    "Отлично!",
-                    "Изменения внесены в профиль",
+                    NSLocalizedString(LocalizableKeys.profileEditUpdateDone, comment: ""),
+                    NSLocalizedString(LocalizableKeys.profileEditUpdateGreat, comment: ""),
+                    NSLocalizedString(LocalizableKeys.profileEditUpdateChangesAreMade, comment: ""),
                     true
                 )
                 
             case .failure( _ ):
                 self.alertInfo?(
-                    "Ой-ой-ой ...",
-                    "Жаль",
-                    "Не удалось обновить данные профиля",
-                    false)
+                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
+                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
+                    NSLocalizedString(LocalizableKeys.profileMyNFTloadErrorUpdateProfile, comment: ""),
+                    false
+                    )
             }
         }
     }

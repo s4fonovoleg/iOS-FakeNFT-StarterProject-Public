@@ -83,4 +83,8 @@ final class ProfileViewModel {
     func genMyNFTsViewModel() -> ProfileMyNFTsViewModel {
         return ProfileMyNFTsViewModel(servicesAssembly: servicesAssembly)
     }
+    
+    func getFavoriteNFTsViewModel() -> ProfileFavoriteNFTsViewModel {
+        return ProfileFavoriteNFTsViewModel(servicesAssembly: servicesAssembly, profile: profile)
+    }
 }
