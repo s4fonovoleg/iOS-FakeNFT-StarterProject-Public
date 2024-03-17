@@ -45,8 +45,11 @@ final class ProfileViewModel {
             case .success(let profile):
                 self.profile.send(profile)
             case .failure( _ ):
-                // TODO: Локализовать уведомления в следующей итерации
-                self.alertInfo?("Ой-ой-ой ...", "Очень жаль", "Не удалось загрузить данные профиля")
+                self.alertInfo?(
+                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
+                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
+                    NSLocalizedString(LocalizableKeys.profileMyNFTloadErrorLoadProfile, comment: "")
+                )
             }
         }
     }
@@ -54,7 +57,6 @@ final class ProfileViewModel {
     private func setupBindings(){
         
         profile.sink { [weak self] profile in
-            
             guard let self else { return }
             self.avatar = profile?.avatar
             self.description = profile?.description
@@ -63,16 +65,8 @@ final class ProfileViewModel {
             self.favoriteNFTs = profile?.likes
             
             // FIXME: Используем мокковые данные пока в профиле отсутствуют реальные
-            //            myNFTs = profile?.nfts
-            let mockNFTsList = [
-                "d6a02bd1-1255-46cd-815b-656174c1d9c0",
-                "b2f44171-7dcd-46d7-a6d3-e2109aacf520",
-                "594aaf01-5962-4ab7-a6b5-470ea37beb93",
-                "9e472edf-ed51-4901-8cfc-8eb3f617519f",
-                "a4edeccd-ad7c-4c7f-b09e-6edec02a812b",
-                "2c9d09f6-25ac-4d6f-8d6a-175c4de2b42f"
-            ]
-            self.myNFTs = mockNFTsList
+            // myNFTs = profile?.nfts
+            self.myNFTs = ProfileService.mockNFTsData
         }.store(in: &subscriptions)
     }
     
@@ -81,7 +75,7 @@ final class ProfileViewModel {
     }
     
     func genMyNFTsViewModel() -> ProfileMyNFTsViewModel {
-        return ProfileMyNFTsViewModel(servicesAssembly: servicesAssembly)
+        return ProfileMyNFTsViewModel(servicesAssembly: servicesAssembly, profile: profile)
     }
     
     func getFavoriteNFTsViewModel() -> ProfileFavoriteNFTsViewModel {

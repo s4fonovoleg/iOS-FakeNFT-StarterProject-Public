@@ -28,5 +28,6 @@
 "Profile.myNFTs.youDontHave" = "У Вас ещё нет NFT";
 "Profile.myNFTs.youDontHaveFavorite" = "У Вас ещё нет избранных NFT";
 "Profile.myNFTs.loadErrorUpdateProfile" = "Не удалось обновить данные профиля";
+"Profile.myNFTs.loadErrorLoadProfile" = "Не удалось загрузить данные профиля";
 "Tab.catalog" = "Каталог";
 "Tab.profile" = "Профиль";

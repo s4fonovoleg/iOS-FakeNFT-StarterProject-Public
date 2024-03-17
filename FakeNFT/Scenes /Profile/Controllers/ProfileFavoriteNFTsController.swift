@@ -81,7 +81,7 @@ class ProfileFavoriteNFTsController: UIViewController {
         view.backgroundColor = UIColor(named: ColorNames.white)
         view.addSubview(collectionView)
         view.addSubview(plugView)
-        ProgressHUD.show()
+        ProgressHUD.show(interaction: false)
     }
     
     private func setupUILayout(){
@@ -127,7 +127,7 @@ extension ProfileFavoriteNFTsController: UICollectionViewDelegateFlowLayout {
 
 extension ProfileFavoriteNFTsController: UnlikerProtocol {
     func unlikeNFT(with id: String) {
-        ProgressHUD.show()
+        ProgressHUD.show(interaction: false)
         
         var newFavoriteNFTsArray: [String] = []
         favoriteNFTs.forEach { nft in

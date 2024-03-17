@@ -34,6 +34,7 @@ enum LocalizableKeys {
     static let profileMyNFTsLoadErrorAll = "Profile.myNFTs.loadErrorAll"
     static let profileMyNFTsLoadErrorSome = "Profile.myNFTs.loadErrorSome"
     static let profileMyNFTloadErrorUpdateProfile = "Profile.myNFTs.loadErrorUpdateProfile"
+    static let profileMyNFTloadErrorLoadProfile = "Profile.myNFTs.loadErrorUpdateProfile"
     static let profileMyNFTsLabelPrice = "Profile.myNFTs.labelPrice"
     static let profileMyNFTsfrom = "Profile.myNFTs.from"
     static let profileMyNFTsyouDontHave = "Profile.myNFTs.youDontHave"

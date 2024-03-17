@@ -17,6 +17,16 @@ protocol ProfileServiceProtocol {
 
 final class ProfileService: ProfileServiceProtocol {
     
+    // TODO: Убрать статичное свойство после того как в профиле появятся реальные данные
+    static let mockNFTsData: [String] = [
+        "d6a02bd1-1255-46cd-815b-656174c1d9c0",
+        "b2f44171-7dcd-46d7-a6d3-e2109aacf520",
+        "594aaf01-5962-4ab7-a6b5-470ea37beb93",
+        "9e472edf-ed51-4901-8cfc-8eb3f617519f",
+        "a4edeccd-ad7c-4c7f-b09e-6edec02a812b",
+        "2c9d09f6-25ac-4d6f-8d6a-175c4de2b42f"
+    ]
+    
     private let networkClient: NetworkClient
     
     init(networkClient: NetworkClient){

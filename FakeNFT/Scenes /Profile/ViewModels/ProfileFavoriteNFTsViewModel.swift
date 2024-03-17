@@ -53,13 +53,7 @@ final class ProfileFavoriteNFTsViewModel {
         gettingNFTs.notify(queue: .main) {
             self.favoriteNFTs = nftList
             
-            if gotError == idList?.count {
-                self.alertInfo?(
-                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
-                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
-                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorAll, comment: "")
-                )
-            } else if gotError > 0 {
+            if gotError > 0 {
                 self.alertInfo?(
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
@@ -77,7 +71,7 @@ final class ProfileFavoriteNFTsViewModel {
                 newProfileData.append(("likes", $0))
             })
         } else {
-            newProfileData.append(("likes", ""))
+            newProfileData.append(("likes", "null"))
         }
         
         let profileData = Urlencoding.urlEncoded(formDataSet: newProfileData)
