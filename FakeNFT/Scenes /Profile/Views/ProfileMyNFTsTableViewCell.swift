@@ -11,18 +11,27 @@ import Kingfisher
 final class ProfileMyNFTsTableViewCell: UITableViewCell {
     
     static let reuseIdentifier = "MyNFTsTableViewCell"
+    private var nftId: String?
+    private weak var delegate: LikerProtocol?
+    private var isFavorite: Bool = false {
+        didSet {
+            buttonFavorite.setImage(
+                UIImage(named: isFavorite ? ImageNames.favoriteActive : ImageNames.favoriteNoActive ),
+                for: .normal
+            )
+        }
+    }
+    
+    private lazy var buttonFavorite: UIButton = {
+        let button: UIButton = UIButton()
+        return button
+    }()
     
     private lazy var imageViewNFT: UIImageView = {
         let imageView: UIImageView = UIImageView()
         imageView.backgroundColor = UIColor(named: ColorNames.lightGray)
         imageView.layer.cornerRadius = 12
         imageView.clipsToBounds = true
-        return imageView
-    }()
-    
-    private lazy var imageViewFavorite: UIImageView = {
-        let imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: ImageNames.favoriteNoActive)
         return imageView
     }()
     
@@ -115,19 +124,27 @@ final class ProfileMyNFTsTableViewCell: UITableViewCell {
         }
     }
     
+    @objc
+    private func buttonFavoriteTapped(){
+        if let nftId {
+            delegate?.changeFavoriteState(of: nftId)
+        }
+    }
+    
     private func setupUI(){
         self.accessoryType = .none
         
-        [imageViewNFT, imageViewFavorite, stackNFT,
+        [imageViewNFT, buttonFavorite, stackNFT,
          stackNFTLeft, labelName, stackRating, viewAuthor, labelFrom, labelAuthor,
          stackNFTRight, labelPrice, labelPriceValue, viewNFTContent].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
+        contentView.backgroundColor = UIColor(named: ColorNames.white)
         contentView.addSubview(viewNFTContent)
         
         viewNFTContent.addSubview(imageViewNFT)
-        viewNFTContent.addSubview(imageViewFavorite)
+        viewNFTContent.addSubview(buttonFavorite)
         viewNFTContent.addSubview(stackNFT)
         
         stackNFT.addArrangedSubview(stackNFTLeft)
@@ -142,6 +159,8 @@ final class ProfileMyNFTsTableViewCell: UITableViewCell {
         
         stackNFTRight.addArrangedSubview(labelPrice)
         stackNFTRight.addArrangedSubview(labelPriceValue)
+        
+        buttonFavorite.addTarget(self, action: #selector(buttonFavoriteTapped), for: .touchUpInside)
     }
     
     private func setupUILayout(){
@@ -155,10 +174,10 @@ final class ProfileMyNFTsTableViewCell: UITableViewCell {
             imageViewNFT.leadingAnchor.constraint(equalTo: viewNFTContent.leadingAnchor),
             imageViewNFT.centerYAnchor.constraint(equalTo: viewNFTContent.centerYAnchor),
             
-            imageViewFavorite.heightAnchor.constraint(equalToConstant: 40),
-            imageViewFavorite.widthAnchor.constraint(equalToConstant: 40),
-            imageViewFavorite.topAnchor.constraint(equalTo: viewNFTContent.topAnchor, constant: 0),
-            imageViewFavorite.leadingAnchor.constraint(equalTo: viewNFTContent.leadingAnchor, constant: 68),
+            buttonFavorite.heightAnchor.constraint(equalToConstant: 40),
+            buttonFavorite.widthAnchor.constraint(equalToConstant: 40),
+            buttonFavorite.topAnchor.constraint(equalTo: viewNFTContent.topAnchor, constant: 0),
+            buttonFavorite.leadingAnchor.constraint(equalTo: viewNFTContent.leadingAnchor, constant: 68),
             
             stackNFTLeft.heightAnchor.constraint(equalToConstant: 62),
             stackNFTLeft.widthAnchor.constraint(equalToConstant: 95),
@@ -184,7 +203,12 @@ final class ProfileMyNFTsTableViewCell: UITableViewCell {
         ])
     }
     
-    func setup(with nft: Nft){
+    func setup(with nft: Nft, isFavofite: Bool, delegateTo: LikerProtocol){
+        delegate = delegateTo
+        nftId = nft.id
+        self.isFavorite = isFavofite
+        
+        
         labelName.text = nft.name
         labelAuthor.text = nft.author
         labelPriceValue.text = nft.price.description + " ETH"

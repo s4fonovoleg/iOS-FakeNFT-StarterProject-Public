@@ -11,6 +11,9 @@
 "Profile.edit.labelName" = "Имя";
 "Profile.edit.labelDescription" = "Описание";
 "Profile.edit.labelSite" = "Сайт";
+"Profile.edit.updateDone" = "Готово!";
+"Profile.edit.updateGreat" = "Отлично";
+"Profile.edit.updateChangesAreMade" = "Изменения внесены в профиль";
 "Profile.myNFTs.sortTitle" = "Сортировка";
 "Profile.myNFTs.sortByPrice" = "По цене";
 "Profile.myNFTs.sortByRating" = "По рейтингу";
@@ -24,5 +27,7 @@
 "Profile.myNFTs.from" = "от";
 "Profile.myNFTs.youDontHave" = "У Вас ещё нет NFT";
 "Profile.myNFTs.youDontHaveFavorite" = "У Вас ещё нет избранных NFT";
+"Profile.myNFTs.loadErrorUpdateProfile" = "Не удалось обновить данные профиля";
+"Profile.myNFTs.loadErrorLoadProfile" = "Не удалось загрузить данные профиля";
 "Tab.catalog" = "Каталог";
 "Tab.profile" = "Профиль";

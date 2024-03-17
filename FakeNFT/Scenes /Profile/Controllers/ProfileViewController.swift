@@ -77,7 +77,7 @@ final class ProfileViewController: UIViewController {
         
         setupUIElements()
         setupUILayout()
-        ProgressHUD.show()
+        ProgressHUD.show(interaction: false)
     }
     
     @objc
@@ -197,12 +197,13 @@ extension ProfileViewController: UITableViewDelegate {
         switch indexPath.row {
         case 0:
             let myNFTsViewModel = profileViewModel.genMyNFTsViewModel()
-            
             myNFTsViewModel.getNFTs(by: myNFTIDs)
-            
+            myNFTsViewModel.setFaviriteNFTS(with: favoriteNFTs)
             viewController = ProfileMyNFTsController(myNFTsViewModel: myNFTsViewModel)
         case 1:
-            viewController = ProfileFavoriteNFTsController()
+            let favoriteNFTsViewModel = profileViewModel.getFavoriteNFTsViewModel()
+            favoriteNFTsViewModel.getNFTs(by: favoriteNFTs)
+            viewController = ProfileFavoriteNFTsController(favoriteNFTsViewModel: favoriteNFTsViewModel)
         default:
             userPageTapped()
             return
@@ -225,13 +226,13 @@ extension ProfileViewController: UITableViewDataSource {
         switch indexPath.row {
         case 0:
             let number = myNFTIDs?.count ?? 0
-            cell.textLabel?.text = 
+            cell.textLabel?.text =
             NSLocalizedString(LocalizableKeys.profileMyNFTs, comment: "") +
             " (\(number.description))"
         case 1:
             let number = favoriteNFTs?.count ?? 0
             cell.textLabel?.text =
-            NSLocalizedString(LocalizableKeys.profileFavoriteNFTs, comment: "") + 
+            NSLocalizedString(LocalizableKeys.profileFavoriteNFTs, comment: "") +
             " (\(number.description))"
         default:
             cell.textLabel?.text =

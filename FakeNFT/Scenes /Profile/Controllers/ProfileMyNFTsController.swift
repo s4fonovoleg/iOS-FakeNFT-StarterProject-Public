@@ -9,6 +9,10 @@ import Combine
 import ProgressHUD
 import UIKit
 
+protocol LikerProtocol: AnyObject {
+    func changeFavoriteState(of nftId: String)
+}
+
 final class ProfileMyNFTsController: UIViewController {
     
     enum OrderProperty: String {
@@ -23,6 +27,7 @@ final class ProfileMyNFTsController: UIViewController {
         }
     }
     private var myNFTs: [Nft] = [Nft]()
+    private var myNFTsSortedBy: OrderProperty = .name
     private let myNFTsViewModel: ProfileMyNFTsViewModel
     private var subscriptions = Set<AnyCancellable>()
     
@@ -59,23 +64,26 @@ final class ProfileMyNFTsController: UIViewController {
     @objc
     private func sortNFTsButtonTapped(){
         guard myNFTs.count > 0 else { return }
-            
+        
         let actionSortByPrice = UIAlertAction(
             title: NSLocalizedString(LocalizableKeys.profileMyNFTsSortByPrice,comment: ""),
             style: .default
         ) { [weak self] _ in
+            self?.myNFTsSortedBy = .prise
             self?.sortNFTList(by: .prise)
         }
         let actionSortByRating = UIAlertAction(
             title: NSLocalizedString(LocalizableKeys.profileMyNFTsSortByRating, comment: ""),
             style: .default
         ) { [weak self] _ in
+            self?.myNFTsSortedBy = .rating
             self?.sortNFTList(by: .rating)
         }
         let actionSortByName = UIAlertAction(
             title: NSLocalizedString(LocalizableKeys.profileMyNFTsSortByName, comment: ""),
             style: .default
         ) { [weak self] _ in
+            self?.myNFTsSortedBy = .name
             self?.sortNFTList(by: .name)
         }
         let actionClose = UIAlertAction(
@@ -93,10 +101,10 @@ final class ProfileMyNFTsController: UIViewController {
     
     private func setupBindings(){
         myNFTsViewModel.$myNFTs.sink(receiveValue: { [weak self] list in
-            
             guard let self else { return }
             if let nftList = list {
                 self.myNFTs = nftList
+                self.sortNFTList(by: myNFTsSortedBy)
                 self.tableView.reloadData()
                 self.gotNFTsData = true
             }
@@ -123,7 +131,7 @@ final class ProfileMyNFTsController: UIViewController {
         view.backgroundColor = UIColor(named: ColorNames.white)
         view.addSubview(tableView)
         if gotNFTsData == false {
-            ProgressHUD.show()
+            ProgressHUD.show(interaction: false)
         }
     }
     
@@ -145,7 +153,6 @@ final class ProfileMyNFTsController: UIViewController {
         case .rating:
             myNFTs = myNFTs.sorted { $0.rating < $1.rating }
         }
-        
         tableView.reloadData()
     }
 }
@@ -170,11 +177,16 @@ extension ProfileMyNFTsController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileMyNFTsTableViewCell.reuseIdentifier) as? ProfileMyNFTsTableViewCell ?? ProfileMyNFTsTableViewCell()
-        
-        cell.setup(with: myNFTs[indexPath.row])
-        
+        let nft = myNFTs[indexPath.row]
+        cell.setup(with: nft, isFavofite: myNFTsViewModel.isFavorite(nftId: nft.id),delegateTo: self)
         return cell
+    }
+}
+
+extension ProfileMyNFTsController: LikerProtocol {
+    func changeFavoriteState(of nftId: String) {
+        ProgressHUD.show(interaction: false)
+        myNFTsViewModel.changeFaforiteState(of: nftId)
     }
 }

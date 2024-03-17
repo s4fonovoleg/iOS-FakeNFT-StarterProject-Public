@@ -1,19 +1,17 @@
 //
-//  File.swift
+//  ProfileFavoriteNFTsViewModel.swift
 //  FakeNFT
 //
-//  Created by Eugene Dmitrichenko on 05.03.2024.
+//  Created by Eugene Dmitrichenko on 12.03.2024.
 //
 
 import Combine
 import Foundation
-import UIKit
 
-final class ProfileMyNFTsViewModel {
+final class ProfileFavoriteNFTsViewModel {
     
-    @Published var myNFTs: [Nft]?
+    @Published var favoriteNFTs: [Nft]?
     @Published var profile: CurrentValueSubject<Profile?, Never>
-    private var favoriteNFTs: [String]?
     
     private let servicesAssembly: ServicesAssembly
     
@@ -53,17 +51,9 @@ final class ProfileMyNFTsViewModel {
         })
         
         gettingNFTs.notify(queue: .main) {
-            self.myNFTs = nftList
+            self.favoriteNFTs = nftList
             
-            if gotError == idList?.count {
-                self.alertInfo?(
-                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
-                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
-                    NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorAll, comment: "")
-                )
-            } else if gotError > 0 {
-                
-                //            if gotError > 0 {
+            if gotError > 0 {
                 self.alertInfo?(
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
@@ -73,34 +63,15 @@ final class ProfileMyNFTsViewModel {
         }
     }
     
-    func isFavorite(nftId: String) -> Bool{
-        favoriteNFTs?.contains(nftId) ?? false
-    }
-    
-    func setFaviriteNFTS(with list: [String]?){
-        self.favoriteNFTs = list
-    }
-    
-    func changeFaforiteState(of nftId: String){
-        guard let favoriteNFTs else { return }
+    func saveProfileLikes(with likes: [String]){
         var newProfileData: [(String, String)] = [(String,String)]()
-        var newFavoriteList: [String] = [String]()
         
-        if isFavorite(nftId: nftId) {
-            newFavoriteList = favoriteNFTs.filter {
-                $0 != nftId
-            }
-        } else {
-            newFavoriteList = favoriteNFTs
-            newFavoriteList.append(nftId)
-        }
-        
-        if newFavoriteList.isEmpty {
-            newProfileData.append(("likes", "null"))
-        } else {
-            newFavoriteList.forEach({
+        if !likes.isEmpty {
+            likes.forEach({
                 newProfileData.append(("likes", $0))
             })
+        } else {
+            newProfileData.append(("likes", "null"))
         }
         
         let profileData = Urlencoding.urlEncoded(formDataSet: newProfileData)
@@ -110,9 +81,7 @@ final class ProfileMyNFTsViewModel {
             
             switch result{
             case .success(let profile):
-                // TODO: Заменить использование моковых данных об NFT когда станут доступны реальные
-                getNFTs(by: ProfileService.mockNFTsData)
-                self.favoriteNFTs = profile.likes
+                getNFTs(by: profile.likes)
                 self.profile.send(profile)
             case .failure( _ ):
                 self.alertInfo?(
