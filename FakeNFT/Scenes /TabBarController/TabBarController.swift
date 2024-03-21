@@ -1,41 +1,39 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-
-    var servicesAssembly: ServicesAssembly!
-
-    private let catalogTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.catalog", comment: ""),
-        image: UIImage(systemName: "square.stack.3d.up.fill"),
-        tag: 1
-    )
+  // MARK: - Private Properties:
+  private let profileNavigationViewController = UINavigationController(rootViewController: UIViewController())
+  private let catalogNavigationViewController = UINavigationController(rootViewController: CatalogView())
+  private let cartNavigationViewController = UINavigationController(rootViewController: CartViewController(viewModel: CartViewModel(service: CartService())))
+  private let statisticsNavigationViewController = UINavigationController(rootViewController: StatisticsViewController())
+  private let profileTabBarItem = UITabBarItem(title: L10n.Localizable.Button.profileTitle, image: Asset.CustomIcons.profileIcon.image, tag: 0)
+  private let catalogTabBarItem = UITabBarItem(title: L10n.Localizable.Button.catalogTitle, image: Asset.CustomIcons.catalogIcon.image, tag: 1)
+  private let cartTabBarItem = UITabBarItem(title: L10n.Localizable.Button.cartTitle, image: Asset.CustomIcons.cartIcon.image, tag: 2)
+  private let statisticsTabBarItem = UITabBarItem(title: L10n.Localizable.Button.statisticsTitle, image: Asset.CustomIcons.statisticsIcon.image, tag: 3)
+  
+  // MARK: - Private Methods:
+  private func setupTabs() {
+    profileNavigationViewController.tabBarItem = profileTabBarItem
+    catalogNavigationViewController.tabBarItem = catalogTabBarItem
+    cartNavigationViewController.tabBarItem = cartTabBarItem
+    statisticsNavigationViewController.tabBarItem = statisticsTabBarItem
     
-    private let profileTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.profile", comment: ""),
-        image: UIImage(systemName: "person.crop.circle.fill"),
-        tag: 0
-    )
+    self.setViewControllers([
+      profileNavigationViewController,
+      catalogNavigationViewController,
+      cartNavigationViewController,
+      statisticsNavigationViewController
+    ], animated: true)
+  }
+}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // TODO: Задать значение токена после успешной авторизации, например, через Keychain
-        NetworkSessionToken.shared.token = "77bd726b-15bc-4ad3-92c4-c4c97adb9491"
-        
-        let profileController = ProfileNavigationController(
-            servicesAssembly: servicesAssembly
-        )
-        
-        profileController.tabBarItem = profileTabBarItem
-
-        let catalogController = TestCatalogViewController(
-            servicesAssembly: servicesAssembly
-        )
-        
-        catalogController.tabBarItem = catalogTabBarItem
-        
-        viewControllers = [profileController, catalogController]
-
-        view.backgroundColor = .systemBackground
-    }
+// MARK: - LifeCycle:
+extension TabBarController {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    tabBar.isTranslucent = false
+    view.backgroundColor = .systemBackground
+    setupTabs()
+    selectedIndex = 1
+  }
 }

@@ -9,35 +9,35 @@ protocol NftDetailPresenter {
 // MARK: - State
 
 enum NftDetailState {
-    case initial, loading, failed(Error), data(Nft)
+    case initial, loading, failed(Error), data(NFTModel)
 }
 
 final class NftDetailPresenterImpl: NftDetailPresenter {
-
+    
     // MARK: - Properties
-
+    
     weak var view: NftDetailView?
     private let input: NftDetailInput
-    private let service: NftService
+    private let service: CartService
     private var state = NftDetailState.initial {
         didSet {
             stateDidChanged()
         }
     }
-
+    
     // MARK: - Init
-
-    init(input: NftDetailInput, service: NftService) {
+    
+    init(input: NftDetailInput, service: CartService) {
         self.input = input
         self.service = service
     }
-
+    
     // MARK: - Functions
-
+    
     func viewDidLoad() {
         state = .loading
     }
-
+    
     private func stateDidChanged() {
         switch state {
         case .initial:
@@ -45,17 +45,19 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
         case .loading:
             view?.showLoading()
             loadNft()
-        case .data( _ ):
+        case .data(let nft):
             view?.hideLoading()
+            let cellModels = nft.images.map { NftDetailCellModel(url: $0) }
+            view?.displayCells(cellModels)
         case .failed(let error):
             let errorModel = makeErrorModel(error)
             view?.hideLoading()
             view?.showError(errorModel)
         }
     }
-
+    
     private func loadNft() {
-        service.loadNft(id: input.id) { [weak self] result in
+        service.loadNft(by: input.id) { [weak self] result in
             switch result {
             case .success(let nft):
                 self?.state = .data(nft)
@@ -64,7 +66,7 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
             }
         }
     }
-
+    
     private func makeErrorModel(_ error: Error) -> ErrorModel {
         let message: String
         switch error {
@@ -73,10 +75,11 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
         default:
             message = NSLocalizedString("Error.unknown", comment: "")
         }
-
+        
         let actionText = NSLocalizedString("Error.repeat", comment: "")
         return ErrorModel(message: message, actionText: actionText) { [weak self] in
             self?.state = .loading
         }
     }
 }
+
