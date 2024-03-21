@@ -151,7 +151,7 @@ final class ProfileEditViewController: UIViewController {
                                                object: nil)
     }
     
-    private func setupBindings(){
+    private func setupBindings() {
         
         profileEditViewModel.$avatar.sink(receiveValue: { [weak self] avatar in
             if let self, let url = avatar, let imageUrl = URL(string: url) {
@@ -213,11 +213,11 @@ final class ProfileEditViewController: UIViewController {
                     self.buttonClose.isEnabled = true
                 }
             }
-            AlertPresenter.shared.presentAlert(title: title, message: message, actions: [action], target: self)
+            AlertPresenterProfile.shared.presentAlert(title: title, message: message, actions: [action], target: self)
         }
     }
     
-    private func setupUIElements(){
+    private func setupUIElements() {
         view.backgroundColor = UIColor(named: ColorNames.white)
         view.addSubview(scrollView)
         
@@ -233,7 +233,7 @@ final class ProfileEditViewController: UIViewController {
             labelSite,
             textFieldSite,
             textFieldChangePicture
-        ].forEach{
+        ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
@@ -313,7 +313,7 @@ final class ProfileEditViewController: UIViewController {
     }
     
     @objc
-    private func buttonCloseTapped(){
+    private func buttonCloseTapped() {
         
         buttonClose.isEnabled = false
         
@@ -325,30 +325,30 @@ final class ProfileEditViewController: UIViewController {
     }
     
     @objc
-    private func labelChangePictureToggle(){
+    private func labelChangePictureToggle() {
         textFieldChangePicture.isHidden = !textFieldChangePicture.isHidden
     }
     
     @objc
-    private func keyboardWillHide(_ notification: Notification){
+    private func keyboardWillHide(_ notification: Notification) {
         updateScrollView(with: 0)
     }
     
     @objc
-    private func keyboardWillShow(_ notification: Notification){
+    private func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardHeight = keyboardFrame.cgRectValue.height
             updateScrollView(with: keyboardHeight)
         }
     }
     
-    private func updateScrollView(with height: CGFloat){
+    private func updateScrollView(with height: CGFloat) {
         scrollViewBottomConstraint?.constant = 0 - height
         scrollView.layoutIfNeeded()
     }
     
     @objc
-    private func viewDidTapped(){
+    private func viewDidTapped() {
         [textFieldUserName, textFieldSite, textViewDescription, textFieldChangePicture].forEach {
             $0.resignFirstResponder()
         }

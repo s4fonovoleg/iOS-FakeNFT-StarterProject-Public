@@ -10,7 +10,7 @@ import Foundation
 
 final class ProfileFavoriteNFTsViewModel {
     
-    @Published var favoriteNFTs: [Nft]?
+    @Published var favoriteNFTs: [NFTModel]?
     @Published var profile: CurrentValueSubject<Profile?, Never>
     
     private let servicesAssembly: ServicesAssembly
@@ -28,8 +28,9 @@ final class ProfileFavoriteNFTsViewModel {
         self.profile = profile
     }
     
-    func getNFTs(by idList: [String]?){
-        var nftList: [Nft] = [Nft]()
+    func getNFTs(by idList: [String]?) {
+//        var nftList: [Nft] = [Nft]()
+        var nftList: [NFTModel] = [NFTModel]()
         var gotError: Int = 0
         
         let gettingNFTs: DispatchGroup = DispatchGroup()
@@ -63,8 +64,8 @@ final class ProfileFavoriteNFTsViewModel {
         }
     }
     
-    func saveProfileLikes(with likes: [String]){
-        var newProfileData: [(String, String)] = [(String,String)]()
+    func saveProfileLikes(with likes: [String]) {
+        var newProfileData: [(String, String)] = [(String, String)]()
         
         if !likes.isEmpty {
             likes.forEach({
@@ -76,14 +77,14 @@ final class ProfileFavoriteNFTsViewModel {
         
         let profileData = Urlencoding.urlEncoded(formDataSet: newProfileData)
         
-        servicesAssembly.profileService.saveProfile(profileData){ [weak self] result in
+        servicesAssembly.profileService.saveProfile(profileData) { [weak self] result in
             guard let self else { return }
             
-            switch result{
+            switch result {
             case .success(let profile):
                 getNFTs(by: profile.likes)
                 self.profile.send(profile)
-            case .failure( _ ):
+            case .failure(_):
                 self.alertInfo?(
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),

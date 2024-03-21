@@ -29,11 +29,11 @@ final class ProfileService: ProfileServiceProtocol {
     
     private let networkClient: NetworkClient
     
-    init(networkClient: NetworkClient){
+    init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
     
-    func loadProfile(completion: @escaping ProfileCompletion){
+    func loadProfile(completion: @escaping ProfileCompletion) {
         
         let request = ProfileGetRequest()
         

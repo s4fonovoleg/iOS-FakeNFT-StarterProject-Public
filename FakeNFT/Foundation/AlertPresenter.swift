@@ -12,9 +12,9 @@ public protocol AlertPresenterProtocol {
     func presentAlert(title: String?, message: String?, actions: [UIAlertAction]?, target: UIViewController?, preferredStyle: UIAlertController.Style)
 }
 
-final class AlertPresenter: AlertPresenterProtocol {
+final class AlertPresenterProfile: AlertPresenterProtocol {
     
-    static let shared = AlertPresenter()
+    static let shared = AlertPresenterProfile()
     
     private init() {}
     

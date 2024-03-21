@@ -66,8 +66,8 @@ final class ProfileEditViewModel {
         self.editableProfile = originProfile
     }
     
-    func saveProfile(){
-        var newProfileData: [(String, String)] = [(String,String)]()
+    func saveProfile() {
+        var newProfileData: [(String, String)] = [(String, String)]()
         
         newProfileData.append(("avatar", newAvatar ?? ""))
         newProfileData.append(("description", newDescription ?? ""))
@@ -81,10 +81,10 @@ final class ProfileEditViewModel {
         
         let profileData = Urlencoding.urlEncoded(formDataSet: newProfileData)
         
-        servicesAssembly.profileService.saveProfile(profileData){ [weak self] result in
+        servicesAssembly.profileService.saveProfile(profileData) { [weak self] result in
             guard let self else { return }
             
-            switch result{
+            switch result {
             case .success(let profile):
                 self.profile.send(profile)
                 
@@ -95,7 +95,7 @@ final class ProfileEditViewModel {
                     true
                 )
                 
-            case .failure( _ ):
+            case .failure(_):
                 self.alertInfo?(
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),

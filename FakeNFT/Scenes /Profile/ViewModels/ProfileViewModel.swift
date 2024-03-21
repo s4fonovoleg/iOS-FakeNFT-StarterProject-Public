@@ -19,13 +19,15 @@ final class ProfileViewModel {
     
     @Published var profile = CurrentValueSubject<Profile?, Never>(nil)
     
-    private let servicesAssembly: ServicesAssembly
+    private let servicesAssembly: ServicesAssembly = ServicesAssembly(
+        networkClient: DefaultNetworkClient(),
+        nftStorage: NftStorageImpl()
+    )
     private var subscriptions = Set<AnyCancellable>()
     
     var alertInfo: (( _ title: String, _ buttonTapped: String, _ message: String) -> Void)?
     
-    init(servicesAssembly: ServicesAssembly) {
-        self.servicesAssembly = servicesAssembly
+    init() {
         
         setupBindings()
         loadInitData()
@@ -35,7 +37,7 @@ final class ProfileViewModel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func loadInitData(){
+    private func loadInitData() {
         
         servicesAssembly.profileService.loadProfile { [weak self] result in
             
@@ -44,7 +46,7 @@ final class ProfileViewModel {
             switch result {
             case .success(let profile):
                 self.profile.send(profile)
-            case .failure( _ ):
+            case .failure(_):
                 self.alertInfo?(
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorTitle, comment: ""),
                     NSLocalizedString(LocalizableKeys.profileMyNFTsLoadErrorButton, comment: ""),
@@ -54,7 +56,7 @@ final class ProfileViewModel {
         }
     }
     
-    private func setupBindings(){
+    private func setupBindings() {
         
         profile.sink { [weak self] profile in
             guard let self else { return }
@@ -65,8 +67,8 @@ final class ProfileViewModel {
             self.favoriteNFTs = profile?.likes
             
             // FIXME: Используем мокковые данные пока в профиле отсутствуют реальные
-            // myNFTs = profile?.nfts
-            self.myNFTs = ProfileService.mockNFTsData
+            self.myNFTs = profile?.nfts
+//            self.myNFTs = ProfileService.mockNFTsData
         }.store(in: &subscriptions)
     }
     

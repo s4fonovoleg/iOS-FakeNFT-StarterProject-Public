@@ -12,7 +12,7 @@ final class Observable<Value> {
 		return self
 	}
 	
-	private var onChange: ((Value) -> Void)? = nil
+	private var onChange: ((Value) -> Void)?
 	
 	init(wrappedValue: Value) {
 		self.wrappedValue = wrappedValue

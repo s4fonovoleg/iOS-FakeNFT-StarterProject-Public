@@ -16,11 +16,11 @@ protocol UnlikerProtocol: AnyObject {
 class ProfileFavoriteNFTsController: UIViewController {
     
     private var gotNFTsData: Bool = false {
-        didSet{
+        didSet {
             ProgressHUD.dismiss()
         }
     }
-    private var favoriteNFTs: [Nft] = [Nft]()
+    private var favoriteNFTs: [NFTModel] = [NFTModel]()
     private let favoriteNFTsViewModel: ProfileFavoriteNFTsViewModel
     private var subscriptions = Set<AnyCancellable>()
     
@@ -57,7 +57,7 @@ class ProfileFavoriteNFTsController: UIViewController {
         setupUILayout()
     }
     
-    private func setupBindings(){
+    private func setupBindings() {
         favoriteNFTsViewModel.$favoriteNFTs.sink(receiveValue: { [weak self] list in
             guard let self else { return }
             if let nftList = list {
@@ -71,12 +71,12 @@ class ProfileFavoriteNFTsController: UIViewController {
         favoriteNFTsViewModel.alertInfo = { [weak self] (title, buttonTitle, message) in
             guard let self else { return }
             let action = UIAlertAction(title: buttonTitle, style: .cancel)
-            AlertPresenter.shared.presentAlert(title: title, message: message, actions: [action], target: self)
+            AlertPresenterProfile.shared.presentAlert(title: title, message: message, actions: [action], target: self)
             ProgressHUD.dismiss()
         }
     }
     
-    private func setupUI(){
+    private func setupUI() {
         title = NSLocalizedString(LocalizableKeys.profileFavoriteNFTs, comment: "")
         view.backgroundColor = UIColor(named: ColorNames.white)
         view.addSubview(collectionView)
@@ -84,12 +84,12 @@ class ProfileFavoriteNFTsController: UIViewController {
         ProgressHUD.show(interaction: false)
     }
     
-    private func setupUILayout(){
+    private func setupUILayout() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }

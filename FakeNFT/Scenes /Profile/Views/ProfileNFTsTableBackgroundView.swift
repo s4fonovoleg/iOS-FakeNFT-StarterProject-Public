@@ -23,7 +23,7 @@ final class ProfileNFTsTableBackgroundView: UIView {
         return label
     }()
 
-    init(frame: CGRect, nftsType: NFTsType){
+    init(frame: CGRect, nftsType: NFTsType) {
         self.nftsType = nftsType
         super.init(frame: frame)
         setupUI()
@@ -33,7 +33,7 @@ final class ProfileNFTsTableBackgroundView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupUI(){
+    private func setupUI() {
         self.backgroundColor = UIColor(named: ColorNames.white)
         
         label.text = nftsType == .myNFTs ? 

@@ -81,14 +81,14 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc
-    private func buttonEditTapped(){
+    private func buttonEditTapped() {
         if let profileEditViewModel = profileViewModel.genEditViewModel() {
             let editVC = ProfileEditViewController(profileEditViewModel: profileEditViewModel)
             present(editVC, animated: true)
         }
     }
     
-    private func setupBindings(){
+    private func setupBindings() {
         profileViewModel.$avatar.sink(receiveValue: { [weak self] avatar in
             
             ProgressHUD.dismiss()
@@ -125,11 +125,11 @@ final class ProfileViewController: UIViewController {
         profileViewModel.alertInfo = {[weak self] (title, buttonTitle, message) in
             guard let self else { return }
             let action = UIAlertAction(title: buttonTitle, style: .cancel)
-            AlertPresenter.shared.presentAlert(title: title, message: message, actions: [action], target: self)
+            AlertPresenterProfile.shared.presentAlert(title: title, message: message, actions: [action], target: self)
         }
     }
     
-    private func setupUIElements(){
+    private func setupUIElements() {
         view.backgroundColor = UIColor(named: ColorNames.white)
         
         let editButton = UIBarButtonItem(image: UIImage(named: ImageNames.buttonEdit), style: .plain, target: self, action: #selector(buttonEditTapped))
@@ -141,7 +141,7 @@ final class ProfileViewController: UIViewController {
         navigationItem.rightBarButtonItem = editButton
         navigationItem.backBarButtonItem = backButton
         
-        [imageViewUserPicture, labelUserName, textViewDescription, buttonUserPage, tableView].forEach{
+        [imageViewUserPicture, labelUserName, textViewDescription, buttonUserPage, tableView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -149,7 +149,7 @@ final class ProfileViewController: UIViewController {
         tableView.separatorColor = .clear
     }
     
-    private func setupUILayout(){
+    private func setupUILayout() {
         NSLayoutConstraint.activate([
             imageViewUserPicture.heightAnchor.constraint(equalToConstant: 70),
             imageViewUserPicture.widthAnchor.constraint(equalToConstant: 70),
@@ -174,7 +174,7 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc
-    private func userPageTapped(){
+    private func userPageTapped() {
         let webController = ProfileWebViewController()
         if let website = self.website {
             webController.userSite = website

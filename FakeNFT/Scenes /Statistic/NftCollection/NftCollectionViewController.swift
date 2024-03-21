@@ -72,7 +72,7 @@ final class NftCollectionViewController: UIViewController {
 			collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
 			collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
 			collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-			collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+			collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
 		])
 	}
 	
@@ -95,7 +95,6 @@ final class NftCollectionViewController: UIViewController {
 		dismiss(animated: true)
 	}
 }
-
 
 // MARK: UICollectionViewDataSource
 

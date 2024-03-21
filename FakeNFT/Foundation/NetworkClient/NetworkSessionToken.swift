@@ -24,7 +24,7 @@ final class NetworkSessionToken {
     
     private init() {}
     
-    func clear(){
+    func clear() {
        sessionToken = nil
     }
 }

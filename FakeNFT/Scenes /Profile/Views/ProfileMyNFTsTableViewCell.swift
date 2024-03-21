@@ -125,13 +125,13 @@ final class ProfileMyNFTsTableViewCell: UITableViewCell {
     }
     
     @objc
-    private func buttonFavoriteTapped(){
+    private func buttonFavoriteTapped() {
         if let nftId {
             delegate?.changeFavoriteState(of: nftId)
         }
     }
     
-    private func setupUI(){
+    private func setupUI() {
         self.accessoryType = .none
         
         [imageViewNFT, buttonFavorite, stackNFT,
@@ -163,7 +163,7 @@ final class ProfileMyNFTsTableViewCell: UITableViewCell {
         buttonFavorite.addTarget(self, action: #selector(buttonFavoriteTapped), for: .touchUpInside)
     }
     
-    private func setupUILayout(){
+    private func setupUILayout() {
         NSLayoutConstraint.activate([
             viewNFTContent.heightAnchor.constraint(equalToConstant: 108),
             viewNFTContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -199,29 +199,28 @@ final class ProfileMyNFTsTableViewCell: UITableViewCell {
             labelFrom.centerYAnchor.constraint(equalTo: viewAuthor.centerYAnchor),
             
             labelAuthor.leadingAnchor.constraint(equalTo: labelFrom.trailingAnchor, constant: 5),
-            labelAuthor.centerYAnchor.constraint(equalTo: viewAuthor.centerYAnchor),
+            labelAuthor.centerYAnchor.constraint(equalTo: viewAuthor.centerYAnchor)
         ])
     }
     
-    func setup(with nft: Nft, isFavofite: Bool, delegateTo: LikerProtocol){
+    func setup(with nft: NFTModel, isFavofite: Bool, delegateTo: LikerProtocol) {
         delegate = delegateTo
         nftId = nft.id
         self.isFavorite = isFavofite
-        
         
         labelName.text = nft.name
         labelAuthor.text = nft.author
         labelPriceValue.text = nft.price.description + " ETH"
         
-        if let url = nft.images.first, let imageUrl = URL(string: url) {
+        if let imageUrl = nft.images.first {
             
             self.imageViewNFT.kf.indicatorType = .activity
             self.imageViewNFT.kf.setImage(with: imageUrl)
         }
         
-        for i in 0...4 {
+        for rating in 0...4 {
             
-            let imageName = nft.rating > i ? ImageNames.starActive : ImageNames.starNoActive
+            let imageName = nft.rating > rating ? ImageNames.starProfActive : ImageNames.starProfNoActive
             
             let imageView = UIImageView(image: UIImage(named: imageName))
             stackRating.addArrangedSubview(imageView)

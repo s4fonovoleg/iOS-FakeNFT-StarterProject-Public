@@ -58,7 +58,7 @@ class ProfileFavoriteNFTsCollectionViewCell: UICollectionViewCell {
     
     private lazy var viewNFTContent: UIView = UIView()
     
-    override init(frame: CGRect){
+    override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupUI()
@@ -75,7 +75,7 @@ class ProfileFavoriteNFTsCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private func setupUI(){
+    private func setupUI() {
         [imageViewNFT, buttonFavorite,
          stackNFT, labelName, stackRating,
          labelPriceValue, viewNFTContent].forEach {
@@ -95,7 +95,7 @@ class ProfileFavoriteNFTsCollectionViewCell: UICollectionViewCell {
         buttonFavorite.addTarget(self, action: #selector(buttonUnlikeTapped), for: .touchUpInside)
     }
     
-    private func setupUILayout(){
+    private func setupUILayout() {
         NSLayoutConstraint.activate([
             viewNFTContent.topAnchor.constraint(equalTo: contentView.topAnchor),
             viewNFTContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -119,31 +119,32 @@ class ProfileFavoriteNFTsCollectionViewCell: UICollectionViewCell {
             stackNFT.centerYAnchor.constraint(equalTo: viewNFTContent.centerYAnchor),
             
             stackRating.heightAnchor.constraint(equalToConstant: 12),
-            stackRating.widthAnchor.constraint(equalToConstant: 68),
+            stackRating.widthAnchor.constraint(equalToConstant: 68)
         ])
     }
     
     @objc
-    private func buttonUnlikeTapped(){
+    private func buttonUnlikeTapped() {
         if let nftId {
             delegate?.unlikeNFT(with: nftId)
         }
     }
     
-    func setup(with nft: Nft, delegateTo: UnlikerProtocol){
+    func setup(with nft: NFTModel, delegateTo: UnlikerProtocol) {
         delegate = delegateTo
         nftId = nft.id
         
         labelName.text = nft.name
         labelPriceValue.text = nft.price.description + " ETH"
         
-        if let url = nft.images.first, let imageUrl = URL(string: url) {
+//        if let url = nft.images.first, let imageUrl = URL(string: url) {
+        if let imageUrl = nft.images.first {
             self.imageViewNFT.kf.indicatorType = .activity
             self.imageViewNFT.kf.setImage(with: imageUrl)
         }
         
-        for i in 0...4 {
-            let imageName = nft.rating > i ? ImageNames.starActive : ImageNames.starNoActive
+        for rating in 0...4 {
+            let imageName = nft.rating > rating ? ImageNames.starProfActive : ImageNames.starProfNoActive
             let imageView = UIImageView(image: UIImage(named: imageName))
             stackRating.addArrangedSubview(imageView)
         }

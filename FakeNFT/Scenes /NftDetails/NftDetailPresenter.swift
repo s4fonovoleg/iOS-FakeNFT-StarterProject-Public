@@ -82,4 +82,3 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
         }
     }
 }
-
