@@ -128,4 +128,3 @@ extension CatalogView: UITableViewDelegate {
 }
 
 extension CatalogView: ErrorView {}
-

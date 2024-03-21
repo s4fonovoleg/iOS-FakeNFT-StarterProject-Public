@@ -28,7 +28,7 @@ final class NftCollectionCell: UICollectionViewCell {
 	}()
 	
 	private lazy var like = {
-		let image = UIImage(named: "Like_no_active");
+		let image = UIImage(named: "Like_no_active")
 		let button = UIButton()
 		button.setImage(image, for: .normal)
 		button.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +66,7 @@ final class NftCollectionCell: UICollectionViewCell {
 	}()
 	
 	private lazy var cart = {
-		let image = UIImage(named: "Cart_add");
+		let image = UIImage(named: "Cart_add")
 		let button = UIButton()
 		button.translatesAutoresizingMaskIntoConstraints = false
 		button.setImage(image, for: .normal)
@@ -126,7 +126,7 @@ final class NftCollectionCell: UICollectionViewCell {
 			cart.topAnchor.constraint(equalTo: rating.bottomAnchor, constant: 4),
 			cart.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 			cart.heightAnchor.constraint(equalToConstant: 40),
-			cart.widthAnchor.constraint(equalToConstant: 40),
+			cart.widthAnchor.constraint(equalToConstant: 40)
 		])
 	}
 	

@@ -2,7 +2,7 @@ import UIKit
 
 final class TabBarController: UITabBarController {
   // MARK: - Private Properties:
-  private let profileNavigationViewController = UINavigationController(rootViewController: UIViewController())
+  private let profileNavigationViewController = UINavigationController(rootViewController: ProfileViewController(profileViewModel: ProfileViewModel()))
   private let catalogNavigationViewController = UINavigationController(rootViewController: CatalogView())
   private let cartNavigationViewController = UINavigationController(rootViewController: CartViewController(viewModel: CartViewModel(service: CartService())))
   private let statisticsNavigationViewController = UINavigationController(rootViewController: StatisticsViewController())
@@ -34,6 +34,6 @@ extension TabBarController {
     tabBar.isTranslucent = false
     view.backgroundColor = .systemBackground
     setupTabs()
-    selectedIndex = 1
+    selectedIndex = 0
   }
 }

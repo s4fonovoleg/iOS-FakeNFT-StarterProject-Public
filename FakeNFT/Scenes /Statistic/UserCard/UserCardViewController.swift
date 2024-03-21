@@ -147,10 +147,9 @@ final class UserCardViewController: UIViewController {
 			avatar.widthAnchor.constraint(equalToConstant: 70),
 			avatar.heightAnchor.constraint(equalToConstant: 70),
 			
-			nameLabel.centerYAnchor.constraint(equalTo:avatar.centerYAnchor),
+			nameLabel.centerYAnchor.constraint(equalTo: avatar.centerYAnchor),
 			nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
 			nameLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 16),
-			
 			
 			descriptionLabel.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 16),
 			descriptionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -160,14 +159,12 @@ final class UserCardViewController: UIViewController {
 			navigateToUserWebsiteButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 28),
 			navigateToUserWebsiteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
 			navigateToUserWebsiteButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-			navigateToUserWebsiteButton
-				.heightAnchor.constraint(equalToConstant: 40),
+			navigateToUserWebsiteButton.heightAnchor.constraint(equalToConstant: 40),
 
 			nftCollectionButton.topAnchor.constraint(equalTo: navigateToUserWebsiteButton.bottomAnchor, constant: 40),
 			nftCollectionButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
 			nftCollectionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-			nftCollectionButton
-				.heightAnchor.constraint(equalToConstant: 54),
+			nftCollectionButton.heightAnchor.constraint(equalToConstant: 54)
 		])
 	}
 	

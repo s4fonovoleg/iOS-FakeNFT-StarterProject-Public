@@ -54,6 +54,4 @@ final class CatalogCell: UITableViewCell {
             $0.top.equalTo(nftImageView.snp_bottomMargin).offset(10)
         }
     }
-
 }
-

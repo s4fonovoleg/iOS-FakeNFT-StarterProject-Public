@@ -18,6 +18,4 @@ final class NftView: UIViewController {
     private func setupScreen() {
         view.backgroundColor = UIColor(named: "WhiteColor")
     }
-
 }
-
