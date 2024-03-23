@@ -57,7 +57,9 @@ playground.xcworkspace
 # Pods/
 #
 # Add this line if you want to avoid checking in source code from the Xcode workspace
-# *.xcworkspace
+*.xcworkspace
+Pods
+*.lock
 
 # Carthage
 #
@@ -90,3 +92,9 @@ fastlane/test_output
 iOSInjectionProject/
 
 .DS_Store
+/Users/ruslanhalilulin/Desktop/iOS-FakeNFT-StarterProject-Public
+Pods
+/Users/ruslanhalilulin/Desktop/iOS-FakeNFT-StarterProject-Public/FakeNFT/Resources/Generated.swift
+
+FakeNFT/Resources/Generated.swift
+FakeNFT/Resources/Assets.swift
